@@ -1470,6 +1470,271 @@ def blake2s_hash(data: str, digest_size=32) -> str:
     import hashlib
     h = hashlib.blake2s(data.encode(), digest_size=digest_size)
     return h.hexdigest()
+def sm3_hash(data: str) -> str:
+    from gmssl import sm3, func
+    msg = data.encode()
+    return sm3.sm3_hash(func.bytes_to_list(msg))
+def keccak_hash(data: str, bits: int = 256) -> str:
+    from Crypto.Hash import keccak
+
+    if bits == 224:
+        h = keccak.new(digest_bits=224)
+    elif bits == 256:
+        h = keccak.new(digest_bits=256)
+    elif bits == 384:
+        h = keccak.new(digest_bits=384)
+    elif bits == 512:
+        h = keccak.new(digest_bits=512)
+    else:
+        raise ValueError("Keccak supports 224/256/384/512 bits")
+
+    h.update(data.encode())
+    return h.hexdigest()
+def shake_hash(data: str, bits: int = 256) -> str:
+    import hashlib
+
+    if bits == 128:
+        return hashlib.shake_128(data.encode()).hexdigest(32)
+    elif bits == 256:
+        return hashlib.shake_256(data.encode()).hexdigest(64)
+    else:
+        raise ValueError("SHAKE supports 128 or 256")
+def streebog_256(data: str) -> str:
+    from Crypto.Hash import GOST34112012
+    h = GOST34112012.new(digest_bits=256)
+    h.update(data.encode())
+    return h.hexdigest()
+def streebog_512(data: str) -> str:
+    from Crypto.Hash import GOST34112012
+    h = GOST34112012.new(digest_bits=512)
+    h.update(data.encode())
+    return h.hexdigest()
+def ssdeep_hash(data: str) -> str:
+    import ssdeep
+    return ssdeep.hash(data)
+
+def ssdeep_compare(hash1: str, hash2: str) -> int:
+    import ssdeep
+    return ssdeep.compare(hash1, hash2)
+
+def hmac_generate(message: str, key: str, algo: str = "SHA256") -> str:
+    import hmac
+    import hashlib
+
+    algo = algo.upper()
+
+    algo_map = {
+        "MD5": hashlib.md5,
+        "SHA1": hashlib.sha1,
+        "SHA256": hashlib.sha256,
+        "SHA384": hashlib.sha384,
+        "SHA512": hashlib.sha512,
+        "SHA3-256": hashlib.sha3_256,
+        "SHA3-512": hashlib.sha3_512,
+    }
+
+    if algo not in algo_map:
+        raise ValueError("Unsupported HMAC algorithm")
+
+    h = hmac.new(
+        key.encode(),
+        message.encode(),
+        algo_map[algo]
+    )
+
+    return h.hexdigest()
+def hmac_verify(message: str, key: str, algo: str, given_hmac: str) -> bool:
+    import hmac
+
+    calculated = hmac_generate(message, key, algo)
+    return hmac.compare_digest(calculated, given_hmac)
+def bcrypt_hash(password: str, rounds: int = 12) -> str:
+    import bcrypt
+    salt = bcrypt.gensalt(rounds)
+    hashed = bcrypt.hashpw(password.encode(), salt)
+    return hashed.decode()
+def bcrypt_compare(password: str, hashed: str) -> bool:
+    import bcrypt
+    return bcrypt.checkpw(password.encode(), hashed.encode())
+def bcrypt_parse(hash_value: str) -> dict:
+    parts = hash_value.split('$')
+    if len(parts) != 4:
+        raise ValueError("Invalid bcrypt hash format")
+
+    return {
+        "algorithm": parts[1],
+        "cost_factor": int(parts[2]),
+        "salt+hash": parts[3][:],
+        "salt": parts[3][:22],
+        "hash": parts[3][22:]
+    }
+def scrypt_hash(password: str, salt: bytes = None,
+                n: int = 2**14, r: int = 8, p: int = 1) -> dict:
+    import hashlib, os, base64
+
+    if salt is None:
+        salt = os.urandom(16)
+
+    key = hashlib.scrypt(
+        password.encode(),
+        salt=salt,
+        n=n,
+        r=r,
+        p=p,
+        dklen=64
+    )
+
+    return {
+        "algorithm": "scrypt",
+        "n": n,
+        "r": r,
+        "p": p,
+        "salt": base64.b64encode(salt).decode(),
+        "hash": base64.b64encode(key).decode()
+    }
+def scrypt_compare(password: str, stored: dict) -> bool:
+    import hashlib, base64, hmac
+
+    salt = base64.b64decode(stored["salt"])
+    original = base64.b64decode(stored["hash"])
+
+    new_key = hashlib.scrypt(
+        password.encode(),
+        salt=salt,
+        n=stored["n"],
+        r=stored["r"],
+        p=stored["p"],
+        dklen=len(original)
+    )
+
+    return hmac.compare_digest(original, new_key)
+def scrypt_parse(stored: dict):
+    return {
+        "algorithm": stored["algorithm"],
+        "N": stored["n"],
+        "r": stored["r"],
+        "p": stored["p"],
+        "salt_length": len(stored["salt"]),
+        "hash_length": len(stored["hash"])
+    }
+def pbkdf2_derive_key(password: str,
+                      salt: bytes = None,
+                      iterations: int = 100000,
+                      dklen: int = 32,
+                      hash_name: str = "sha256") -> dict:
+    import hashlib, os, base64
+
+    if salt is None:
+        salt = os.urandom(16)
+
+    key = hashlib.pbkdf2_hmac(
+        hash_name,
+        password.encode(),
+        salt,
+        iterations,
+        dklen
+    )
+
+    return {
+        "algorithm": "PBKDF2",
+        "hash": hash_name.upper(),
+        "iterations": iterations,
+        "key_length": dklen,
+        "salt": base64.b64encode(salt).decode(),
+        "derived_key": base64.b64encode(key).decode()
+    }
+def pbkdf2_verify(password: str, stored: dict) -> bool:
+    import hashlib, base64, hmac
+
+    salt = base64.b64decode(stored["salt"])
+    original = base64.b64decode(stored["derived_key"])
+
+    new_key = hashlib.pbkdf2_hmac(
+        stored["hash"].lower(),
+        password.encode(),
+        salt,
+        stored["iterations"],
+        len(original)
+    )
+
+    return hmac.compare_digest(original, new_key)
+def evp_bytes_to_key(password: bytes,
+                     salt: bytes,
+                     key_len: int,
+                     iv_len: int,
+                     hash_name: str = "md5") -> tuple:
+    import hashlib
+
+    digest = getattr(hashlib, hash_name)
+    derived = b""
+    block = b""
+
+    while len(derived) < (key_len + iv_len):
+        block = digest(block + password + salt).digest()
+        derived += block
+
+    key = derived[:key_len]
+    iv = derived[key_len:key_len + iv_len]
+
+    return key, iv
+def derive_evp_key(password: str,
+                   salt: bytes = None,
+                   key_len: int = 32,
+                   iv_len: int = 16,
+                   hash_name: str = "md5") -> dict:
+    import os, base64
+
+    if salt is None:
+        salt = os.urandom(8)  # OpenSSL standard salt length
+
+    key, iv = evp_bytes_to_key(
+        password.encode(),
+        salt,
+        key_len,
+        iv_len,
+        hash_name
+    )
+
+    return {
+        "algorithm": "EVP_BytesToKey",
+        "hash": hash_name.upper(),
+        "salt": base64.b64encode(salt).decode(),
+        "key": base64.b64encode(key).decode(),
+        "iv": base64.b64encode(iv).decode(),
+        "key_length": key_len,
+        "iv_length": iv_len
+    }
+def prng_python(seed: int, count: int = 10):
+    import random
+    random.seed(seed)
+    return [random.randint(0, 2**32 - 1) for _ in range(count)]
+def prng_lcg(seed: int, count: int = 10):
+    m = 2**32
+    a = 1664525
+    c = 1013904223
+
+    values = []
+    x = seed
+
+    for _ in range(count):
+        x = (a * x + c) % m
+        values.append(x)
+
+    return values
+def prng_xorshift(seed: int, count: int = 10):
+    values = []
+    x = seed
+
+    for _ in range(count):
+        x ^= (x << 13) & 0xFFFFFFFF
+        x ^= (x >> 17)
+        x ^= (x << 5) & 0xFFFFFFFF
+        values.append(x & 0xFFFFFFFF)
+
+    return values
+def csprng(count: int = 10):
+    import secrets
+    return [secrets.randbits(32) for _ in range(count)]
 
 
 
@@ -2349,8 +2614,38 @@ def coder_ops():
                     print("Invalid choice")
 
             SHA_ops()
+        elif op == 38:
+            def sponge_hash_ops():
+                while True:
+                    print("\nSM3 / KECCAK / SHAKE")
+                    print("1. SM3")
+                    print("2. Keccak")
+                    print("3. SHAKE")
 
- #       elif op == 38:
+                    choice = input("Choose algorithm (1-3): ")
+
+                    if choice not in ["1", "2", "3"]:
+                        print("Invalid option")
+                        continue
+
+                    data = input("Enter text: ")
+
+                    if choice == "1":
+                        print("SM3:", sm3_hash(data))
+                        break
+
+                    elif choice == "2":
+                        bits = int(input("Keccak bits (224/256/384/512): "))
+                        print("Keccak:", keccak_hash(data, bits))
+                        break
+
+                    elif choice == "3":
+                        bits = int(input("SHAKE bits (128/256): "))
+                        print("SHAKE:", shake_hash(data, bits))
+                        break
+
+            sponge_hash_ops()
+
         elif op == 39:
             def Hash_ops():
                 print("\nHASH FUNCTIONS")
@@ -2400,17 +2695,330 @@ def coder_ops():
                     print("Invalid choice.")
 
             Blake_ops()
+        elif op == 41:
+            def gost_streebog_ops():
+                while True:
+                    print("\nGOST / STREEBOG")
+                    print("1. Streebog-256")
+                    print("2. Streebog-512")
 
+                    choice = input("Choose option (1-2): ")
+                    if choice not in ["1", "2"]:
+                        print("Invalid option")
+                        continue
 
- #       elif op == 40:
- #       elif op == 41:
- #       elif op == 42:
- #       elif op == 43:
- #       elif op == 44:
-  #      elif op == 45:
-  #      elif op == 46:
-  #      elif op == 47:
-  #      elif op == 48:
+                    data = input("Enter text: ")
+
+                    if choice == "1":
+                        print("Streebog-256:", streebog_256(data))
+                        break
+
+                    elif choice == "2":
+                        print("Streebog-512:", streebog_512(data))
+                        break
+
+            gost_streebog_ops()
+        elif op == 42:
+            def ssdeep_ops():
+                while True:
+                    print("\nSSDEEP / CTPH")
+                    print("1. Generate SSDEEP hash")
+                    print("2. Compare SSDEEP hashes")
+
+                    choice = input("Choose option (1-2): ")
+
+                    if choice not in ["1", "2"]:
+                        print("Invalid option")
+                        continue
+
+                    if choice == "1":
+                        data = input("Enter text or data: ")
+                        print("SSDEEP Hash:")
+                        print(ssdeep_hash(data))
+                        break
+
+                    elif choice == "2":
+                        h1 = input("Enter first SSDEEP hash: ")
+                        h2 = input("Enter second SSDEEP hash: ")
+
+                        score = ssdeep_compare(h1, h2)
+                        print(f"Similarity Score: {score}%")
+
+                        if score >= 80:
+                            print("🔴 Very High Similarity")
+                        elif score >= 50:
+                            print("🟠 Moderate Similarity")
+                        elif score >= 20:
+                            print("🟡 Low Similarity")
+                        else:
+                            print("🟢 No meaningful similarity")
+                        break
+
+            ssdeep_ops()
+        elif op == 43:
+            def hmac_ops():
+                while True:
+                    print("\nHMAC")
+                    print("1. Generate HMAC")
+                    print("2. Verify HMAC")
+
+                    choice = input("Choose option (1-2): ")
+
+                    if choice not in ["1", "2"]:
+                        print("Invalid option")
+                        continue
+
+                    print("\nSupported Algorithms:")
+                    print("MD5 | SHA1 | SHA256 | SHA384 | SHA512 | SHA3-256 | SHA3-512")
+
+                    algo = input("Choose HMAC algorithm: ").upper()
+                    message = input("Enter message: ")
+                    key = input("Enter secret key: ")
+
+                    if choice == "1":
+                        mac = hmac_generate(message, key, algo)
+                        print("\nGenerated HMAC:")
+                        print(mac)
+                        break
+
+                    elif choice == "2":
+                        given = input("Enter HMAC to verify: ")
+                        if hmac_verify(message, key, algo, given):
+                            print("✅ HMAC is VALID (message authentic)")
+                        else:
+                            print("❌ HMAC is INVALID (tampered or wrong key)")
+                        break
+
+            hmac_ops()
+        elif op == 44:
+            def bcrypt_ops():
+                while True:
+                    print("\nBCRYPT")
+                    print("1. Hash password")
+                    print("2. Compare password")
+                    print("3. Parse bcrypt hash")
+
+                    choice = input("Choose option (1-3): ")
+
+                    if choice not in ["1", "2", "3"]:
+                        print("Invalid option")
+                        continue
+
+                    if choice == "1":
+                        pwd = input("Enter password: ")
+                        rounds = int(input("Cost factor (10–14 recommended): "))
+                        print("Bcrypt Hash:")
+                        print(bcrypt_hash(pwd, rounds))
+                        break
+
+                    elif choice == "2":
+                        pwd = input("Enter password: ")
+                        hashed = input("Enter bcrypt hash: ")
+                        if bcrypt_compare(pwd, hashed):
+                            print("✅ Password MATCHES hash")
+                        else:
+                            print("❌ Password does NOT match")
+                        break
+
+                    elif choice == "3":
+                        hashed = input("Enter bcrypt hash: ")
+                        info = bcrypt_parse(hashed)
+                        print("\nParsed bcrypt hash:")
+                        for k, v in info.items():
+                            print(f"{k:<15}: {v}")
+                        break
+
+            bcrypt_ops()
+        elif op == 45:
+            def scrypt_ops():
+                while True:
+                    print("\nSCRYPT")
+                    print("1. Hash password")
+                    print("2. Compare password")
+                    print("3. Parse scrypt hash")
+
+                    choice = input("Choose option (1-3): ")
+
+                    if choice not in ["1", "2", "3"]:
+                        print("Invalid option")
+                        continue
+
+                    if choice == "1":
+                        pwd = input("Enter password: ")
+                        print("Recommended values: N=16384 r=8 p=1")
+                        n = int(input("Enter N (CPU/memory cost): "))
+                        r = int(input("Enter r (block size): "))
+                        p = int(input("Enter p (parallelization): "))
+
+                        result = scrypt_hash(pwd, n=n, r=r, p=p)
+                        print("\nGenerated scrypt hash:")
+                        for k, v in result.items():
+                            print(f"{k:<10}: {v}")
+                        break
+
+                    elif choice == "2":
+                        pwd = input("Enter password: ")
+                        print("Paste stored scrypt parameters")
+
+                        stored = {
+                            "algorithm": "scrypt",
+                            "n": int(input("N: ")),
+                            "r": int(input("r: ")),
+                            "p": int(input("p: ")),
+                            "salt": input("salt (base64): "),
+                            "hash": input("hash (base64): ")
+                        }
+
+                        if scrypt_compare(pwd, stored):
+                            print("✅ Password MATCHES hash")
+                        else:
+                            print("❌ Password does NOT match")
+                        break
+
+                    elif choice == "3":
+                        stored = {
+                            "algorithm": "scrypt",
+                            "n": int(input("N: ")),
+                            "r": int(input("r: ")),
+                            "p": int(input("p: ")),
+                            "salt": input("salt (base64): "),
+                            "hash": input("hash (base64): ")
+                        }
+
+                        info = scrypt_parse(stored)
+                        print("\nParsed scrypt hash:")
+                        for k, v in info.items():
+                            print(f"{k:<15}: {v}")
+                        break
+
+            scrypt_ops()
+        elif op == 46:
+            def pbkdf2_ops():
+                while True:
+                    print("\nPBKDF2 KEY DERIVATION")
+                    print("1. Derive key")
+                    print("2. Verify key")
+
+                    choice = input("Choose option (1-2): ")
+
+                    if choice not in ["1", "2"]:
+                        print("Invalid option")
+                        continue
+
+                    print("\nSupported hashes:")
+                    print("SHA1 | SHA256 | SHA384 | SHA512")
+
+                    if choice == "1":
+                        password = input("Enter password: ")
+                        hash_name = input("Hash algorithm: ").lower()
+                        iterations = int(input("Iterations (recommended ≥100000): "))
+                        dklen = int(input("Key length (bytes): "))
+
+                        result = pbkdf2_derive_key(
+                            password,
+                            iterations=iterations,
+                            dklen=dklen,
+                            hash_name=hash_name
+                        )
+
+                        print("\nDerived PBKDF2 key:")
+                        for k, v in result.items():
+                            print(f"{k:<15}: {v}")
+                        break
+
+                    elif choice == "2":
+                        password = input("Enter password: ")
+                        stored = {
+                            "algorithm": "PBKDF2",
+                            "hash": input("Hash: "),
+                            "iterations": int(input("Iterations: ")),
+                            "salt": input("Salt (base64): "),
+                            "derived_key": input("Derived key (base64): ")
+                        }
+
+                        if pbkdf2_verify(password, stored):
+                            print("✅ Password produces SAME derived key")
+                        else:
+                            print("❌ Password does NOT match derived key")
+                        break
+
+            pbkdf2_ops()
+        elif op == 47:
+            def evp_ops():
+                while True:
+                    print("\nEVP KEY DERIVATION (OpenSSL Compatible)")
+                    print("1. Derive EVP key")
+
+                    choice = input("Choose option (1): ")
+
+                    if choice != "1":
+                        print("Invalid option")
+                        continue
+
+                    password = input("Enter password: ")
+
+                    print("\nSupported hashes:")
+                    print("MD5 | SHA1 | SHA256")
+
+                    hash_name = input("Hash algorithm: ").lower()
+
+                    key_len = int(input("Key length (bytes, e.g. 16/24/32): "))
+                    iv_len = int(input("IV length (bytes, e.g. 16): "))
+
+                    result = derive_evp_key(
+                        password,
+                        key_len=key_len,
+                        iv_len=iv_len,
+                        hash_name=hash_name
+                    )
+
+                    print("\nDerived EVP Key:")
+                    print("=" * 60)
+                    for k, v in result.items():
+                        print(f"{k:<15}: {v}")
+                    print("=" * 60)
+
+                    break
+
+            evp_ops()
+        elif op == 48:
+            def prng_ops():
+                while True:
+                    print("\nPSEUDO-RANDOM NUMBER GENERATOR")
+                    print("1. Python PRNG (Mersenne Twister)")
+                    print("2. Linear Congruential Generator (LCG)")
+                    print("3. XORShift")
+                    print("4. Secure RNG (CSPRNG)")
+
+                    choice = input("Choose PRNG (1-4): ")
+
+                    if choice not in ["1", "2", "3", "4"]:
+                        print("Invalid option")
+                        continue
+
+                    count = int(input("How many random numbers?: "))
+
+                    if choice == "4":
+                        nums = csprng(count)
+                    else:
+                        seed = int(input("Enter seed value: "))
+
+                        if choice == "1":
+                            nums = prng_python(seed, count)
+                        elif choice == "2":
+                            nums = prng_lcg(seed, count)
+                        elif choice == "3":
+                            nums = prng_xorshift(seed, count)
+
+                    print("\nGenerated Numbers:")
+                    print("=" * 60)
+                    for i, n in enumerate(nums, 1):
+                        print(f"{i:02}: {n}")
+                    print("=" * 60)
+                    break
+
+            prng_ops()
+
   #      elif op == 49:
   #      elif op == 50:
   #      elif op == 51:
