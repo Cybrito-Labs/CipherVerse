@@ -1357,7 +1357,6 @@ def md4_hash(message: str) -> str:
         D = (D + DD) & 0xffffffff
 
     return ''.join(f'{x:02x}' for x in struct.pack('<4I', A,B,C,D))
-
 def md5_hash(data: str) -> str:
     import hashlib
     return hashlib.md5(data.encode()).hexdigest()
@@ -1431,6 +1430,49 @@ def sha_family_hash(data: str, algo: str) -> str:
 
     else:
         return "Unsupported SHA algorithm"
+def ripemd160_hash(data: str) -> str:
+    import hashlib
+
+    try:
+        h = hashlib.new("ripemd160")
+    except ValueError:
+        raise RuntimeError("RIPEMD160 not supported in this environment")
+
+    h.update(data.encode())
+    return h.hexdigest()
+def whirlpool_hash(data: str) -> str:
+    import hashlib
+
+    try:
+        h = hashlib.new("whirlpool")
+    except ValueError:
+        raise RuntimeError("Whirlpool not supported in this environment")
+
+    h.update(data.encode())
+    return h.hexdigest()
+def has160_demo(data: str) -> str:
+    import hashlib
+
+    sha1 = hashlib.sha1(data.encode()).hexdigest()
+    return "HAS160-DEMO-" + sha1[:40]
+def snefru_demo(data: str, bits=256) -> str:
+    import hashlib
+
+    if bits == 128:
+        return hashlib.md5(data.encode()).hexdigest()
+    else:
+        return hashlib.sha256(data.encode()).hexdigest()
+def blake2b_hash(data: str, digest_size=64) -> str:
+    import hashlib
+    h = hashlib.blake2b(data.encode(), digest_size=digest_size)
+    return h.hexdigest()
+def blake2s_hash(data: str, digest_size=32) -> str:
+    import hashlib
+    h = hashlib.blake2s(data.encode(), digest_size=digest_size)
+    return h.hexdigest()
+
+
+
 
 
 
@@ -2309,7 +2351,57 @@ def coder_ops():
             SHA_ops()
 
  #       elif op == 38:
-#        elif op == 39:
+        elif op == 39:
+            def Hash_ops():
+                print("\nHASH FUNCTIONS")
+                print("1. RIPEMD-160")
+                print("2. HAS-160 (Demo)")
+                print("3. Whirlpool")
+                print("4. Snefru (Demo)")
+
+                choice = input("Choose hash type: ")
+                text = input("Enter text: ")
+
+                if choice == "1":
+                    print("RIPEMD-160:", ripemd160_hash(text))
+
+                elif choice == "2":
+                    print("HAS-160:", has160_demo(text))
+
+                elif choice == "3":
+                    print("Whirlpool:", whirlpool_hash(text))
+
+                elif choice == "4":
+                    bits = input("Enter output size (128/256): ")
+                    print("Snefru:", snefru_demo(text, int(bits)))
+
+                else:
+                    print("Invalid choice.")
+
+            Hash_ops()
+        elif op == 40:
+            def Blake_ops():
+                print("\nBLAKE2 HASH FUNCTIONS")
+                print("1. BLAKE2b")
+                print("2. BLAKE2s")
+
+                choice = input("Choose hash type: ")
+                text = input("Enter text: ")
+
+                if choice == "1":
+                    size = int(input("Digest size in bytes (1–64): "))
+                    print("BLAKE2b:", blake2b_hash(text, size))
+
+                elif choice == "2":
+                    size = int(input("Digest size in bytes (1–32): "))
+                    print("BLAKE2s:", blake2s_hash(text, size))
+
+                else:
+                    print("Invalid choice.")
+
+            Blake_ops()
+
+
  #       elif op == 40:
  #       elif op == 41:
  #       elif op == 42:
