@@ -1,4 +1,4 @@
-# CIPHERVERSE - Crypto Toolkit
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        # CIPHERVERSE - Crypto Toolkit
 import hashlib , base64
 def menu():
     print("="*50)
@@ -58,15 +58,14 @@ def menu():
     print("37. SHA0 / SHA1 / SHA2 / SHA3")
     print("38. SM3 / Keccak / Shake")
     print("39. RIPEMD / HAS-160 / Whirlpool / Snefru")
-    print("40. BLAKE2b / BLAKE2s")
-    print("41. GOST / Streebog")
-    print("42. SSDEEP / CTPH / Compare SSDEEP or CTPH hashes")
+    print("40. BLAKE2b / BLAKE2s") 
+    print("41. GOST / Streebog") #fail------------------------pip install -U pycryptodome
+    print("42. SSDEEP / CTPH / Compare SSDEEP or CTPH hashes") #fail--------pip install ssdeep
 
     # Passwords and HMACs
     print("\n[PASSWORDS & MACS]")
     print("43. HMAC")
-    print("44. Bcrypt (Hash/Compare/Parse)")
-    print("45. Scrypt")
+    print("44. Bcrypt (Hash/Compare/Parse)")  #fail-----------pip install bcrypt
 
     # Key Derivation & Random
     print("\n[KEYS & RANDOMNESS]")
@@ -88,28 +87,28 @@ def menu():
     print("55. TCP/IP Checksum")
 
         # Public Key Cryptography
-    print("\n[PUBLIC KEY CRYPTOGRAPHY]")
-    print("56. RSA (Encrypt/Decrypt)")
-    print("57. RSA (Sign/Verify)")
-    print("58. Diffie-Hellman (DH)")
-    print("59. Elliptic Curve Diffie-Hellman (ECDH)")
-    print("60. DSA (Sign/Verify)")
-    print("61. ECDSA (Sign/Verify)")
-    print("62. Ed25519 / EdDSA")
-    print("63. X25519 Key Exchange")
+    print("\n[PUBLIC KEY CRYPTOGRAPHY]")#DONE
+    print("56. RSA (Encrypt/Decrypt)")#DONE
+    print("57. RSA (Sign/Verify)") #pip install pycryptodome  #DONE
+    print("58. Diffie-Hellman (DH)") #pip install pycryptodome   #DONE
+    print("59. Elliptic Curve Diffie-Hellman (ECDH)") #pip install pycryptodome  #DONE
+    print("60. DSA (Sign/Verify)") #pip install pycryptodome  #DONE
+    print("61. ECDSA (Sign/Verify)")   #DONE #pip install pycryptodome
+    print("62. Ed25519 / EdDSA")   #DONE #pip install pycryptodome
+    print("63. X25519 Key Exchange")   #DONE #pip install pycryptodome
 
     # Certificates & TLS
     print("\n[CERTIFICATES & TLS]")
-    print("64. X.509 Certificate Parser")
-    print("65. TLS Certificate Analyzer")
-    print("66. PEM ↔ DER Converter")
+    print("64. X.509 Certificate Parser")#pip install cryptography  #DONE
+    print("65. TLS Certificate Analyzer")#pip install cryptography  #DONE
+    print("66. PEM ↔ DER Converter")#pip install cryptography  #DONE
     print("67. Public Key Extractor")
     print("68. Fingerprint Generator")
 
     # File & Forensics Tools
     print("\n[FILE & FORENSICS]")
-    print("69. File Hashing")
-    print("70. Directory Hashing")
+    print("69. File Hashing") #DONE
+    print("70. Directory Hashing") #DONE
     print("71. Compare File Hashes")
     print("72. File Encryption / Decryption")
     print("73. File Integrity Checker")
@@ -119,7 +118,7 @@ def menu():
 
     # Malware & Fuzzy Analysis
     print("\n[MALWARE & FUZZY ANALYSIS]")
-    print("77. TLSH Fuzzy Hashing")
+    print("77. TLSH Fuzzy Hashing")#pip install py-tlsh,pip install tlsh
     print("78. Imphash Generator")
     print("79. PE Hash Analyzer")
 
@@ -1792,10 +1791,705 @@ def prng_xorshift(seed: int, count: int = 10):
 def csprng(count: int = 10):
     import secrets
     return [secrets.randbits(32) for _ in range(count)]
+def jwt_sign(payload: dict, secret: str, algo: str = "HS256", expire_sec: int = None) -> str:
+    import jwt, time
+
+    data = payload.copy()
+    if expire_sec:
+        data["exp"] = int(time.time()) + expire_sec
+
+    token = jwt.encode(data, secret, algorithm=algo)
+    return token
+def jwt_verify(token: str, secret: str, algo: str = "HS256") -> dict:
+    import jwt
+
+    decoded = jwt.decode(token, secret, algorithms=[algo])
+    return decoded
+def jwt_decode_no_verify(token: str) -> dict:
+    import jwt
+
+    # Decode WITHOUT signature verification (for inspection only)
+    return jwt.decode(token, options={"verify_signature": False})
+def ctx1_encode(data: str) -> str:
+    import zlib, base64
+
+    compressed = zlib.compress(data.encode())
+    encoded = base64.urlsafe_b64encode(compressed).decode()
+    return encoded
+def ctx1_decode(token: str) -> str:
+    import zlib, base64
+
+    decoded = base64.urlsafe_b64decode(token.encode())
+    decompressed = zlib.decompress(decoded)
+    return decompressed.decode()
+def fletcher8(data: bytes) -> int:
+    sum1 = 0
+    sum2 = 0
+    for b in data:
+        sum1 = (sum1 + b) % 15
+        sum2 = (sum2 + sum1) % 15
+    return (sum2 << 4) | sum1
+def fletcher16(data: bytes) -> int:
+    sum1 = 0
+    sum2 = 0
+    for b in data:
+        sum1 = (sum1 + b) % 255
+        sum2 = (sum2 + sum1) % 255
+    return (sum2 << 8) | sum1
+def fletcher32(data: bytes) -> int:
+    sum1 = 0
+    sum2 = 0
+    for i in range(0, len(data), 2):
+        word = data[i] << 8
+        if i + 1 < len(data):
+            word |= data[i + 1]
+        sum1 = (sum1 + word) % 65535
+        sum2 = (sum2 + sum1) % 65535
+    return (sum2 << 16) | sum1
+def fletcher64(data: bytes) -> int:
+    sum1 = 0
+    sum2 = 0
+    for i in range(0, len(data), 4):
+        word = 0
+        for j in range(4):
+            if i + j < len(data):
+                word = (word << 8) | data[i + j]
+        sum1 = (sum1 + word) % (2**32 - 1)
+        sum2 = (sum2 + sum1) % (2**32 - 1)
+    return (sum2 << 32) | sum1
+def adler32_checksum(data: bytes) -> int:
+    MOD_ADLER = 65521
+    a = 1
+    b = 0
+
+    for byte in data:
+        a = (a + byte) % MOD_ADLER
+        b = (b + a) % MOD_ADLER
+
+    return (b << 16) | a
+def luhn_check_digit(number: str) -> int:
+    total = 0
+    reverse_digits = number[::-1]
+
+    for i, d in enumerate(reverse_digits):
+        n = int(d)
+        if i % 2 == 0:
+            n *= 2
+            if n > 9:
+                n -= 9
+        total += n
+
+    return (10 - (total % 10)) % 10
+def luhn_validate(number: str) -> bool:
+    if not number.isdigit() or len(number) < 2:
+        return False
+
+    check = int(number[-1])
+    return luhn_check_digit(number[:-1]) == check
+def luhn_generate(base_number: str) -> str:
+    if not base_number.isdigit():
+        raise ValueError("Input must be numeric")
+
+    return base_number + str(luhn_check_digit(base_number))
+def crc8(data: bytes, poly=0x07, init=0x00) -> int:
+    crc = init
+    for b in data:
+        crc ^= b
+        for _ in range(8):
+            if crc & 0x80:
+                crc = ((crc << 1) ^ poly) & 0xFF
+            else:
+                crc = (crc << 1) & 0xFF
+    return crc
+def crc16(data: bytes, poly=0x1021, init=0xFFFF) -> int:
+    crc = init
+    for b in data:
+        crc ^= b << 8
+        for _ in range(8):
+            if crc & 0x8000:
+                crc = ((crc << 1) ^ poly) & 0xFFFF
+            else:
+                crc = (crc << 1) & 0xFFFF
+    return crc
+def crc32(data: bytes) -> int:
+    crc = 0xFFFFFFFF
+    for b in data:
+        crc ^= b
+        for _ in range(8):
+            if crc & 1:
+                crc = (crc >> 1) ^ 0xEDB88320
+            else:
+                crc >>= 1
+    return crc ^ 0xFFFFFFFF
+def tcp_ip_checksum(data: bytes) -> int:
+    if len(data) % 2 == 1:
+        data += b'\x00'  # pad if odd length
+
+    checksum = 0
+    for i in range(0, len(data), 2):
+        word = (data[i] << 8) + data[i + 1]
+        checksum += word
+        checksum = (checksum & 0xFFFF) + (checksum >> 16)
+
+    return (~checksum) & 0xFFFF
+def rsa_genrate_keys(key_size=2048):
+    from Crypto.PublicKey import RSA
+    key = RSA.generate(key_size)
+    private_key = key.export_key().decode()
+    public_key = key.publickey().export_key().decode()
+    return public_key, private_key
+def rsa_encrypt(plaintext: str, public_key_str: str) -> str:
+    from Crypto.Cipher import PKCS1_OAEP
+    from Crypto.PublicKey import RSA
+    import base64
+    public_key = RSA.import_key(public_key_str)
+    cipher = PKCS1_OAEP.new(public_key)
+    ciphertext = cipher.encrypt(plaintext.encode())
+    return base64.b64encode(ciphertext).decode()
+def rsa_decrypt(ciphertext_b64: str, private_key_str: str) -> str:
+    from Crypto.Cipher import PKCS1_OAEP
+    from Crypto.PublicKey import RSA
+    import base64
+    private_key = RSA.import_key(private_key_str)
+    cipher = PKCS1_OAEP.new(private_key)
+    ciphertext = base64.b64decode(ciphertext_b64)
+    plaintext = cipher.decrypt(ciphertext)
+    return plaintext.decode()
+def rsa_sign(message: str, private_key_str: str) -> str:
+    from Crypto.PublicKey import RSA
+    from Crypto.Signature import pkcs1_15
+    from Crypto.Hash import SHA256
+    import base64
+    private_key = RSA.import_key(private_key_str)
+    h = SHA256.new(message.encode())
+    signature = pkcs1_15.new(private_key).sign(h)
+    return base64.b64encode(signature).decode()
+def rsa_verify(message: str, signature_b64: str, public_key_str: str) -> bool:
+    from Crypto.PublicKey import RSA
+    from Crypto.Signature import pkcs1_15
+    from Crypto.Hash import SHA256
+    import base64
+    public_key = RSA.import_key(public_key_str)
+    h = SHA256.new(message.encode())
+    signature = base64.b64decode(signature_b64)
+
+    try:
+        pkcs1_15.new(public_key).verify(h, signature)
+        return True
+    except (ValueError, TypeError):
+        return False
+def dh_generate_parameters():
+    from Crypto.PublicKey import DSA
+    # 2048-bit safe prime group
+    params = DSA.generate(2048)
+    return params.p, params.g
+def dh_generate_private_key(p):
+    import secrets
+    return secrets.randbelow(p - 2) + 2
+def dh_generate_public_key(g, private_key, p):
+    return pow(g, private_key, p)
+def dh_compute_shared_secret(peer_public, private_key, p):
+    return pow(peer_public, private_key, p)
+def dh_derive_key(shared_secret, key_len=32):
+    import hashlib
+    return hashlib.sha256(shared_secret.to_bytes((shared_secret.bit_length() + 7) // 8, 'big')).digest()[:key_len]
+def aes_encrypt_with_dh_key(data: str, key: bytes):
+    from Crypto.Cipher import AES
+    from Crypto.Random import get_random_bytes
+    iv = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    padded = data.encode() + b"\x00" * (16 - len(data) % 16)
+    return iv + cipher.encrypt(padded)
+def ecdh_generate_keypair():
+    from Crypto.PublicKey import ECC
+    key = ECC.generate(curve="P-256")
+    private_key = key.export_key(format="PEM")
+    public_key = key.public_key().export_key(format="PEM")
+    return public_key, private_key
+def ecdh_shared_secret(private_key_pem: str, peer_public_key_pem: str) -> bytes:
+    from Crypto.Hash import SHA256
+    from Crypto.PublicKey import ECC
+    private_key = ECC.import_key(private_key_pem)
+    peer_public = ECC.import_key(peer_public_key_pem)
+    shared_point = peer_public.pointQ * private_key.d
+    shared_secret = int(shared_point.x).to_bytes(32, "big")
+    return SHA256.new(shared_secret).digest()
+def aes_encrypt_ecdh(data: str, key: bytes):
+    from Crypto.Cipher import AES
+    from Crypto.Random import get_random_bytes
+    iv = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_GCM, nonce=iv)
+    ciphertext, tag = cipher.encrypt_and_digest(data.encode())
+    return iv, ciphertext, tag
+def dsa_generate_keys(key_size=2048):
+    from Crypto.PublicKey import DSA
+    key = DSA.generate(key_size)
+    private_key = key.export_key().decode()
+    public_key = key.publickey().export_key().decode()
+    return public_key, private_key
+def dsa_sign(message: str, private_key_pem: str) -> str:
+    from Crypto.PublicKey import DSA
+    from Crypto.Signature import DSS
+    from Crypto.Hash import SHA256
+    import base64
+    private_key = DSA.import_key(private_key_pem)
+    h = SHA256.new(message.encode())
+    signer = DSS.new(private_key, 'fips-186-3')
+    signature = signer.sign(h)
+    return base64.b64encode(signature).decode()
+def dsa_verify(message: str, signature_b64: str, public_key_pem: str) -> bool:
+    from Crypto.PublicKey import DSA
+    from Crypto.Signature import DSS
+    from Crypto.Hash import SHA256
+    import base64
+    public_key = DSA.import_key(public_key_pem)
+    h = SHA256.new(message.encode())
+    signature = base64.b64decode(signature_b64)
+    verifier = DSS.new(public_key, 'fips-186-3')
+
+    try:
+        verifier.verify(h, signature)
+        return True
+    except ValueError:
+        return False
+def ecdsa_generate_keys():
+    from Crypto.PublicKey import ECC
+    key = ECC.generate(curve="P-256")
+    private_key = key.export_key(format="PEM")
+    public_key = key.public_key().export_key(format="PEM")
+    return public_key, private_key
+def ecdsa_sign(message: str, private_key_pem: str) -> str:
+    from Crypto.PublicKey import ECC
+    from Crypto.Signature import DSS
+    from Crypto.Hash import SHA256
+    import base64
+    private_key = ECC.import_key(private_key_pem)
+    h = SHA256.new(message.encode())
+    signer = DSS.new(private_key, 'fips-186-3')
+    signature = signer.sign(h)
+    return base64.b64encode(signature).decode()
+def ecdsa_verify(message: str, signature_b64: str, public_key_pem: str) -> bool:
+    from Crypto.PublicKey import ECC
+    from Crypto.Signature import DSS
+    from Crypto.Hash import SHA256
+    import base64
+    public_key = ECC.import_key(public_key_pem)
+    h = SHA256.new(message.encode())
+    signature = base64.b64decode(signature_b64)
+    verifier = DSS.new(public_key, 'fips-186-3')
+
+    try:
+        verifier.verify(h, signature)
+        return True
+    except ValueError:
+        return False
+def ed25519_generate_keys():
+    from Crypto.PublicKey import ECC
+    key = ECC.generate(curve="Ed25519")
+    private_key = key.export_key(format="PEM")
+    public_key = key.public_key().export_key(format="PEM")
+    return public_key, private_key
+def ed25519_sign(message: str, private_key_pem: str) -> str:
+    from Crypto.PublicKey import ECC
+    from Crypto.Signature import eddsa
+    import base64
+    private_key = ECC.import_key(private_key_pem)
+    signer = eddsa.new(private_key, mode='rfc8032')
+    signature = signer.sign(message.encode())
+    return base64.b64encode(signature).decode()
+def ed25519_verify(message: str, signature_b64: str, public_key_pem: str) -> bool:
+    from Crypto.PublicKey import ECC
+    from Crypto.Signature import eddsa
+    import base64
+    public_key = ECC.import_key(public_key_pem)
+    verifier = eddsa.new(public_key, mode='rfc8032')
+    signature = base64.b64decode(signature_b64)
+
+    try:
+        verifier.verify(message.encode(), signature)
+        return True
+    except ValueError:
+        return False
+def x25519_generate_keypair():
+    from Crypto.PublicKey import ECC
+    key = ECC.generate(curve="X25519")
+    private_key = key.export_key(format="PEM")
+    public_key = key.public_key().export_key(format="PEM")
+    return public_key, private_key
+def x25519_shared_secret(private_key_pem: str, peer_public_key_pem: str) -> bytes:
+    from Crypto.PublicKey import ECC
+    from Crypto.Hash import SHA256
+    private_key = ECC.import_key(private_key_pem)
+    peer_public = ECC.import_key(peer_public_key_pem)
+
+    # X25519 ECDH primitive
+    shared_point = peer_public.pointQ * private_key.d
+    shared_secret = int(shared_point.x).to_bytes(32, "little")
+
+    # Mandatory KDF (real-world requirement)
+    return SHA256.new(shared_secret).digest()
+def aes_encrypt_x25519(data: str, key: bytes):
+    from Crypto.Cipher import AES
+    from Crypto.Random import get_random_bytes
+    cipher = AES.new(key, AES.MODE_GCM)
+    ciphertext, tag = cipher.encrypt_and_digest(data.encode())
+    return cipher.nonce, ciphertext, tag
 
 
 
 
+
+
+
+
+def parse_x509_certificate(cert_path: str) -> dict:
+    from cryptography import x509
+    from cryptography.hazmat.backends import default_backend
+
+    with open(cert_path, "rb") as f:
+        cert_data = f.read()
+
+    try:
+        cert = x509.load_pem_x509_certificate(cert_data, default_backend())
+    except ValueError:
+        cert = x509.load_der_x509_certificate(cert_data, default_backend())
+
+    info = {
+        "Subject": cert.subject.rfc4514_string(),
+        "Issuer": cert.issuer.rfc4514_string(),
+        "Serial Number": hex(cert.serial_number),
+        "Version": cert.version.name,
+        "Not Before": cert.not_valid_before.isoformat(),
+        "Not After": cert.not_valid_after.isoformat(),
+        "Signature Algorithm": cert.signature_hash_algorithm.name,
+        "Public Key Type": cert.public_key().__class__.__name__,
+        "Public Key Size": cert.public_key().key_size,
+        "Extensions": []
+    }
+
+    for ext in cert.extensions:
+        info["Extensions"].append(ext.oid._name or str(ext.oid))
+
+    return info
+def analyze_tls_certificate(hostname: str, port: int = 443) -> dict:
+    import socket, ssl
+    from cryptography import x509
+    from cryptography.hazmat.backends import default_backend
+    from datetime import datetime
+
+    context = ssl.create_default_context()
+    with socket.create_connection((hostname, port), timeout=5) as sock:
+        with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+            cert_bin = ssock.getpeercert(binary_form=True)
+
+    cert = x509.load_der_x509_certificate(cert_bin, default_backend())
+
+    now = datetime.utcnow()
+    expired = now < cert.not_valid_before or now > cert.not_valid_after
+
+    info = {
+        "Subject": cert.subject.rfc4514_string(),
+        "Issuer": cert.issuer.rfc4514_string(),
+        "Serial Number": hex(cert.serial_number),
+        "Not Before": cert.not_valid_before.isoformat(),
+        "Not After": cert.not_valid_after.isoformat(),
+        "Expired": expired,
+        "Signature Algorithm": cert.signature_hash_algorithm.name,
+        "Public Key Type": cert.public_key().__class__.__name__,
+        "Public Key Size": cert.public_key().key_size,
+        "Extensions": [],
+        "Warnings": []
+    }
+
+    # Extensions
+    for ext in cert.extensions:
+        info["Extensions"].append(ext.oid._name or str(ext.oid))
+
+    # Basic warnings
+    if cert.public_key().key_size < 2048:
+        info["Warnings"].append("Weak public key size (<2048 bits)")
+
+    if cert.signature_hash_algorithm.name.lower() in ["md5", "sha1"]:
+        info["Warnings"].append("Weak signature hash algorithm")
+
+    if expired:
+        info["Warnings"].append("Certificate is expired or not yet valid")
+
+    return info
+def pem_to_der(input_path: str, output_path: str):
+    from cryptography import x509
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import serialization
+
+    with open(input_path, "rb") as f:
+        pem_data = f.read()
+
+    cert = x509.load_pem_x509_certificate(pem_data, default_backend())
+    der_data = cert.public_bytes(encoding=serialization.Encoding.DER)
+
+    with open(output_path, "wb") as f:
+        f.write(der_data)
+def der_to_pem(input_path: str, output_path: str):
+    from cryptography import x509
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import serialization
+
+    with open(input_path, "rb") as f:
+        der_data = f.read()
+
+    cert = x509.load_der_x509_certificate(der_data, default_backend())
+    pem_data = cert.public_bytes(encoding=serialization.Encoding.PEM)
+
+    with open(output_path, "wb") as f:
+        f.write(pem_data)
+def extract_public_key_any(input_path: str, output_path: str, password: str = None):
+    from cryptography import x509
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.backends import default_backend
+
+    with open(input_path, "rb") as f:
+        data = f.read()
+
+    pwd = password.encode() if password else None
+    pubkey = None
+
+    # 1. X.509 Certificate (PEM or DER)
+    try:
+        try:
+            cert = x509.load_pem_x509_certificate(data, default_backend())
+        except ValueError:
+            cert = x509.load_der_x509_certificate(data, default_backend())
+        pubkey = cert.public_key()
+    except Exception:
+        pass
+
+    # 2. Private Key (RSA / DSA / EC / Ed25519 / X25519)
+    if pubkey is None:
+        try:
+            private_key = serialization.load_pem_private_key(
+                data, password=pwd, backend=default_backend()
+            )
+            pubkey = private_key.public_key()
+        except Exception:
+            pass
+
+    # 3. Public Key (PEM)
+    if pubkey is None:
+        try:
+            pubkey = serialization.load_pem_public_key(
+                data, backend=default_backend()
+            )
+        except Exception:
+            pass
+
+    # 4. SSH Public Key
+    if pubkey is None:
+        try:
+            pubkey = serialization.load_ssh_public_key(
+                data, backend=default_backend()
+            )
+        except Exception:
+            pass
+
+    # 5. SSH Private Key
+    if pubkey is None:
+        try:
+            private_key = serialization.load_ssh_private_key(
+                data, password=pwd, backend=default_backend()
+            )
+            pubkey = private_key.public_key()
+        except Exception:
+            pass
+
+    if pubkey is None:
+        raise ValueError("Unsupported or invalid key/certificate format")
+
+    pem = pubkey.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+
+    with open(output_path, "wb") as f:
+        f.write(pem)
+def generate_fingerprint(data: bytes, algo: str = "sha256") -> str:
+    import hashlib
+
+    algo = algo.lower()
+    if algo not in hashlib.algorithms_available:
+        raise ValueError("Unsupported hash algorithm")
+
+    h = hashlib.new(algo)
+    h.update(data)
+    return h.hexdigest()
+def fingerprint_certificate(cert_path: str, algo: str = "sha256") -> str:
+    from cryptography import x509
+    from cryptography.hazmat.backends import default_backend
+
+    with open(cert_path, "rb") as f:
+        data = f.read()
+
+    try:
+        cert = x509.load_pem_x509_certificate(data, default_backend())
+    except ValueError:
+        cert = x509.load_der_x509_certificate(data, default_backend())
+
+    return generate_fingerprint(cert.public_bytes(), algo)
+def fingerprint_public_key(key_path: str, algo: str = "sha256") -> str:
+    from cryptography.hazmat.primitives import serialization
+
+    with open(key_path, "rb") as f:
+        key_data = f.read()
+
+    return generate_fingerprint(key_data, algo)
+def fingerprint_file(file_path: str, algo: str = "sha256") -> str:
+    import hashlib
+
+    h = hashlib.new(algo)
+    with open(file_path, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+#69
+def file_hash(filepath: str, algorithm: str = "SHA256") -> str:
+    import hashlib
+    algorithm = algorithm.upper()
+    hash_map = {
+        "MD5": hashlib.md5,
+        "SHA1": hashlib.sha1,
+        "SHA256": hashlib.sha256,
+        "SHA512": hashlib.sha512,
+        "SHA3_256": hashlib.sha3_256,
+        "BLAKE2B": hashlib.blake2b,
+    }
+
+    if algorithm not in hash_map:
+        return "Unsupported hash algorithm"
+
+    h = hash_map[algorithm]()
+
+    try:
+        with open(filepath, "rb") as f:
+            while chunk := f.read(8192):  # 8KB chunks
+                h.update(chunk)
+        return h.hexdigest()
+    except FileNotFoundError:
+        return "File not found"
+    except PermissionError:
+        return "Permission denied"
+def file_multi_hash(filepath: str):
+    import hashlib
+    algorithms = {
+        "MD5": hashlib.md5(),
+        "SHA1": hashlib.sha1(),
+        "SHA256": hashlib.sha256(),
+        "SHA512": hashlib.sha512(),
+    }
+
+    try:
+        with open(filepath, "rb") as f:
+            while chunk := f.read(8192):
+                for h in algorithms.values():
+                    h.update(chunk)
+
+        return {name: h.hexdigest() for name, h in algorithms.items()}
+    except Exception as e:
+        return str(e)
+#70
+def directory_hash(directory: str,algorithm: str = "SHA256",ignore_hidden: bool = True) -> str:
+    import os
+    import hashlib
+    algorithm = algorithm.upper()
+    hash_map = {
+        "MD5": hashlib.md5,
+        "SHA1": hashlib.sha1,
+        "SHA256": hashlib.sha256,
+        "SHA512": hashlib.sha512,
+        "SHA3_256": hashlib.sha3_256,
+        "BLAKE2B": hashlib.blake2b,
+    }
+
+    if algorithm not in hash_map:
+        return "Unsupported hash algorithm"
+
+    dir_hasher = hash_map[algorithm]()
+
+    for root, dirs, files in os.walk(directory):
+        dirs.sort()
+        files.sort()
+
+        for filename in files:
+            if ignore_hidden and filename.startswith("."):
+                continue
+
+            filepath = os.path.join(root, filename)
+            rel_path = os.path.relpath(filepath, directory)
+
+            # Include relative path in hash (important!)
+            dir_hasher.update(rel_path.encode())
+
+            try:
+                with open(filepath, "rb") as f:
+                    while chunk := f.read(8192):
+                        dir_hasher.update(chunk)
+            except (PermissionError, FileNotFoundError):
+                continue
+
+    return dir_hasher.hexdigest()
+def directory_multi_hash(directory: str):
+    import os
+    import hashlib
+    algorithms = {
+        "MD5": hashlib.md5(),
+        "SHA1": hashlib.sha1(),
+        "SHA256": hashlib.sha256(),
+        "SHA512": hashlib.sha512(),
+    }
+
+    for root, dirs, files in os.walk(directory):
+        dirs.sort()
+        files.sort()
+
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            rel_path = os.path.relpath(filepath, directory)
+
+            for h in algorithms.values():
+                h.update(rel_path.encode())
+
+            try:
+                with open(filepath, "rb") as f:
+                    while chunk := f.read(8192):
+                        for h in algorithms.values():
+                            h.update(chunk)
+            except Exception:
+                continue
+
+    return {name: h.hexdigest() for name, h in algorithms.items()}
+
+
+
+
+
+
+
+
+
+def tlsh_hash(data: bytes) -> str:
+    import tlsh
+
+    h = tlsh.hash(data)
+    if not h:
+        raise ValueError("Input too small for TLSH (minimum ~50 bytes)")
+    return h
+def tlsh_file_hash(path: str) -> str:
+    with open(path, "rb") as f:
+        data = f.read()
+    return tlsh_hash(data)
+def tlsh_compare(hash1: str, hash2: str) -> int:
+    import tlsh
+
+    return tlsh.diff(hash1, hash2)
 
 
 
@@ -2586,7 +3280,7 @@ def coder_ops():
                     else:
                         print("Entered wrong option!!,Try again")
             morse_en_de_coders_ops()
-#        elif op == 34:
+#       elif op == 34:
         elif op == 35:
             def generate_all_hashes_cli():
                 print("\n[ GENERATE ALL HASHES ]")
@@ -2629,21 +3323,21 @@ def coder_ops():
                 text = input("Enter text to hash: ")
 
                 print("""
-1. SHA-0
-2. SHA-1
-3. SHA-224
-4. SHA-256
-5. SHA-384
-6. SHA-512
-7. SHA-512/224
-8. SHA-512/256
-9. SHA3-224
-10. SHA3-256
-11. SHA3-384
-12. SHA3-512
-13. SHAKE128
-14. SHAKE256
-""")
+                    1. SHA-0
+                    2. SHA-1
+                    3. SHA-224
+                    4. SHA-256
+                    5. SHA-384
+                    6. SHA-512
+                    7. SHA-512/224
+                    8. SHA-512/256
+                    9. SHA3-224
+                    10. SHA3-256
+                    11. SHA3-384
+                    12. SHA3-512
+                    13. SHAKE128
+                    14. SHAKE256
+                """)
 
                 choice_map = {
                     "1": "sha0",
@@ -3076,39 +3770,626 @@ def coder_ops():
 
             prng_ops()
 
-  #      elif op == 49:
-  #      elif op == 50:
-  #      elif op == 51:
-  #      elif op == 52:
-  #      elif op == 53:
-  #      elif op == 54:
-  #      elif op == 55:
-  #      elif op == 56:
-  #      elif op == 57:
-  #      elif op == 58:
-  #      elif op == 59:
-  #      elif op == 60:
-  #      elif op == 61:
-  #      elif op == 62:
-  #      elif op == 63:
-  #      elif op == 64:
-  #      elif op == 65:
-  #      elif op == 66:
-  #      elif op == 67:
-  #      elif op == 68:
+        elif op == 49:
+            def jwt_ops():
+                while True:
+                    print("\nJWT OPERATIONS")
+                    print("1. Sign JWT")
+                    print("2. Verify JWT")
+                    print("3. Decode JWT (No Verify)")
+
+                    choice = input("Choose option (1-3): ")
+
+                    if choice not in ["1", "2", "3"]:
+                        print("Invalid option")
+                        continue
+
+                    if choice == "1":
+                        print("\nSupported Algorithms: HS256 | HS384 | HS512")
+                        algo = input("Algorithm: ").upper()
+                        secret = input("Secret key: ")
+
+                        payload = {}
+                        print("Enter payload key=value (empty line to finish)")
+                        while True:
+                            line = input("> ")
+                            if not line:
+                                break
+                            k, v = line.split("=", 1)
+                            payload[k.strip()] = v.strip()
+
+                        exp = input("Expiration seconds (optional): ")
+                        exp = int(exp) if exp else None
+
+                        token = jwt_sign(payload, secret, algo, exp)
+                        print("\nJWT Token:")
+                        print(token)
+                        break
+
+                    elif choice == "2":
+                        token = input("Enter JWT token: ")
+                        secret = input("Secret key: ")
+                        algo = input("Algorithm (HS256 default): ") or "HS256"
+
+                        try:
+                            data = jwt_verify(token, secret, algo)
+                            print("\n✅ JWT is VALID")
+                            print("Payload:")
+                            for k, v in data.items():
+                                print(f"{k}: {v}")
+                        except Exception as e:
+                            print("\n❌ JWT verification FAILED")
+                            print("Error:", str(e))
+                        break
+
+                    elif choice == "3":
+                        token = input("Enter JWT token: ")
+                        data = jwt_decode_no_verify(token)
+
+                        print("\nDecoded JWT (NO verification):")
+                        for k, v in data.items():
+                            print(f"{k}: {v}")
+                        break
+
+            jwt_ops()
+
+        elif op == 50:
+            def ctx1_ops():
+                while True:
+                    print("\nCITRIX CTX1")
+                    print("1. Encode")
+                    print("2. Decode")
+
+                    choice = input("Choose option (1-2): ")
+
+                    if choice not in ["1", "2"]:
+                        print("Invalid option")
+                        continue
+
+                    if choice == "1":
+                        data = input("Enter text to encode: ")
+                        result = ctx1_encode(data)
+                        print("\nCTX1 Encoded:")
+                        print(result)
+                        break
+
+                    elif choice == "2":
+                        token = input("Enter CTX1 token: ")
+                        try:
+                            result = ctx1_decode(token)
+                            print("\nCTX1 Decoded:")
+                            print(result)
+                        except Exception as e:
+                            print("\n❌ Decode failed")
+                            print("Error:", str(e))
+                        break
+        
+            ctx1_ops()
+        elif op == 51:
+            def fletcher_ops():
+                print("\nFLETCHER CHECKSUM")
+                print("1. Fletcher-8")
+                print("2. Fletcher-16")
+                print("3. Fletcher-32")
+                print("4. Fletcher-64")
+
+                choice = input("Choose option (1-4): ")
+                data = input("Enter text: ").encode()
+
+                if choice == "1":
+                    print("Fletcher-8 :", hex(fletcher8(data)))
+                elif choice == "2":
+                    print("Fletcher-16:", hex(fletcher16(data)))
+                elif choice == "3":
+                    print("Fletcher-32:", hex(fletcher32(data)))
+                elif choice == "4":
+                    print("Fletcher-64:", hex(fletcher64(data)))
+                else:
+                    print("Invalid option")
+
+            fletcher_ops()
+        elif op == 52:
+            def adler32_ops():
+                print("\nADLER-32 CHECKSUM")
+
+                data = input("Enter text: ").encode()
+                checksum = adler32_checksum(data)
+
+                print("Adler-32 Checksum:", hex(checksum))
+
+            adler32_ops()
+        elif op == 53:
+            def luhn_ops():
+                print("\nLUHN CHECKSUM")
+                print("1. Validate number")
+                print("2. Generate check digit")
+
+                choice = input("Choose option (1-2): ")
+
+                if choice == "1":
+                    number = input("Enter full number: ")
+                    if luhn_validate(number):
+                        print("✅ Valid Luhn number")
+                    else:
+                        print("❌ Invalid Luhn number")
+
+                elif choice == "2":
+                    base = input("Enter number without check digit: ")
+                    try:
+                        full = luhn_generate(base)
+                        print("Generated Luhn number:", full)
+                    except Exception as e:
+                        print("Error:", str(e))
+                else:
+                    print("Invalid option")
+
+            luhn_ops()
+        elif op == 54:
+            def crc_ops():
+                print("\nCRC CHECKSUM")
+                print("1. CRC-8")
+                print("2. CRC-16")
+                print("3. CRC-32")
+
+                choice = input("Choose option (1-3): ")
+                data = input("Enter text: ").encode()
+
+                if choice == "1":
+                    print("CRC-8 :", hex(crc8(data)))
+                elif choice == "2":
+                    print("CRC-16:", hex(crc16(data)))
+                elif choice == "3":
+                    print("CRC-32:", hex(crc32(data)))
+                else:
+                    print("Invalid option")
+
+            crc_ops()
+        elif op == 55:
+            def tcp_ip_checksum_ops():
+                print("\nTCP/IP CHECKSUM")
+
+                data = input("Enter text: ").encode()
+                checksum = tcp_ip_checksum(data)
+
+                print("TCP/IP Checksum:", hex(checksum))
+
+            tcp_ip_checksum_ops()
+        elif op == 56:
+            
+            def RSA_ops():
+                print("1. Generate Keys")
+                print("2. Encrypt")
+                print("3. Decrypt")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    pub, priv = rsa_generate_keys()
+                    print("Public Key:\n", pub)
+                    print("Private Key:\n", priv)
+
+                elif ch == "2":
+                    text = input("Enter plaintext: ")
+                    pub = input("Paste public key:\n")
+                    print("Encrypted:", rsa_encrypt(text, pub))
+
+                elif ch == "3":
+                    cipher = input("Enter ciphertext (Base64): ")
+                    priv = input("Paste private key:\n")
+                    print("Decrypted:", rsa_decrypt(cipher, priv))
+
+                else:
+                    print("Invalid option")
+
+            RSA_ops()
+
+        elif op == 57:
+            def RSA_sign_verify_ops():
+                print("1. Sign")
+                print("2. Verify")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    msg = input("Enter message: ")
+                    priv = input("Paste PRIVATE key:\n")
+                    print("Signature:", rsa_sign(msg, priv))
+
+                elif ch == "2":
+                    msg = input("Enter message: ")
+                    sig = input("Enter signature (Base64): ")
+                    pub = input("Paste PUBLIC key:\n")
+                    result = rsa_verify(msg, sig, pub)
+                    print("VALID SIGNATURE" if result else "INVALID SIGNATURE")
+
+                else:
+                    print("Invalid option")
+
+            RSA_sign_verify_ops()
+
+        elif op == 58:
+            def DH_ops():
+                print("Performing real Diffie–Hellman key exchange (2048-bit)")
+                p, g = dh_generate_parameters()
+
+                a = dh_generate_private_key(p)
+                b = dh_generate_private_key(p)
+
+                A = dh_generate_public_key(g, a, p)
+                B = dh_generate_public_key(g, b, p)
+
+                secret = dh_compute_shared_secret(B, a, p)
+                key = dh_derive_key(secret)
+
+                print("Shared secret established")
+                print("Derived AES key:", key.hex())
+
+            DH_ops()
+
+        elif op == 59:
+            def ECDH_ops():
+                print("Elliptic Curve Diffie-Hellman (P-256)")
+
+                alice_pub, alice_priv = ecdh_generate_keypair()
+                bob_pub, bob_priv = ecdh_generate_keypair()
+
+                key = ecdh_shared_secret(alice_priv, bob_pub)
+
+                print("Shared secret (AES key):", key.hex())
+
+            ECDH_ops()
+
+        elif op == 60:
+            def DSA_ops():
+                print("1. Generate Keys")
+                print("2. Sign")
+                print("3. Verify")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    pub, priv = dsa_generate_keys()
+                    print("Public Key:\n", pub)
+                    print("Private Key:\n", priv)
+
+                elif ch == "2":
+                    msg = input("Enter message: ")
+                    priv = input("Paste PRIVATE key:\n")
+                    print("Signature:", dsa_sign(msg, priv))
+
+                elif ch == "3":
+                    msg = input("Enter message: ")
+                    sig = input("Enter signature (Base64): ")
+                    pub = input("Paste PUBLIC key:\n")
+                    print(
+                        "VALID SIGNATURE"
+                        if dsa_verify(msg, sig, pub)
+                        else "INVALID SIGNATURE"
+                    )
+
+                else:
+                    print("Invalid option")
+
+            DSA_ops()
+        elif op == 61:
+            def ECDSA_ops():
+                print("1. Generate Keys")
+                print("2. Sign")
+                print("3. Verify")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    pub, priv = ecdsa_generate_keys()
+                    print("Public Key:\n", pub)
+                    print("Private Key:\n", priv)
+
+                elif ch == "2":
+                    msg = input("Enter message: ")
+                    priv = input("Paste PRIVATE key:\n")
+                    print("Signature:", ecdsa_sign(msg, priv))
+
+                elif ch == "3":
+                    msg = input("Enter message: ")
+                    sig = input("Enter signature (Base64): ")
+                    pub = input("Paste PUBLIC key:\n")
+                    print(
+                        "VALID SIGNATURE"
+                        if ecdsa_verify(msg, sig, pub)
+                        else "INVALID SIGNATURE"
+                    )
+
+                else:
+                    print("Invalid option")
+
+            ECDSA_ops()
+        elif op == 62:
+            def Ed25519_ops():
+                print("1. Generate Keys")
+                print("2. Sign")
+                print("3. Verify")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    pub, priv = ed25519_generate_keys()
+                    print("Public Key:\n", pub)
+                    print("Private Key:\n", priv)
+
+                elif ch == "2":
+                    msg = input("Enter message: ")
+                    priv = input("Paste PRIVATE key:\n")
+                    print("Signature:", ed25519_sign(msg, priv))
+
+                elif ch == "3":
+                    msg = input("Enter message: ")
+                    sig = input("Enter signature (Base64): ")
+                    pub = input("Paste PUBLIC key:\n")
+                    print(
+                        "VALID SIGNATURE"
+                        if ed25519_verify(msg, sig, pub)
+                        else "INVALID SIGNATURE")
+                else:
+                    print("Invalid option")
+
+                Ed25519_ops()
+        elif op == 63:
+            def X25519_ops():
+                print("X25519 Key Exchange")
+
+                alice_pub, alice_priv = x25519_generate_keypair()
+                bob_pub, bob_priv = x25519_generate_keypair()
+
+                key = x25519_shared_secret(alice_priv, bob_pub)
+
+                print("Shared secret (AES key):", key.hex())
+
+            X25519_ops()
+        
+        elif op == 64:
+            def x509_ops():
+                print("\nX.509 CERTIFICATE PARSER")
+
+                path = input("Enter certificate file path (.pem / .der): ")
+
+                try:
+                    info = parse_x509_certificate(path)
+
+                    print("\nCERTIFICATE DETAILS")
+                    print("=" * 60)
+                    for k, v in info.items():
+                        if k != "Extensions":
+                            print(f"{k}: {v}")
+
+                    print("\nExtensions:")
+                    for e in info["Extensions"]:
+                        print(" -", e)
+
+                    print("=" * 60)
+
+                except Exception as e:
+                    print("\n❌ Failed to parse certificate")
+                    print("Error:", str(e))
+
+            x509_ops()
+        elif op == 65:
+            def tls_cert_ops():
+                print("\nTLS CERTIFICATE ANALYZER")
+
+                host = input("Enter domain (example.com): ")
+                port = input("Enter port (default 443): ")
+                port = int(port) if port else 443
+
+                try:
+                    info = analyze_tls_certificate(host, port)
+
+                    print("\nTLS CERTIFICATE DETAILS")
+                    print("=" * 60)
+                    for k, v in info.items():
+                        if k not in ["Extensions", "Warnings"]:
+                            print(f"{k}: {v}")
+
+                    print("\nExtensions:")
+                    for e in info["Extensions"]:
+                        print(" -", e)
+
+                    if info["Warnings"]:
+                        print("\n⚠ WARNINGS:")
+                        for w in info["Warnings"]:
+                            print(" -", w)
+                    else:
+                        print("\n✔ No obvious certificate issues detected")
+
+                    print("=" * 60)
+
+                except Exception as e:
+                    print("\n❌ Failed to analyze TLS certificate")
+                    print("Error:", str(e))
+
+            tls_cert_ops()
+        
+        elif op == 66:
+            def pem_der_ops():
+                print("\nPEM ↔ DER CONVERTER")
+                print("1. PEM → DER")
+                print("2. DER → PEM")
+
+                choice = input("Choose option (1-2): ")
+
+                if choice == "1":
+                    inp = input("Enter PEM file path: ")
+                    out = input("Enter output DER file path: ")
+                    try:
+                        pem_to_der(inp, out)
+                        print("✔ Converted PEM → DER successfully")
+                    except Exception as e:
+                        print("❌ Conversion failed:", e)
+
+                elif choice == "2":
+                    inp = input("Enter DER file path: ")
+                    out = input("Enter output PEM file path: ")
+                    try:
+                        der_to_pem(inp, out)
+                        print("✔ Converted DER → PEM successfully")
+                    except Exception as e:
+                        print("❌ Conversion failed:", e)
+                else:
+                    print("Invalid option")
+
+            pem_der_ops()
+        elif op == 67:
+            def public_key_extractor_ops():
+                print("\nPUBLIC KEY EXTRACTOR")
+                print("1. Extract from Certificate (PEM/DER)")
+                print("2. Extract from Private Key (PEM)")
+
+                choice = input("Choose option (1-2): ")
+
+                if choice == "1":
+                    inp = input("Enter certificate file path: ")
+                    out = input("Enter output public key PEM path: ")
+                    try:
+                        extract_public_key_from_cert(inp, out)
+                        print("✔ Public key extracted from certificate")
+                    except Exception as e:
+                        print("❌ Failed:", e)
+
+                elif choice == "2":
+                    inp = input("Enter private key PEM path: ")
+                    pwd = input("Private key password (leave empty if none): ")
+                    out = input("Enter output public key PEM path: ")
+                    try:
+                        extract_public_key_from_private_key(inp, out, pwd if pwd else None)
+                        print("✔ Public key extracted from private key")
+                    except Exception as e:
+                        print("❌ Failed:", e)
+                else:
+                    print("Invalid option")
+
+            public_key_extractor_ops()
+
+        elif op == 68:
+            def fingerprint_ops():
+                print("\nFINGERPRINT GENERATOR")
+                print("1. Certificate Fingerprint")
+                print("2. Public Key Fingerprint")
+                print("3. File Fingerprint")
+                print("4. Text Fingerprint")
+
+                algo = input("Hash algorithm (md5 / sha1 / sha256 / sha384 / sha512): ").lower()
+                choice = input("Choose option (1-4): ")
+
+                try:
+                    if choice == "1":
+                        path = input("Certificate file path: ")
+                        print("Fingerprint:", fingerprint_certificate(path, algo))
+
+                    elif choice == "2":
+                        path = input("Public key PEM path: ")
+                        print("Fingerprint:", fingerprint_public_key(path, algo))
+
+                    elif choice == "3":
+                        path = input("File path: ")
+                        print("Fingerprint:", fingerprint_file(path, algo))
+
+                    elif choice == "4":
+                        text = input("Enter text: ")
+                        print("Fingerprint:", generate_fingerprint(text.encode(), algo))
+
+                    else:
+                        print("Invalid option")
+
+                except Exception as e:
+                    print("❌ Error:", str(e))
+
+            fingerprint_ops()
+
   #      elif op == 69:
-  #      elif op == 70:
-  #      elif op == 71:
+        elif op == 70:
+            def file_hash_ops():
+                path = input("Enter file path: ")
+                print("""
+                    1. MD5
+                    2. SHA1
+                    3. SHA256
+                    4. SHA512
+                    5. SHA3-256
+                    6. BLAKE2b
+                    7. ALL (Forensics)
+                """)
+                choice = input("Choose option: ")
+
+                algo_map = {
+                    "1": "MD5",
+                    "2": "SHA1",
+                    "3": "SHA256",
+                    "4": "SHA512",
+                    "5": "SHA3_256",
+                    "6": "BLAKE2B"
+                }
+
+                if choice in algo_map:
+                    print("Hash:", file_hash(path, algo_map[choice]))
+
+                elif choice == "7":
+                    hashes = file_multi_hash(path)
+                    for k, v in hashes.items():
+                        print(f"{k}: {v}")
+
+                else:
+                    print("Invalid option")
+
+            file_hash_ops()
+
+
+
+        elif op == 71:
+            def directory_hash_ops():
+                path = input("Enter directory path: ")
+
+                print("""
+                    1. MD5
+                    2. SHA1
+                    3. SHA256
+                    4. SHA512
+                    5. SHA3-256
+                    6. BLAKE2b
+                    7. ALL (Forensics)
+                """)
+
+                choice = input("Choose option: ")
+
+                algo_map = {
+                    "1": "MD5",
+                    "2": "SHA1",
+                    "3": "SHA256",
+                    "4": "SHA512",
+                    "5": "SHA3_256",
+                    "6": "BLAKE2B",
+                }
+
+                if choice in algo_map:
+                    print("Directory Hash:", directory_hash(path, algo_map[choice]))
+
+                elif choice == "7":
+                    hashes = directory_multi_hash(path)
+                    for k, v in hashes.items():
+                        print(f"{k}: {v}")
+
+                else:
+                    print("Invalid option")
+            directory_hash_ops()
+
+
 #       elif op == 99:
-#            print("You have selected all decoders and encoders at once.")
-#            data = input("Enter the text for all operations:")
-#            print("encoded Base64 value is:", base64_encoder(data))
-#            print("decoded Base64 value is:", base64_decoder(data))
+#            print("You have selected all decoders and encodersr all operations:")
+#            print("encoded Base64 value is:", base64_encod        def file_hash_ops():
 #            print("encoded hex value is:", hex_encoder(data))
 #            print("decoded hex value is:", hex_decoder(data))
 #            print("encoded url value is:", url_encoder(data))
 #            print("decoded url value is:", url_decoder(data))
 #           print("ROT13 value is:", CAESARorROT13_encrypt_and_decrypt(data, 13))
+#            print("MD5 hash is:", MD5_encoder(data))
+#            print("SHA1 hash is:", SHA1_encoder(data))
+#            print("All operations completed successfully.")
+#            break
+#            print("working on it, coming soon...")
+        
 #            print("MD5 hash is:", MD5_encoder(data))
 #            print("SHA1 hash is:", SHA1_encoder(data))
 #            print("All operations completed successfully.")
@@ -3125,6 +4406,20 @@ def coder_ops():
         else:
             print("Entered wrong option!!,Try again")
 
-print("Welcome to Free Decoders in One.")
-menu()
-coder_ops()
+if __name__ == "__main__":
+    print("Welcome to Free Decoders in One.")
+    menu()
+    coder_ops()
+
+
+
+
+
+
+
+    
+    
+
+    
+
+    
