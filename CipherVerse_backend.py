@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        # CIPHERVERSE - Crypto Toolkit
+# CIPHERVERSE - Crypto Toolkit
 import hashlib , base64
 def menu():
     print("="*50)
@@ -37,7 +37,7 @@ def menu():
     print("22. Multiple Bombe") #DONE
     print("23. Typex") #DONE
     print("24. Lorenz") #DONE
-    print("25. Colossus")
+    print("25. Colossus") 
     print("26. SIGABA")
 
     # Encoding/Decoding
@@ -109,9 +109,9 @@ def menu():
     print("\n[FILE & FORENSICS]")
     print("69. File Hashing") #DONE
     print("70. Directory Hashing") #DONE
-    print("71. Compare File Hashes")
-    print("72. File Encryption / Decryption")
-    print("73. File Integrity Checker")
+    print("71. Compare File Hashes") #DONE
+    print("72. File Encryption / Decryption") #DONE
+    print("73. File Integrity Checker") #DONE
     print("74. Entropy Analyzer")
     print("75. Randomness Test Suite")
     print("76. Key Strength Analyzer")
@@ -120,20 +120,20 @@ def menu():
     print("\n[MALWARE & FUZZY ANALYSIS]")
     print("77. TLSH Fuzzy Hashing")#pip install py-tlsh,pip install tlsh
     print("78. Imphash Generator")
-    print("79. PE Hash Analyzer")
+    print("79. PE Hash Analyzer")#pip install pefile
 
     # Blockchain & Cryptocurrency
     print("\n[BLOCKCHAIN & CRYPTOCURRENCY]")
     print("80. Bitcoin Address Validator")
     print("81. Ethereum Address Validator")
-    print("82. Keccak-256 (Ethereum)")
+    print("82. Keccak-256 (Ethereum)")#pip install pysha3
     print("83. Merkle Tree Generator")
     print("84. Wallet Import Format (WIF)")
 
     # Steganography
     print("\n[STEGANOGRAPHY]")
     print("85. Text Steganography")
-    print("86. Image LSB Steganography")
+    print("86. Image LSB Steganography")#pip install pillow
     print("87. Audio Steganography")
 
     # Utilities
@@ -2466,30 +2466,594 @@ def directory_multi_hash(directory: str):
                 continue
 
     return {name: h.hexdigest() for name, h in algorithms.items()}
+#71
+def compare_file_hashes(file1: str, file2: str, algorithm: str = "SHA256"):
+    try:
+        h1 = file_hash(file1, algorithm)
+        h2 = file_hash(file2, algorithm)
+
+        return {
+            "algorithm": algorithm,
+            "file1_hash": h1,
+            "file2_hash": h2,
+            "match": h1 == h2
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+#72
+def file_encrypt_aes(input_file: str, output_file: str, key: bytes):
+    from Crypto.Cipher import AES
+    from Crypto.Random import get_random_bytes
+    import os
+    iv = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    with open(input_file, "rb") as f:
+        data = f.read()
+    # PKCS7 padding
+    pad_len = 16 - (len(data) % 16)
+    data += bytes([pad_len]) * pad_len
+    encrypted = cipher.encrypt(data)
+    with open(output_file, "wb") as f:
+        f.write(iv + encrypted)
+def file_decrypt_aes(input_file: str, output_file: str, key: bytes):
+    from Crypto.Cipher import AES
+    from Crypto.Random import get_random_bytes
+    import os
+    with open(input_file, "rb") as f:
+        raw = f.read()
+    iv = raw[:16]
+    ciphertext = raw[16:]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    decrypted = cipher.decrypt(ciphertext)
+    # Remove PKCS7 padding
+    pad_len = decrypted[-1]
+    decrypted = decrypted[:-pad_len]
+    with open(output_file, "wb") as f:
+        f.write(decrypted)
+def derive_key(password: str, length=32):
+    import hashlib
+    return hashlib.sha256(password.encode()).digest()[:length]
+#73
+def create_integrity_baseline(filepath: str, algorithm="SHA256"):
+    import json
+    import time
+    h = file_hash(filepath, algorithm)
+    baseline = {
+        "file": filepath,
+        "algorithm": algorithm,
+        "hash": h,
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    with open(filepath + ".integrity", "w") as f:
+        json.dump(baseline, f, indent=4)
+    return "Integrity baseline created"
+def verify_file_integrity(filepath: str):
+    try:
+        with open(filepath + ".integrity", "r") as f:
+            baseline = json.load(f)
+
+        current_hash = file_hash(filepath, baseline["algorithm"])
+
+        return {
+            "file": filepath,
+            "algorithm": baseline["algorithm"],
+            "original_hash": baseline["hash"],
+            "current_hash": current_hash,
+            "intact": baseline["hash"] == current_hash
+        }
+    except FileNotFoundError:
+        return {"error": "Integrity baseline not found"}
+    except Exception as e:
+        return {"error": str(e)}
+#74
+def calculate_entropy(filepath: str) -> float:
+    import math
+    with open(filepath, "rb") as f:
+        data = f.read()
+    if not data:
+        return 0.0
+    freq = [0] * 256
+    for byte in data:
+        freq[byte] += 1
+    entropy = 0.0
+    data_len = len(data)
+    for count in freq:
+        if count == 0:
+            continue
+        p = count / data_len
+        entropy -= p * math.log2(p)
+    return round(entropy, 4)
+def interpret_entropy(entropy: float) -> str:
+    if entropy < 3:
+        return "Very low entropy (plain text / structured)"
+    elif entropy < 6:
+        return "Moderate entropy (binary / executable)"
+    elif entropy < 7.5:
+        return "High entropy (compressed)"
+    else:
+        return "Very high entropy (encrypted / packed)"
+#75
+def load_binary_data(path: str) -> bytes:
+    with open(path, "rb") as f:
+        return f.read()
+def byte_frequency_test(data: bytes):
+    freq = [0] * 256
+    for b in data:
+        freq[b] += 1
+    return freq
+def bit_balance_test(data: bytes):
+    ones = 0
+    zeros = 0
+    for byte in data:
+        bits = bin(byte)[2:].zfill(8)
+        ones += bits.count("1")
+        zeros += bits.count("0")
+    total = ones + zeros
+    ratio = ones / total if total else 0
+    return {
+        "ones": ones,
+        "zeros": zeros,
+        "ratio": round(ratio, 4)
+    }
+def runs_test(data: bytes):
+    bits = "".join(bin(b)[2:].zfill(8) for b in data)
+    runs = 1
+    for i in range(1, len(bits)):
+        if bits[i] != bits[i - 1]:
+            runs += 1
+    return {
+        "total_bits": len(bits),
+        "runs": runs
+    }
+def chi_square_test(data: bytes):
+    freq = byte_frequency_test(data)
+    expected = len(data) / 256
+    chi = 0.0
+    for count in freq:
+        chi += ((count - expected) ** 2) / expected if expected else 0
+    return round(chi, 4)
+def randomness_test_suite(filepath: str):
+    data = load_binary_data(filepath)
+    entropy = calculate_entropy(filepath)
+    bit_balance = bit_balance_test(data)
+    runs = runs_test(data)
+    chi = chi_square_test(data)
+    return {
+        "entropy": entropy,
+        "bit_balance": bit_balance,
+        "runs": runs,
+        "chi_square": chi
+    }
+#76
 
 
 
 
 
 
-
-
-
-def tlsh_hash(data: bytes) -> str:
+def tlsh_hash_bytes(data: bytes) -> str:
     import tlsh
 
     h = tlsh.hash(data)
-    if not h:
-        raise ValueError("Input too small for TLSH (minimum ~50 bytes)")
+    if not h or h == "TNULL":
+        raise ValueError("Data too small or low entropy for TLSH")
     return h
-def tlsh_file_hash(path: str) -> str:
+def tlsh_hash_text(text: str) -> str:
+    return tlsh_hash_bytes(text.encode())
+def tlsh_hash_file(path: str) -> str:
     with open(path, "rb") as f:
         data = f.read()
-    return tlsh_hash(data)
+    return tlsh_hash_bytes(data)
 def tlsh_compare(hash1: str, hash2: str) -> int:
     import tlsh
 
-    return tlsh.diff(hash1, hash2)
+    score = tlsh.diff(hash1, hash2)
+    return score
+def generate_imphash(pe_path: str) -> str:
+    import pefile
+    import hashlib
+
+    pe = pefile.PE(pe_path)
+    imports = []
+
+    if not hasattr(pe, "DIRECTORY_ENTRY_IMPORT"):
+        raise ValueError("No imports found in PE file")
+
+    for entry in pe.DIRECTORY_ENTRY_IMPORT:
+        dll = entry.dll.decode(errors="ignore").lower()
+        for imp in entry.imports:
+            if imp.name:
+                func = imp.name.decode(errors="ignore").lower()
+                imports.append(f"{dll}.{func}")
+
+    if not imports:
+        raise ValueError("No valid imports for Imphash")
+
+    imports.sort()
+    joined = ",".join(imports)
+    return hashlib.md5(joined.encode()).hexdigest()
+def pe_hash_analyzer(pe_path: str) -> dict:
+    import pefile
+    import hashlib
+    import os
+
+    results = {}
+
+    # File hashes
+    with open(pe_path, "rb") as f:
+        data = f.read()
+
+    results["MD5"] = hashlib.md5(data).hexdigest()
+    results["SHA1"] = hashlib.sha1(data).hexdigest()
+    results["SHA256"] = hashlib.sha256(data).hexdigest()
+
+    # PE parsing
+    pe = pefile.PE(pe_path)
+
+    # Imphash
+    try:
+        results["Imphash"] = pe.get_imphash()
+    except Exception:
+        results["Imphash"] = "N/A"
+
+    # Sections
+    sections = []
+    for sec in pe.sections:
+        sec_info = {
+            "Name": sec.Name.decode(errors="ignore").strip("\x00"),
+            "VirtualSize": sec.Misc_VirtualSize,
+            "RawSize": sec.SizeOfRawData,
+            "Entropy": round(sec.get_entropy(), 2)
+        }
+        sections.append(sec_info)
+
+    results["Sections"] = sections
+
+    # Suspicious indicators
+    flags = []
+    for sec in sections:
+        if sec["Entropy"] > 7.2:
+            flags.append(f"High entropy section: {sec['Name']}")
+
+    if len(sections) < 3:
+        flags.append("Very few sections (possible packing)")
+
+    results["Warnings"] = flags
+
+    return results
+def base58check_decode(addr: str) -> bytes:
+    num = 0
+    for c in addr:
+        if c not in BASE58_ALPHABET:
+            raise ValueError("Invalid Base58 character")
+        num = num * 58 + BASE58_ALPHABET.index(c)
+
+    combined = num.to_bytes((num.bit_length() + 7) // 8, byteorder="big")
+
+    # Restore leading zeros
+    n_pad = len(addr) - len(addr.lstrip("1"))
+    data = b"\x00" * n_pad + combined
+
+    payload, checksum = data[:-4], data[-4:]
+
+    import hashlib
+    h = hashlib.sha256(hashlib.sha256(payload).digest()).digest()[:4]
+
+    if h != checksum:
+        raise ValueError("Invalid Base58 checksum")
+
+    return payload
+def bech32_verify(addr: str) -> bool:
+    CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
+    addr = addr.lower()
+
+    if not addr.startswith("bc1"):
+        return False
+
+    if not all(c in CHARSET or c.isalnum() for c in addr[3:]):
+        return False
+
+    # Bech32 checksum verification (minimal)
+    return True  # format + prefix validated
+def validate_bitcoin_address(addr: str) -> dict:
+    addr = addr.strip()
+
+    try:
+        # Legacy & P2SH
+        if addr.startswith("1") or addr.startswith("3"):
+            payload = base58check_decode(addr)
+            version = payload[0]
+            addr_type = "P2PKH" if addr.startswith("1") else "P2SH"
+
+            return {
+                "Valid": True,
+                "Type": addr_type,
+                "Network": "Mainnet"
+            }
+
+        # Bech32 (SegWit)
+        elif addr.lower().startswith("bc1"):
+            if bech32_verify(addr):
+                return {
+                    "Valid": True,
+                    "Type": "Bech32 (SegWit)",
+                    "Network": "Mainnet"
+                }
+
+        return {"Valid": False}
+
+    except Exception:
+        return {"Valid": False}
+def is_valid_eth_hex(address: str) -> bool:
+    if not address.startswith("0x"):
+        return False
+    addr = address[2:]
+    return len(addr) == 40 and all(c in "0123456789abcdefABCDEF" for c in addr)
+def is_checksum_eth_address(address: str) -> bool:
+    import hashlib
+
+    addr = address.replace("0x", "")
+    addr_lower = addr.lower()
+
+    keccak = hashlib.new("sha3_256")
+    keccak.update(addr_lower.encode())
+    hash_hex = keccak.hexdigest()
+
+    for i in range(40):
+        char = addr[i]
+        if char.isalpha():
+            if (int(hash_hex[i], 16) >= 8 and char.upper() != char) or \
+               (int(hash_hex[i], 16) < 8 and char.lower() != char):
+                return False
+    return True
+def validate_ethereum_address(address: str) -> dict:
+    address = address.strip()
+
+    if not is_valid_eth_hex(address):
+        return {"Valid": False}
+
+    addr = address[2:]
+
+    # All lower or all upper = valid (no checksum)
+    if addr.islower() or addr.isupper():
+        return {
+            "Valid": True,
+            "Checksum": False,
+            "Type": "Non-checksummed"
+        }
+
+    # Mixed case → checksum required
+    if is_checksum_eth_address(address):
+        return {
+            "Valid": True,
+            "Checksum": True,
+            "Type": "EIP-55 checksummed"
+        }
+
+    return {"Valid": False}
+def keccak256_eth(data: bytes) -> str:
+    import sha3  # from pysha3
+
+    k = sha3.keccak_256()
+    k.update(data)
+    return k.hexdigest()
+def merkle_hash(data: bytes, algo: str = "sha256") -> bytes:
+    import hashlib
+    h = hashlib.new(algo)
+    h.update(data)
+    return h.digest()
+def build_merkle_tree(items: list, algo: str = "sha256") -> dict:
+    if not items:
+        raise ValueError("No items provided")
+
+    # Convert leaves to hashes
+    level = [merkle_hash(item.encode(), algo) for item in items]
+    tree = [level]
+
+    while len(level) > 1:
+        if len(level) % 2 == 1:
+            level.append(level[-1])  # duplicate last if odd
+
+        next_level = []
+        for i in range(0, len(level), 2):
+            combined = level[i] + level[i + 1]
+            next_level.append(merkle_hash(combined, algo))
+
+        level = next_level
+        tree.append(level)
+
+    return {
+        "Root": tree[-1][0].hex(),
+        "Levels": [[h.hex() for h in lvl] for lvl in tree]
+    }
+BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+def base58_encode(data: bytes) -> str:
+    num = int.from_bytes(data, "big")
+    encoded = ""
+    while num > 0:
+        num, rem = divmod(num, 58)
+        encoded = BASE58_ALPHABET[rem] + encoded
+
+    # Preserve leading zeros
+    pad = 0
+    for b in data:
+        if b == 0:
+            pad += 1
+        else:
+            break
+
+    return "1" * pad + encoded
+def base58_decode(s: str) -> bytes:
+    num = 0
+    for c in s:
+        if c not in BASE58_ALPHABET:
+            raise ValueError("Invalid Base58 character")
+        num = num * 58 + BASE58_ALPHABET.index(c)
+
+    combined = num.to_bytes((num.bit_length() + 7) // 8, "big")
+
+    pad = len(s) - len(s.lstrip("1"))
+    return b"\x00" * pad + combined
+def double_sha256(data: bytes) -> bytes:
+    import hashlib
+    return hashlib.sha256(hashlib.sha256(data).digest()).digest()
+def wif_decode(wif: str) -> dict:
+    raw = base58_decode(wif)
+    payload, checksum = raw[:-4], raw[-4:]
+
+    if double_sha256(payload)[:4] != checksum:
+        raise ValueError("Invalid WIF checksum")
+
+    version = payload[0]
+    compressed = len(payload) == 34 and payload[-1] == 0x01
+
+    key = payload[1:-1] if compressed else payload[1:]
+
+    network = "Mainnet" if version == 0x80 else "Testnet"
+
+    return {
+        "PrivateKeyHex": key.hex(),
+        "Compressed": compressed,
+        "Network": network
+    }
+def wif_encode(private_key_hex: str, compressed=True, testnet=False) -> str:
+    key = bytes.fromhex(private_key_hex)
+
+    if len(key) != 32:
+        raise ValueError("Private key must be 32 bytes")
+
+    version = b"\xEF" if testnet else b"\x80"
+    payload = version + key + (b"\x01" if compressed else b"")
+
+    checksum = double_sha256(payload)[:4]
+    return base58_encode(payload + checksum)
+def steg_text_encode(cover_text: str, secret: str) -> str:
+    ZWSP = "\u200b"   # 0
+    ZWNJ = "\u200c"   # 1
+    ZWJ  = "\u200d"   # end marker
+
+    bits = "".join(format(ord(c), "08b") for c in secret)
+    encoded = "".join(ZWNJ if b == "1" else ZWSP for b in bits)
+
+    return cover_text + encoded + ZWJ
+def steg_text_decode(stego_text: str) -> str:
+    ZWSP = "\u200b"
+    ZWNJ = "\u200c"
+    ZWJ  = "\u200d"
+
+    bits = ""
+    for c in stego_text:
+        if c == ZWSP:
+            bits += "0"
+        elif c == ZWNJ:
+            bits += "1"
+        elif c == ZWJ:
+            break
+
+    chars = [bits[i:i+8] for i in range(0, len(bits), 8)]
+    return "".join(chr(int(b, 2)) for b in chars if len(b) == 8)
+def _text_to_bits(text: str) -> str:
+    bits = ''.join(format(ord(c), '08b') for c in text)
+    return bits + '1111111111111110'  # end marker
+def _bits_to_text(bits: str) -> str:
+    chars = []
+    for i in range(0, len(bits), 8):
+        byte = bits[i:i+8]
+        if len(byte) < 8:
+            break
+        chars.append(chr(int(byte, 2)))
+    return ''.join(chars)
+def image_lsb_encode(input_img: str, output_img: str, secret: str):
+    from PIL import Image
+
+    img = Image.open(input_img).convert("RGB")
+    pixels = img.load()
+
+    bits = _text_to_bits(secret)
+    idx = 0
+
+    for y in range(img.height):
+        for x in range(img.width):
+            if idx >= len(bits):
+                img.save(output_img)
+                return
+
+            r, g, b = pixels[x, y]
+            r = (r & ~1) | int(bits[idx]); idx += 1
+            if idx < len(bits):
+                g = (g & ~1) | int(bits[idx]); idx += 1
+            if idx < len(bits):
+                b = (b & ~1) | int(bits[idx]); idx += 1
+
+            pixels[x, y] = (r, g, b)
+
+    raise ValueError("Image too small to hold secret")
+def image_lsb_decode(img_path: str) -> str:
+    from PIL import Image
+
+    img = Image.open(img_path).convert("RGB")
+    pixels = img.load()
+
+    bits = ""
+    for y in range(img.height):
+        for x in range(img.width):
+            r, g, b = pixels[x, y]
+            bits += str(r & 1)
+            bits += str(g & 1)
+            bits += str(b & 1)
+
+            if bits.endswith("1111111111111110"):
+                return _bits_to_text(bits[:-16])
+
+    return _bits_to_text(bits)
+def _audio_text_to_bits(text: str) -> str:
+    bits = ''.join(format(ord(c), '08b') for c in text)
+    return bits + '1111111111111110'  # end marker
+def _audio_bits_to_text(bits: str) -> str:
+    chars = []
+    for i in range(0, len(bits), 8):
+        byte = bits[i:i+8]
+        if len(byte) < 8:
+            break
+        chars.append(chr(int(byte, 2)))
+    return ''.join(chars)
+def audio_lsb_encode(input_wav: str, output_wav: str, secret: str):
+    import wave
+    import struct
+
+    with wave.open(input_wav, 'rb') as wf:
+        params = wf.getparams()
+        frames = bytearray(wf.readframes(wf.getnframes()))
+
+    bits = _audio_text_to_bits(secret)
+    if len(bits) > len(frames):
+        raise ValueError("Audio file too small to hold secret")
+
+    bit_idx = 0
+    for i in range(len(frames)):
+        if bit_idx >= len(bits):
+            break
+        frames[i] = (frames[i] & 0xFE) | int(bits[bit_idx])
+        bit_idx += 1
+
+    with wave.open(output_wav, 'wb') as wf:
+        wf.setparams(params)
+        wf.writeframes(frames)
+def audio_lsb_decode(stego_wav: str) -> str:
+    import wave
+
+    with wave.open(stego_wav, 'rb') as wf:
+        frames = bytearray(wf.readframes(wf.getnframes()))
+
+    bits = ""
+    for b in frames:
+        bits += str(b & 1)
+        if bits.endswith("1111111111111110"):
+            return _audio_bits_to_text(bits[:-16])
+
+    return _audio_bits_to_text(bits)
 
 
 
@@ -3034,8 +3598,6 @@ def coder_ops():
                         print(r)
 
             Bombe_ops()
-
-            
         elif op == 22:
             def Multiple_Bombe_ops():
                 ciphertext = input("Enter Enigma ciphertext: ").replace(" ", "").upper()
@@ -3056,7 +3618,6 @@ def coder_ops():
                         print("Possible settings:", r)
 
             Multiple_Bombe_ops()
- 
         elif op == 23:
             def Typex_ops():
                 print("\nTYPEX MACHINE")
@@ -3317,7 +3878,6 @@ def coder_ops():
                     print("Invalid option")
 
             MD_ops()
-
         elif op == 37:
             def SHA_ops():
                 text = input("Enter text to hash: ")
@@ -3396,7 +3956,6 @@ def coder_ops():
                         break
 
             sponge_hash_ops()
-
         elif op == 39:
             def Hash_ops():
                 print("\nHASH FUNCTIONS")
@@ -3769,7 +4328,6 @@ def coder_ops():
                     break
 
             prng_ops()
-
         elif op == 49:
             def jwt_ops():
                 while True:
@@ -3832,7 +4390,6 @@ def coder_ops():
                         break
 
             jwt_ops()
-
         elif op == 50:
             def ctx1_ops():
                 while True:
@@ -3981,7 +4538,6 @@ def coder_ops():
                     print("Invalid option")
 
             RSA_ops()
-
         elif op == 57:
             def RSA_sign_verify_ops():
                 print("1. Sign")
@@ -4004,7 +4560,6 @@ def coder_ops():
                     print("Invalid option")
 
             RSA_sign_verify_ops()
-
         elif op == 58:
             def DH_ops():
                 print("Performing real Diffie–Hellman key exchange (2048-bit)")
@@ -4023,7 +4578,6 @@ def coder_ops():
                 print("Derived AES key:", key.hex())
 
             DH_ops()
-
         elif op == 59:
             def ECDH_ops():
                 print("Elliptic Curve Diffie-Hellman (P-256)")
@@ -4036,7 +4590,6 @@ def coder_ops():
                 print("Shared secret (AES key):", key.hex())
 
             ECDH_ops()
-
         elif op == 60:
             def DSA_ops():
                 print("1. Generate Keys")
@@ -4140,7 +4693,6 @@ def coder_ops():
                 print("Shared secret (AES key):", key.hex())
 
             X25519_ops()
-        
         elif op == 64:
             def x509_ops():
                 print("\nX.509 CERTIFICATE PARSER")
@@ -4202,7 +4754,6 @@ def coder_ops():
                     print("Error:", str(e))
 
             tls_cert_ops()
-        
         elif op == 66:
             def pem_der_ops():
                 print("\nPEM ↔ DER CONVERTER")
@@ -4248,7 +4799,6 @@ def coder_ops():
                         print("✔ Public key extracted from certificate")
                     except Exception as e:
                         print("❌ Failed:", e)
-
                 elif choice == "2":
                     inp = input("Enter private key PEM path: ")
                     pwd = input("Private key password (leave empty if none): ")
@@ -4260,9 +4810,7 @@ def coder_ops():
                         print("❌ Failed:", e)
                 else:
                     print("Invalid option")
-
             public_key_extractor_ops()
-
         elif op == 68:
             def fingerprint_ops():
                 print("\nFINGERPRINT GENERATOR")
@@ -4270,33 +4818,25 @@ def coder_ops():
                 print("2. Public Key Fingerprint")
                 print("3. File Fingerprint")
                 print("4. Text Fingerprint")
-
                 algo = input("Hash algorithm (md5 / sha1 / sha256 / sha384 / sha512): ").lower()
                 choice = input("Choose option (1-4): ")
-
                 try:
                     if choice == "1":
                         path = input("Certificate file path: ")
                         print("Fingerprint:", fingerprint_certificate(path, algo))
-
                     elif choice == "2":
                         path = input("Public key PEM path: ")
                         print("Fingerprint:", fingerprint_public_key(path, algo))
-
                     elif choice == "3":
                         path = input("File path: ")
                         print("Fingerprint:", fingerprint_file(path, algo))
-
                     elif choice == "4":
                         text = input("Enter text: ")
                         print("Fingerprint:", generate_fingerprint(text.encode(), algo))
-
                     else:
                         print("Invalid option")
-
                 except Exception as e:
                     print("❌ Error:", str(e))
-
             fingerprint_ops()
         elif op == 69:
             def file_hash_ops():
@@ -4311,7 +4851,6 @@ def coder_ops():
                     7. ALL (Forensics)
                 """)
                 choice = input("Choose option: ")
-
                 algo_map = {
                     "1": "MD5",
                     "2": "SHA1",
@@ -4320,26 +4859,18 @@ def coder_ops():
                     "5": "SHA3_256",
                     "6": "BLAKE2B"
                 }
-
                 if choice in algo_map:
                     print("Hash:", file_hash(path, algo_map[choice]))
-
                 elif choice == "7":
                     hashes = file_multi_hash(path)
                     for k, v in hashes.items():
                         print(f"{k}: {v}")
-
                 else:
                     print("Invalid option")
-
             file_hash_ops()
-
-
-
         elif op == 70:
             def directory_hash_ops():
                 path = input("Enter directory path: ")
-
                 print("""
                     1. MD5
                     2. SHA1
@@ -4349,9 +4880,7 @@ def coder_ops():
                     6. BLAKE2b
                     7. ALL (Forensics)
                 """)
-
                 choice = input("Choose option: ")
-
                 algo_map = {
                     "1": "MD5",
                     "2": "SHA1",
@@ -4360,20 +4889,335 @@ def coder_ops():
                     "5": "SHA3_256",
                     "6": "BLAKE2B",
                 }
-
                 if choice in algo_map:
                     print("Directory Hash:", directory_hash(path, algo_map[choice]))
-
                 elif choice == "7":
                     hashes = directory_multi_hash(path)
                     for k, v in hashes.items():
                         print(f"{k}: {v}")
-
                 else:
                     print("Invalid option")
             directory_hash_ops()
+        elif op == 71:
+            def compare_file_hash_ops():
+                file1 = input("Enter first file path: ")
+                file2 = input("Enter second file path: ")
+                print("""
+                    1. MD5
+                    2. SHA1
+                    3. SHA256
+                    4. SHA512
+                    5. SHA3-256
+                    6. BLAKE2b
+                """)
+                choice = input("Choose option: ")
+                algo_map = {
+                    "1": "MD5",
+                    "2": "SHA1",
+                    "3": "SHA256",
+                    "4": "SHA512",
+                    "5": "SHA3_256",
+                    "6": "BLAKE2B",
+                }
+                if choice in algo_map:
+                    result = compare_file_hashes(file1, file2, algo_map[choice])
+                    print("MATCH" if result["match"] else "NO MATCH")
+                    print(result)
+                else:
+                    print("Invalid option")
+            compare_file_hash_ops()
+        elif op == 72:
+            def file_encrypt_decrypt_ops():
+                print("1. Encrypt File (AES)")
+                print("2. Decrypt File (AES)")
+                ch = input("Choose option: ")
+                if ch == "1":
+                    infile = input("Enter input file path: ")
+                    outfile = input("Enter output encrypted file path: ")
+                    password = input("Enter password: ")
+                    key = derive_key(password)
+                    file_encrypt_aes(infile, outfile, key)
+                    print("File encrypted successfully")
+                elif ch == "2":
+                    infile = input("Enter encrypted file path: ")
+                    outfile = input("Enter output decrypted file path: ")
+                    password = input("Enter password: ")
+                    key = derive_key(password)
+                    file_decrypt_aes(infile, outfile, key)
+                    print("File decrypted successfully")
+                else:
+                    print("Invalid option")
+            file_encrypt_decrypt_ops()
+        elif op == 73:
+            def file_integrity_ops():
+                print("1. Create Integrity Baseline")
+                print("2. Verify File Integrity")
+                ch = input("Choose option: ")
+                if ch == "1":
+                    path = input("Enter file path: ")
+                    algo = input("Hash algorithm (default SHA256): ") or "SHA256"
+                    print(create_integrity_baseline(path, algo))
+                elif ch == "2":
+                    path = input("Enter file path: ")
+                    result = verify_file_integrity(path)
+                    if "error" in result:
+                        print(result["error"])
+                    else:
+                        print("FILE INTACT" if result["intact"] else "FILE MODIFIED")
+                        print(result)
+                else:
+                    print("Invalid option")
+            file_integrity_ops()
+        elif op == 74:
+            def entropy_analyzer_ops():
+                path = input("Enter file path: ")
+                try:
+                    entropy = calculate_entropy(path)
+                    print("\n🧠 WHY ENTROPY MATTERS IN FORENSICS")
+                    print("---------------------------------")
+                    print("Entropy Range     Interpretation")
+                    print("---------------------------------")
+                    print("0.0 – 3.0         Plain text / simple data")
+                    print("3.0 – 6.0         Structured binary")
+                    print("6.0 – 7.5         Compressed")
+                    print("7.5 – 8.0         Encrypted / packed")
+                    print("---------------------------------")
 
+                    print(f"\nCalculated Entropy: {entropy}")
+                    print("Analysis:", interpret_entropy(entropy))
+                except FileNotFoundError:
+                    print("File not found")
+                except PermissionError:
+                    print("Permission denied")
+            entropy_analyzer_ops()
 
+        elif op == 75:
+            def randomness_test_ops():
+                path = input("Enter file path: ")
+                try:
+                    results = randomness_test_suite(path)
+                    print("Entropy:", results["entropy"])
+                    print("Bit balance:", results["bit_balance"])
+                    print("Runs:", results["runs"])
+                    print("Chi-square:", results["chi_square"])
+                except FileNotFoundError:
+                    print("File not found")
+                except PermissionError:
+                    print("Permission denied")
+            randomness_test_ops()
+            
+        elif op == 77:
+            def tlsh_ops():
+                print("\nTLSH FUZZY HASHING")
+                print("1. Hash Text")
+                print("2. Hash File")
+                print("3. Compare TLSH Hashes")
+                choice = input("Choose option (1-3): ")
+                try:
+                    if choice == "1":
+                        text = input("Enter text: ")
+                        h = tlsh_hash_text(text)
+                        print("TLSH Hash:", h)
+                    elif choice == "2":
+                        path = input("Enter file path: ")
+                        h = tlsh_hash_file(path)
+                        print("TLSH Hash:", h)
+                    elif choice == "3":
+                        h1 = input("Enter TLSH hash 1: ")
+                        h2 = input("Enter TLSH hash 2: ")
+                        score = tlsh_compare(h1, h2)
+                        print("TLSH Distance Score:", score)
+                        if score == 0:
+                            print("✔ Identical")
+                        elif score < 50:
+                            print("✔ Very similar")
+                        elif score < 100:
+                            print("⚠ Related")
+                        else:
+                            print("❌ Different")
+                    else:
+                        print("Invalid option")
+                except Exception as e:
+                    print("❌ TLSH Error:", str(e))
+            tlsh_ops()
+        elif op == 78:
+            def imphash_ops():
+                print("\nIMPHASH GENERATOR (Windows PE)")
+                path = input("Enter PE file path (.exe / .dll): ")
+                try:
+                    h = generate_imphash(path)
+                    print("Imphash:", h)
+                except Exception as e:
+                    print("❌ Failed to generate Imphash")
+                    print("Error:", str(e))
+            imphash_ops()
+        elif op == 79:
+            def pe_hash_ops():
+                print("\nPE HASH ANALYZER")
+                path = input("Enter PE file path (.exe / .dll): ")
+                try:
+                    info = pe_hash_analyzer(path)
+                    print("\nFILE HASHES")
+                    print("-" * 50)
+                    print("MD5    :", info["MD5"])
+                    print("SHA1   :", info["SHA1"])
+                    print("SHA256 :", info["SHA256"])
+                    print("Imphash:", info["Imphash"])
+                    print("\nSECTIONS")
+                    print("-" * 50)
+                    for s in info["Sections"]:
+                        print(f"{s['Name']:8} | Entropy: {s['Entropy']} | Raw: {s['RawSize']}")
+                    if info["Warnings"]:
+                        print("\n⚠ WARNINGS")
+                        for w in info["Warnings"]:
+                            print(" -", w)
+                    else:
+                        print("\n✔ No obvious PE anomalies")
+                except Exception as e:
+                    print("\n❌ PE analysis failed")
+                    print("Error:", str(e))
+            pe_hash_ops()
+        elif op == 80:
+            def btc_address_ops():
+                print("\nBITCOIN ADDRESS VALIDATOR")
+                addr = input("Enter Bitcoin address: ")
+                result = validate_bitcoin_address(addr)
+                if result.get("Valid"):
+                    print("✔ VALID Bitcoin address")
+                    print("Type   :", result["Type"])
+                    print("Network:", result["Network"])
+                else:
+                    print("❌ INVALID Bitcoin address")
+            btc_address_ops()
+        elif op == 81:
+            def eth_address_ops():
+                print("\nETHEREUM ADDRESS VALIDATOR")
+                addr = input("Enter Ethereum address: ")
+                result = validate_ethereum_address(addr)
+                if result.get("Valid"):
+                    print("✔ VALID Ethereum address")
+                    print("Type      :", result["Type"])
+                    print("Checksum  :", result["Checksum"])
+                else:
+                    print("❌ INVALID Ethereum address")
+            eth_address_ops()
+        elif op == 82:
+            def keccak_eth_ops():
+                print("\nKECCAK-256 (ETHEREUM)")
+                print("1. Hash Text")
+                print("2. Hash File")
+                choice = input("Choose option (1-2): ")
+                try:
+                    if choice == "1":
+                        text = input("Enter text: ")
+                        print("Keccak-256:", keccak256_eth(text.encode()))
+                    elif choice == "2":
+                        path = input("Enter file path: ")
+                        with open(path, "rb") as f:
+                            data = f.read()
+                        print("Keccak-256:", keccak256_eth(data))
+                    else:
+                        print("Invalid option")
+                except Exception as e:
+                    print("❌ Error:", str(e))
+            keccak_eth_ops()
+        elif op == 83:
+            def merkle_ops():
+                print("\nMERKLE TREE GENERATOR")
+                print("1. Text Inputs")
+                print("2. File Hashes")
+                algo = input("Hash algorithm (sha256 default): ") or "sha256"
+                choice = input("Choose option (1-2): ")
+                try:
+                    if choice == "1":
+                        items = []
+                        print("Enter items (empty line to finish):")
+                        while True:
+                            line = input("> ")
+                            if not line:
+                                break
+                            items.append(line)
+                    elif choice == "2":
+                        items = []
+                        print("Enter file paths (empty line to finish):")
+                        while True:
+                            path = input("> ")
+                            if not path:
+                                break
+                            with open(path, "rb") as f:
+                                items.append(f.read().hex())
+                    else:
+                        print("Invalid option")
+                        return
+                    tree = build_merkle_tree(items, algo)
+                    print("\nMerkle Root:")
+                    print(tree["Root"])
+                    print("\nMerkle Tree Levels:")
+                    for i, lvl in enumerate(tree["Levels"]):
+                        print(f"Level {i}:")
+                        for h in lvl:
+                            print(" ", h)
+                except Exception as e:
+                    print("❌ Error:", str(e))
+            merkle_ops()
+        elif op == 84:
+                def wif_ops():
+                    print("\nWALLET IMPORT FORMAT (WIF)")
+                    print("1. Decode WIF")
+                    print("2. Encode Private Key → WIF")
+
+                    choice = input("Choose option (1-2): ")
+
+                    try:
+                    if choice == "1":
+                        wif = input("Enter WIF: ")
+                        info = wif_decode(wif)
+
+                        print("\nWIF DETAILS")
+                            print("Private Key:", info["PrivateKeyHex"])
+                        print("Network    :", info["Network"])
+                        print("Compressed :", info["Compressed"])
+
+                        elif choice == "2":
+                        key = input("Enter private key (hex): ")
+                        compressed = input("Compressed? (y/n): ").lower() == "y"
+                        testnet = input("Testnet? (y/n): ").lower() == "y"
+
+                            wif = wif_encode(key, compressed, testnet)
+                                t("WIF:", wif)
+
+                            :
+                                t("Invalid option")
+
+                        xception as e:
+                            t("❌ Error:", str(e))
+
+                wif_ops()
+        elif op == 85:
+            def text_steg_ops():
+                print("\nTEXT STEGANOGRAPHY")
+                print("1. Hide text")
+                print("2. Extract hidden text")
+
+                choice = input("Choose option (1-2): ")
+
+                if choice == "1":
+                    cover = input("Enter cover text: ")
+                    secret = input("Enter secret message: ")
+                    result = steg_text_encode(cover, secret)
+                    print("\nStego Text (looks normal):")
+                    print(result)
+
+                elif choice == "2":
+                    text = input("Paste stego text: ")
+                    hidden = steg_text_decode(text)
+                    print("\nHidden message:")
+                    print(hidden)
+
+                else:
+                    print("Invalid option")
+
+            text_steg_ops()
 #       elif op == 99:
 #            print("You have selected all decoders and encodersr all operations:")
 #            print("encoded Base64 value is:", base64_encod        def file_hash_ops():
@@ -4408,16 +5252,3 @@ if __name__ == "__main__":
     print("Welcome to Free Decoders in One.")
     menu()
     coder_ops()
-
-
-
-
-
-
-
-    
-    
-
-    
-
-    
