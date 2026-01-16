@@ -87,6 +87,63 @@ def menu():
     print("54. CRC-8/16/32 Checksum")
     print("55. TCP/IP Checksum")
 
+        # Public Key Cryptography
+    print("\n[PUBLIC KEY CRYPTOGRAPHY]")
+    print("56. RSA (Encrypt/Decrypt)")
+    print("57. RSA (Sign/Verify)")
+    print("58. Diffie-Hellman (DH)")
+    print("59. Elliptic Curve Diffie-Hellman (ECDH)")
+    print("60. DSA (Sign/Verify)")
+    print("61. ECDSA (Sign/Verify)")
+    print("62. Ed25519 / EdDSA")
+    print("63. X25519 Key Exchange")
+
+    # Certificates & TLS
+    print("\n[CERTIFICATES & TLS]")
+    print("64. X.509 Certificate Parser")
+    print("65. TLS Certificate Analyzer")
+    print("66. PEM ↔ DER Converter")
+    print("67. Public Key Extractor")
+    print("68. Fingerprint Generator")
+
+    # File & Forensics Tools
+    print("\n[FILE & FORENSICS]")
+    print("69. File Hashing")
+    print("70. Directory Hashing")
+    print("71. Compare File Hashes")
+    print("72. File Encryption / Decryption")
+    print("73. File Integrity Checker")
+    print("74. Entropy Analyzer")
+    print("75. Randomness Test Suite")
+    print("76. Key Strength Analyzer")
+
+    # Malware & Fuzzy Analysis
+    print("\n[MALWARE & FUZZY ANALYSIS]")
+    print("77. TLSH Fuzzy Hashing")
+    print("78. Imphash Generator")
+    print("79. PE Hash Analyzer")
+
+    # Blockchain & Cryptocurrency
+    print("\n[BLOCKCHAIN & CRYPTOCURRENCY]")
+    print("80. Bitcoin Address Validator")
+    print("81. Ethereum Address Validator")
+    print("82. Keccak-256 (Ethereum)")
+    print("83. Merkle Tree Generator")
+    print("84. Wallet Import Format (WIF)")
+
+    # Steganography
+    print("\n[STEGANOGRAPHY]")
+    print("85. Text Steganography")
+    print("86. Image LSB Steganography")
+    print("87. Audio Steganography")
+
+    # Utilities
+    print("\n[UTILITIES]")
+    print("88. Password Strength Estimator")
+    print("89. Salt Generator")
+    print("90. Nonce Generator")
+    print("91. Diceware Password Generator")
+
     print("\n[UTILITIES]")
     print("99. Process ALL")
     print("999. Return to Main Menu")
