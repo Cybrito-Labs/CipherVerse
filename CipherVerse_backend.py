@@ -5169,28 +5169,28 @@ def coder_ops():
                     choice = input("Choose option (1-2): ")
 
                     try:
-                    if choice == "1":
-                        wif = input("Enter WIF: ")
-                        info = wif_decode(wif)
+                        if choice == "1":
+                            wif = input("Enter WIF: ")
+                            info = wif_decode(wif)
 
-                        print("\nWIF DETAILS")
+                            print("\nWIF DETAILS")
                             print("Private Key:", info["PrivateKeyHex"])
-                        print("Network    :", info["Network"])
-                        print("Compressed :", info["Compressed"])
+                            print("Network    :", info["Network"])
+                            print("Compressed :", info["Compressed"])
 
                         elif choice == "2":
-                        key = input("Enter private key (hex): ")
-                        compressed = input("Compressed? (y/n): ").lower() == "y"
-                        testnet = input("Testnet? (y/n): ").lower() == "y"
+                            key = input("Enter private key (hex): ")
+                            compressed = input("Compressed? (y/n): ").lower() == "y"
+                            testnet = input("Testnet? (y/n): ").lower() == "y"
 
                             wif = wif_encode(key, compressed, testnet)
-                                t("WIF:", wif)
+                            print("WIF:", wif)
 
-                            :
-                                t("Invalid option")
+                        else:
+                            print("Invalid option")
 
-                        xception as e:
-                            t("❌ Error:", str(e))
+                    except Exception as e:
+                        print("❌ Error:", str(e))
 
                 wif_ops()
         elif op == 85:
