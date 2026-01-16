@@ -4298,9 +4298,7 @@ def coder_ops():
                     print("❌ Error:", str(e))
 
             fingerprint_ops()
-
-  #      elif op == 69:
-        elif op == 70:
+        elif op == 69:
             def file_hash_ops():
                 path = input("Enter file path: ")
                 print("""
@@ -4338,7 +4336,7 @@ def coder_ops():
 
 
 
-        elif op == 71:
+        elif op == 70:
             def directory_hash_ops():
                 path = input("Enter directory path: ")
 
