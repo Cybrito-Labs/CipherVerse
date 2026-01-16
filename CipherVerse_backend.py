@@ -5218,6 +5218,68 @@ def coder_ops():
                     print("Invalid option")
 
             text_steg_ops()
+        elif op == 86:
+            def image_steg_ops():
+                print("\nIMAGE LSB STEGANOGRAPHY")
+                print("1. Hide text in image")
+                print("2. Extract text from image")
+        
+                choice = input("Choose option (1-2): ")
+        
+                try:
+                    if choice == "1":
+                        inp = input("Input image path (PNG/BMP): ")
+                        out = input("Output image path: ")
+                        secret = input("Secret message: ")
+        
+                        image_lsb_encode(inp, out, secret)
+                        print("✔ Message hidden successfully")
+        
+                    elif choice == "2":
+                        path = input("Stego image path: ")
+                        secret = image_lsb_decode(path)
+                        print("\nHidden message:")
+                        print(secret)
+        
+                    else:
+                        print("Invalid option")
+        
+                except Exception as e:
+                    print("❌ Error:", str(e))
+        
+            image_steg_ops()
+        elif op == 87:
+            def audio_steg_ops():
+                print("\nAUDIO STEGANOGRAPHY (WAV)")
+                print("1. Hide text in audio")
+                print("2. Extract text from audio")
+        
+                choice = input("Choose option (1-2): ")
+        
+                try:
+                    if choice == "1":
+                        inp = input("Input WAV file path: ")
+                        out = input("Output WAV file path: ")
+                        secret = input("Secret message: ")
+        
+                        audio_lsb_encode(inp, out, secret)
+                        print("✔ Message hidden successfully")
+        
+                    elif choice == "2":
+                        path = input("Stego WAV file path: ")
+                        secret = audio_lsb_decode(path)
+                        print("\nHidden message:")
+                        print(secret)
+        
+                    else:
+                        print("Invalid option")
+        
+                except Exception as e:
+                    print("❌ Error:", str(e))
+        
+            audio_steg_ops()
+
+
 #       elif op == 99:
 #            print("You have selected all decoders and encodersr all operations:")
 #            print("encoded Base64 value is:", base64_encod        def file_hash_ops():
