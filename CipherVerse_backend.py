@@ -1418,8 +1418,8 @@ def md5_hash(data: str) -> str:
     return hashlib.md5(data.encode()).hexdigest()
 def md6_hash(data: str) -> str:
     return "MD6 was never standardized and is not supported"
-def sha0_hash(data: str) -> str:
-    return "SHA-0 was withdrawn and is not implemented"
+#def sha0_hash(data: str) -> str:
+    #return "SHA-0 was withdrawn and is not implemented"
 def sha1_hash(data: str) -> str:
     import hashlib
     return hashlib.sha1(data.encode()).hexdigest()
@@ -3055,9 +3055,193 @@ def audio_lsb_decode(stego_wav: str) -> str:
 
     return _audio_bits_to_text(bits)
 
+def password_entropy(password: str) -> float:
+    import math
+    import re
+    pool = 0
+
+    if re.search(r"[a-z]", password):
+        pool += 26
+    if re.search(r"[A-Z]", password):
+        pool += 26
+    if re.search(r"[0-9]", password):
+        pool += 10
+    if re.search(r"[^a-zA-Z0-9]", password):
+        pool += 32  # symbols approx
+
+    if pool == 0:
+        return 0.0
+
+    return round(len(password) * math.log2(pool), 2)
+
+def interpret_password_strength(entropy: float) -> str:
+    if entropy < 28:
+        return "VERY WEAK (trivial to crack)"
+    elif entropy < 36:
+        return "WEAK"
+    elif entropy < 60:
+        return "MODERATE"
+    elif entropy < 80:
+        return "STRONG"
+    else:
+        return "VERY STRONG"
+
+def symmetric_key_strength(key_bytes: bytes, algorithm="AES"):
+    bits = len(key_bytes) * 8
+
+    if algorithm.upper() == "AES":
+        if bits < 128:
+            return f"WEAK ({bits}-bit key)"
+        elif bits in (128, 192, 256):
+            return f"SECURE ({bits}-bit AES key)"
+        else:
+            return f"NON-STANDARD ({bits}-bit AES key)"
+
+    return f"{bits}-bit key"
+
+def asymmetric_key_strength(bits: int, algorithm="RSA"):
+    if algorithm.upper() == "RSA":
+        if bits < 2048:
+            return "WEAK (below modern security level)"
+        elif bits < 3072:
+            return "SECURE"
+        else:
+            return "VERY STRONG"
+
+    if algorithm.upper() in ("ECC", "ECDSA", "ED25519", "X25519"):
+        return "SECURE (elliptic-curve cryptography)"
+
+    return "Unknown algorithm"
+
+def estimate_password_entropy(password: str) -> float:
+    import math
+    import re
+    pool = 0
+
+    if re.search(r"[a-z]", password):
+        pool += 26
+    if re.search(r"[A-Z]", password):
+        pool += 26
+    if re.search(r"[0-9]", password):
+        pool += 10
+    if re.search(r"[^a-zA-Z0-9]", password):
+        pool += 32  # symbols approx
+
+    if pool == 0:
+        return 0.0
+
+    entropy = len(password) * math.log2(pool)
+    return round(entropy, 2)
+
+def password_weakness_checks(password: str):
+    issues = []
+
+    if len(password) < 8:
+        issues.append("Too short (less than 8 characters)")
+
+    if password.lower() == password:
+        issues.append("No uppercase letters")
+
+    if not re.search(r"[0-9]", password):
+        issues.append("No digits")
+
+    if not re.search(r"[^a-zA-Z0-9]", password):
+        issues.append("No special characters")
+
+    if password.isalnum():
+        issues.append("Only letters and digits (predictable)")
+
+    return issues
+
+def password_strength_verdict(entropy: float) -> str:
+    if entropy < 28:
+        return "VERY WEAK"
+    elif entropy < 36:
+        return "WEAK"
+    elif entropy < 60:
+        return "MODERATE"
+    elif entropy < 80:
+        return "STRONG"
+    else:
+        return "VERY STRONG"
+
+def password_strength_estimator(password: str):
+    entropy = estimate_password_entropy(password)
+    issues = password_weakness_checks(password)
+    verdict = password_strength_verdict(entropy)
+
+    return {
+        "length": len(password),
+        "entropy": entropy,
+        "verdict": verdict,
+        "issues": issues if issues else ["No obvious weaknesses detected"]
+    }
 
 
+def salt_random(length=16, encoding="hex"):
+    import os, base64
+    salt = os.urandom(length)
+    return salt.hex() if encoding == "hex" else base64.b64encode(salt).decode()
+def salt_fixed(value="fixed_salt"):
+    return value
+def salt_from_password(password: str, length=16):
+    import hashlib
+    return hashlib.sha256(password.encode()).digest()[:length].hex()
+def salt_time_based(length=16):
+    import time, hashlib
+    return hashlib.sha256(str(time.time()).encode()).digest()[:length].hex()
+def salt_user_specific(username: str, length=16):
+    import hashlib
+    return hashlib.sha256(username.encode()).digest()[:length].hex()
+def salt_combined(password: str, username: str, length=16):
+    import os, hashlib
+    random_part = os.urandom(length)
+    context = f"{password}:{username}".encode()
+    return hashlib.sha256(random_part + context).digest().hex()
+def salt_from_file(path: str, length=16):
+    import hashlib
+    with open(path, "rb") as f:
+        data = f.read()
+    return hashlib.sha256(data).digest()[:length].hex()
+def salt_session(length=16):
+    import os
+    return os.urandom(length).hex()
 
+def generate_nonce(length: int = 12) -> bytes:
+    import secrets
+    """
+    Generates a cryptographically secure nonce.
+    Default: 12 bytes (recommended for AES-GCM, ChaCha20)
+    """
+    return secrets.token_bytes(length)
+
+def nonce_hex(length: int = 12) -> str:
+    import base64
+    return generate_nonce(length).hex()
+
+def nonce_base64(length: int = 12) -> str:
+    import base64
+    return base64.b64encode(generate_nonce(length)).decode()
+def load_diceware_wordlist(path: str) -> dict:
+    wordlist = {}
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) == 2:
+                key, word = parts
+                wordlist[key] = word
+    return wordlist
+def roll_die() -> str:
+    import secrets
+    return str(secrets.randbelow(6) + 1)
+def diceware_generate(wordlist: dict, words: int = 6, separator: str = " ") -> str:
+    phrase = []
+
+    for _ in range(words):
+        roll = "".join(roll_die() for _ in range(5))
+        phrase.append(wordlist[roll])
+
+    return separator.join(phrase)
 
 
 def coder_ops():
@@ -5005,7 +5189,42 @@ def coder_ops():
                 except PermissionError:
                     print("Permission denied")
             randomness_test_ops()
-            
+          
+        elif op == 76:
+            def key_strength_ops():
+                print("1. Password / Passphrase")
+                print("2. Symmetric Key")
+                print("3. Asymmetric Key")
+                ch = input("Choose option: ")
+
+                if ch == "1":
+                    pwd = input("Enter password: ")
+                    ent = password_entropy(pwd)
+                    print("Estimated entropy:", ent)
+                    print("Strength:", interpret_password_strength(ent))
+
+                elif ch == "2":
+                    key = input("Enter key (hex or raw): ")
+                    algo = input("Algorithm (AES): ") or "AES"
+
+                    try:
+                        key_bytes = bytes.fromhex(key)
+                    except ValueError:
+                        key_bytes = key.encode()
+
+                    print("Strength:", symmetric_key_strength(key_bytes, algo))
+
+                elif ch == "3":
+                    bits = int(input("Enter key size in bits: "))
+                    algo = input("Algorithm (RSA/ECC): ") or "RSA"
+                    print("Strength:", asymmetric_key_strength(bits, algo))
+
+                else:
+                    print("Invalid option")
+
+            key_strength_ops()
+
+
         elif op == 77:
             def tlsh_ops():
                 print("\nTLSH FUZZY HASHING")
@@ -5278,7 +5497,124 @@ def coder_ops():
                     print("❌ Error:", str(e))
         
             audio_steg_ops()
+        elif op == 88:
+            def password_strength_ops():
+                pwd = input("Enter password to evaluate: ")
 
+                result = password_strength_estimator(pwd)
+
+                print("\n🔐 PASSWORD STRENGTH REPORT")
+                print("--------------------------")
+                print("Length:", result["length"])
+                print("Estimated Entropy:", result["entropy"])
+                print("Strength:", result["verdict"])
+
+                print("\nObservations:")
+                for issue in result["issues"]:
+                    print("-", issue)
+
+            password_strength_ops()
+        elif op == 89:
+            def salt_generator_ops():
+                print("\nSALT GENERATOR (ALL MODES)")
+                print("1. Random Salt")
+                print("2. Fixed Salt (Testing)")
+                print("3. Password-derived Salt")
+                print("4. Time-based Salt")
+                print("5. User-specific Salt")
+                print("6. Combined Salt (Best)")
+                print("7. File-based Salt")
+                print("8. Session Salt")
+
+                choice = input("Choose mode (1-8): ")
+
+                try:
+                    if choice == "1":
+                        l = int(input("Length (bytes): "))
+                        print(salt_random(l))
+
+                    elif choice == "2":
+                        print(salt_fixed())
+
+                    elif choice == "3":
+                        pwd = input("Password: ")
+                        print(salt_from_password(pwd))
+
+                    elif choice == "4":
+                        print(salt_time_based())
+
+                    elif choice == "5":
+                        user = input("Username/email: ")
+                        print(salt_user_specific(user))
+
+                    elif choice == "6":
+                        pwd = input("Password: ")
+                        user = input("Username: ")
+                        print(salt_combined(pwd, user))
+
+                    elif choice == "7":
+                        path = input("File path: ")
+                        print(salt_from_file(path))
+
+                    elif choice == "8":
+                        print(salt_session())
+
+                    else:
+                        print("Invalid option")
+
+                except Exception as e:
+                    print("❌ Error:", str(e))
+
+            salt_generator_ops()
+
+        elif op == 90:
+            def nonce_generator_ops():
+                print("🔐 NONCE GENERATOR")
+                print("-----------------")
+                print("1. AES-GCM / ChaCha20 (12 bytes)")
+                print("2. AES-CTR (16 bytes)")
+                print("3. Custom length")
+                print("4. Show as Base64")
+
+                choice = input("Choose option: ")
+
+                if choice == "1":
+                    print("Nonce (hex):", nonce_hex(12))
+
+                elif choice == "2":
+                    print("Nonce (hex):", nonce_hex(16))
+
+                elif choice == "3":
+                    length = int(input("Enter nonce length (bytes): "))
+                    print("Nonce (hex):", nonce_hex(length))
+
+                elif choice == "4":
+                    length = int(input("Enter nonce length (bytes): "))
+                    print("Nonce (Base64):", nonce_base64(length))
+
+                else:
+                    print("Invalid option")
+
+            nonce_generator_ops()
+        elif op == 91:
+            def diceware_ops():
+                print("\nDICEWARE PASSWORD GENERATOR")
+
+                try:
+                    path = input("Diceware wordlist path: ")
+                    count = int(input("Number of words (recommended 6+): "))
+                    sep = input("Separator (space / dash / underscore): ") or " "
+
+                    wordlist = load_diceware_wordlist(path)
+                    password = diceware_generate(wordlist, count, sep)
+
+                    print("\nGenerated Diceware Password:")
+                    print(password)
+
+                except Exception as e:
+                    print("❌ Error:", str(e))
+
+            diceware_ops()
 
 #       elif op == 99:
 #            print("You have selected all decoders and encodersr all operations:")
