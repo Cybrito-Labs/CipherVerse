@@ -101,7 +101,7 @@ def menu():
     print("\n[CERTIFICATES & TLS]")
     print("64. X.509 Certificate Parser")#pip install cryptography  #DONE
     print("65. TLS Certificate Analyzer")#pip install cryptography  #DONE
-    print("66. PEM ↔ DER Converter")#pip install cryptography  #DONE
+    print("66. PEM <-> DER Converter")#pip install cryptography  #DONE
     print("67. Public Key Extractor")
     print("68. Fingerprint Generator")
 
@@ -115,6 +115,7 @@ def menu():
     print("74. Entropy Analyzer")
     print("75. Randomness Test Suite")
     print("76. Key Strength Analyzer")
+
 
     # Malware & Fuzzy Analysis
     print("\n[MALWARE & FUZZY ANALYSIS]")
@@ -3134,6 +3135,7 @@ def estimate_password_entropy(password: str) -> float:
     return round(entropy, 2)
 
 def password_weakness_checks(password: str):
+    import re
     issues = []
 
     if len(password) < 8:
