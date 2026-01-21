@@ -628,6 +628,39 @@ def rc2_decrypt(ciphertext_b64: str, key: str) -> str:
     plaintext = unpad(cipher.decrypt(ciphertext), 8)
 
     return plaintext.decode()
+def rc4_init(key: bytes):
+    S = list(range(256))
+    j = 0
+
+    for i in range(256):
+        j = (j + S[i] + key[i % len(key)]) % 256
+        S[i], S[j] = S[j], S[i]
+
+    return S
+
+
+def rc4_generate(S, data_len):
+    i = j = 0
+    keystream = []
+
+    for _ in range(data_len):
+        i = (i + 1) % 256
+        j = (j + S[i]) % 256
+        S[i], S[j] = S[j], S[i]
+        K = S[(S[i] + S[j]) % 256]
+        keystream.append(K)
+
+    return keystream
+def rc4_crypt(data: bytes, key: bytes) -> bytes:
+    S = rc4_init(key)
+    keystream = rc4_generate(S, len(data))
+    return bytes([d ^ k for d, k in zip(data, keystream)])
+def rc4_drop_crypt(data: bytes, key: bytes, drop_n=768) -> bytes:
+    S = rc4_init(key)
+    _ = rc4_generate(S, drop_n)   # discard biased output
+    keystream = rc4_generate(S, len(data))
+    return bytes([d ^ k for d, k in zip(data, keystream)])
+
 def derive_aes_key(password: str, key_size: int = 32) -> bytes:
     import hashlib
     """
@@ -1339,6 +1372,70 @@ def sigaba_simulator(text, rotors):
         result += ALPHABET[idx]
 
     return result
+
+def detect_hash_format(hash_str: str):
+    import re
+    if re.fullmatch(r"[a-fA-F0-9]+", hash_str):
+        return "hex"
+    if re.fullmatch(r"[A-Za-z0-9+/=]+", hash_str):
+        return "base64"
+    return "unknown"
+def possible_hash_algorithms(hash_str: str):
+    length = len(hash_str)
+    fmt = detect_hash_format(hash_str)
+
+    if fmt != "hex":
+        return []
+
+    mapping = {
+        32: ["MD5"],
+        40: ["SHA1"],
+        56: ["SHA224"],
+        64: ["SHA256", "BLAKE2s"],
+        96: ["SHA384"],
+        128: ["SHA512", "BLAKE2b"]
+    }
+
+    return mapping.get(length, [])
+
+def hash_security_level(algo: str):
+    weak = ["MD5", "SHA1"]
+    if algo in weak:
+        return "WEAK (collision attacks exist)"
+    return "STRONG (no practical collisions known)"
+def cracking_feasibility(algo: str):
+    if algo == "MD5":
+        return "Easily crackable (rainbow tables, GPU)"
+    if algo == "SHA1":
+        return "Crackable with enough resources"
+    return "Not feasible without brute force"
+def analyze_hash(hash_str: str):
+    fmt = detect_hash_format(hash_str)
+    candidates = possible_hash_algorithms(hash_str)
+
+    analysis = {
+        "hash": hash_str,
+        "format": fmt,
+        "length": len(hash_str),
+        "possible_algorithms": candidates,
+        "analysis": []
+    }
+
+    for algo in candidates:
+        analysis["analysis"].append({
+            "algorithm": algo,
+            "security": hash_security_level(algo),
+            "crack_feasibility": cracking_feasibility(algo)
+        })
+
+    if not candidates:
+        analysis["analysis"].append({
+            "note": "Unknown or custom hash format"
+        })
+
+    return analysis
+
+
 def generate_all_hashes(data: str) -> dict:
     import hashlib
 
@@ -3488,6 +3585,32 @@ def coder_ops():
                     else:
                         print("Invalid option. Try again.")
             rc2_ops()
+        elif op == 14:
+            def RC4_ops():
+                print("\nRC4 STREAM CIPHER")
+                print("1. RC4")
+                print("2. RC4-Drop")
+
+                choice = input("Choose mode: ")
+                text = input("Enter text: ").encode()
+                key = input("Enter key: ").encode()
+
+                if choice == "1":
+                    result = rc4_crypt(text, key)
+
+                elif choice == "2":
+                    drop = int(input("Drop bytes (e.g. 768 / 1024): "))
+                    result = rc4_drop_crypt(text, key, drop)
+
+                else:
+                    print("Invalid option.")
+                    return
+
+                print("Output (hex):", result.hex())
+                print("Output (text):", result.decode(errors="ignore"))
+
+            RC4_ops()
+
         elif op == 15:
             def AES_ops():
                 while True:
@@ -4027,7 +4150,25 @@ def coder_ops():
                     else:
                         print("Entered wrong option!!,Try again")
             morse_en_de_coders_ops()
-#       elif op == 34:
+        elif op == 34:
+            def analyze_hash_ops():
+                h = input("Enter hash value: ")
+                result = analyze_hash(h)
+
+                print("\n🔍 HASH ANALYSIS REPORT")
+                print("----------------------")
+                print("Format:", result["format"])
+                print("Length:", result["length"])
+
+                for item in result["analysis"]:
+                    if "algorithm" in item:
+                        print("\nAlgorithm:", item["algorithm"])
+                        print("Security:", item["security"])
+                        print("Crack Feasibility:", item["crack_feasibility"])
+                    else:
+                        print(item["note"])
+            analyze_hash_ops()
+
         elif op == 35:
             def generate_all_hashes_cli():
                 print("\n[ GENERATE ALL HASHES ]")
