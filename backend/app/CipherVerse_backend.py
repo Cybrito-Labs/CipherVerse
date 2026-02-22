@@ -7,36 +7,36 @@ def menu():
 
     # Classical Ciphers
     print("\n[CLASSICAL CIPHERS]")
-    print("1. Caesar Cipher (Encode/Decode)") 
-    print("2. Vigenère Cipher (Encode/Decode)") 
-    print("3. Atbash Cipher") 
-    print("4. Bacon Cipher (Encode/Decode)") 
-    print("5. Bifid Cipher (Encode/Decode)") 
-    print("6. Affine Cipher (Encode/Decode)") 
-    print("7. A1Z26 Cipher (Encode/Decode)") 
-    print("8. Rail Fence Cipher (Encode/Decode)") 
-    print("9. Substitute Cipher") 
+    print("1. Caesar Cipher (Encode/Decode)") #DONE
+    print("2. Vigenère Cipher (Encode/Decode)") #DONE
+    print("3. Atbash Cipher") #DONE
+    print("4. Bacon Cipher (Encode/Decode)") #DONE
+    print("5. Bifid Cipher (Encode/Decode)") #DONE
+    print("6. Affine Cipher (Encode/Decode)") #DONE
+    print("7. A1Z26 Cipher (Encode/Decode)") #DONE
+    print("8. Rail Fence Cipher (Encode/Decode)") #DONE
+    print("9. Substitute Cipher") #DONE
 
     # Modern and Block Ciphers
     print("\n[BLOCK & STREAM CIPHERS]")
-    print("10. XOR / XOR Brute Force") 
-    print("11. ROT13 / ROT47") 
-    print("12. CipherSaber2 (Encrypt/Decrypt)") 
-    print("13. RC2 (Encrypt/Decrypt)") 
-    print("14. RC4 / RC4 Drop")  
-    print("15. AES (Encrypt/Decrypt)") 
-    print("16. DES (Encrypt/Decrypt)") 
-    print("17. Triple DES (Encrypt/Decrypt)") 
-    print("18. Blowfish (Encrypt/Decrypt)") 
-    print("19. SM4 (Encrypt/Decrypt)") 
+    print("10. XOR / XOR Brute Force") #DONE
+    print("11. ROT13 / ROT47") #DONE
+    print("12. CipherSaber2 (Encrypt/Decrypt)") #DONE
+    print("13. RC2 (Encrypt/Decrypt)") #pip install pycryptodome #DONE
+    print("14. RC4 / RC4 Drop")  #DONE
+    print("15. AES (Encrypt/Decrypt)") #DONE
+    print("16. DES (Encrypt/Decrypt)") #DONE
+    print("17. Triple DES (Encrypt/Decrypt)") #DONE
+    print("18. Blowfish (Encrypt/Decrypt)") #DONE
+    print("19. SM4 (Encrypt/Decrypt)") #DONE
 
     # Emulated / Historic Machines
     print("\n[HISTORIC MACHINES]") 
-    print("20. Enigma") 
-    print("21. Bombe") 
-    print("22. Multiple Bombe") 
-    print("23. Typex") 
-    print("24. Lorenz") 
+    print("20. Enigma") #DONE
+    print("21. Bombe") #DONE
+    print("22. Multiple Bombe") #DONE
+    print("23. Typex") #DONE
+    print("24. Lorenz") #DONE
     print("25. Colossus") 
     print("26. SIGABA")
 
@@ -54,18 +54,18 @@ def menu():
     print("\n[HASHING & ANALYSIS]")
     print("34. Analyze Hash")
     print("35. Generate All Hashes")
-    print("36. MD2 / MD4 / MD5 / MD6")  
+    print("36. MD2 / MD4 / MD5 / MD6") #MD4 MD5 DONE
     print("37. SHA0 / SHA1 / SHA2 / SHA3")
     print("38. SM3 / Keccak / Shake")
     print("39. RIPEMD / HAS-160 / Whirlpool / Snefru")
     print("40. BLAKE2b / BLAKE2s") 
-    print("41. GOST / Streebog") 
-    print("42. SSDEEP / CTPH / Compare SSDEEP or CTPH hashes") 
+    print("41. GOST / Streebog") #fail------------------------pip install -U pycryptodome
+    print("42. SSDEEP / CTPH / Compare SSDEEP or CTPH hashes") #fail--------pip install ssdeep
 
     # Passwords and HMACs
     print("\n[PASSWORDS & MACS]")
     print("43. HMAC")
-    print("44. Bcrypt (Hash/Compare/Parse)")  
+    print("44. Bcrypt (Hash/Compare/Parse)")  #fail-----------pip install bcrypt
 
     # Key Derivation & Random
     print("\n[KEYS & RANDOMNESS]")
@@ -885,7 +885,6 @@ def tdes_encrypt(plaintext: str, password: str, mode: str = "CBC") -> str:
     import base64
     import hashlib
 
-    # Derive 24-byte (3-key) DES3 key
     key = hashlib.sha256(password.encode()).digest()[:24]
     key = DES3.adjust_key_parity(key)
 
@@ -973,7 +972,6 @@ def tdes_decrypt(ciphertext_b64: str, password: str, mode: str = "CBC") -> str:
     else:
         raise ValueError("Unsupported Triple DES mode")
 def derive_blowfish_key(password: str, max_len: int = 56) -> bytes:
-    # Blowfish supports up to 56 bytes
     return hashlib.sha256(password.encode()).digest()[:max_len]
 def blowfish_encrypt(plaintext: str,password: str,mode: str = "CBC") -> str:
     from Crypto.Cipher import Blowfish
