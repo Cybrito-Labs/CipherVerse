@@ -1,7 +1,6 @@
 from fastapi import FastAPI
+from app.api.symmetric_routes import router as symmetric_router
 
-app = FastAPI()
+app = FastAPI(title="CipherVerse API", version="1.0.0")
 
-@app.get("/")
-def root():
-    return {"message": "CipherVerse backend running"}
+app.include_router(symmetric_router)
