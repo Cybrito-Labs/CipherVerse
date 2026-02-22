@@ -1,3 +1,28 @@
+def generate_polybius_square(key=""):
+    ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ"  # J removed
+    key = key.upper().replace("J", "I")
+    seen = set()
+    square = []
+    for c in key + ALPHABET:
+        if c.isalpha() and c not in seen:
+            seen.add(c)
+            square.append(c)
+    char_to_pos = {}
+    pos_to_char = {}
+    idx = 0
+    for r in range(1, 6):
+        for c in range(1, 6):
+            char_to_pos[square[idx]] = (r, c)
+            pos_to_char[(r, c)] = square[idx]
+            idx += 1
+    return char_to_pos, pos_to_char
+
+def mod_inverse(a, m=26):
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return None
+
 def caeser(data: str,shift: int)->str:
     result=''
     for char in data:
@@ -7,7 +32,7 @@ def caeser(data: str,shift: int)->str:
         else:
             result += char
     return result
-
+#done routes
 def vigenere_encrypter(keyword, data):
     result = []
     keyword = keyword.lower()
@@ -20,7 +45,7 @@ def vigenere_encrypter(keyword, data):
         else:
             result.append(char)
     return ''.join(result)
-
+#done routes
 def vigenere_decrypter(data, keyword):
     result = []
     keyword = keyword.lower()
@@ -33,7 +58,7 @@ def vigenere_decrypter(data, keyword):
         else:
             result.append(char)
     return ''.join(result)
-
+#done routes
 def atbash_cipher(data):
     result = ""
     for char in data:
@@ -44,7 +69,7 @@ def atbash_cipher(data):
         else:
             result += char
     return result
-
+#done routes
 def becon_encoder(data):
     BACON_TABLE = {
         'A': 'AAAAA', 'B': 'AAAAB', 'C': 'AAABA', 'D': 'AAABB', 'E': 'AABAA',
@@ -54,7 +79,6 @@ def becon_encoder(data):
         'U': 'BABAA', 'V': 'BABAB', 'W': 'BABBA', 'X': 'BABBB', 'Y': 'BBAAA',
         'Z': 'BBAAB'
     }
-
     REVERSE_BACON_TABLE = {v: k for k, v in BACON_TABLE.items()}
     result = []
     for char in data.upper():

@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-from app.core.classical import caesar_cipher
-app = FastAPI()
+from app.api import classical_routes
 
-@app.get("/")
-def root():
-    return {"message": "CipherVerse backend running"}
+app = FastAPI(
+    title="CipherVerse API",
+    version="1.0.0"
+)
 
-
-
-print(caesar_cipher("HELLO", 3))
+app.include_router(classical_routes.router)
