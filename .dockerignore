@@ -1,0 +1,21 @@
+# Ignore files to keep the Docker image small and avoid issues
+node_modules/
+dist/
+build/
+.git/
+.gitignore
+*.md
+LICENSE
+.vscode/
+.idea/
+venv/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# Exception to keep requirements.txt
+#!requirements.txt
