@@ -507,6 +507,8 @@ def pkcs7_pad(data: bytes, block_size: int = 16) -> bytes:
 def pkcs7_unpad(data: bytes) -> bytes:
     pad_len = data[-1]
     return data[:-pad_len]
+
+
 def sm4_encrypt(plaintext: str, password: str, mode: str = "ECB") -> str:
     try:
         from gmssl.sm4 import CryptSM4, SM4_ENCRYPT
@@ -532,6 +534,8 @@ def sm4_encrypt(plaintext: str, password: str, mode: str = "ECB") -> str:
 
     else:
         raise ValueError("gmssl supports ONLY ECB and CBC modes")
+
+
 def sm4_decrypt(ciphertext_b64: str, password: str, mode: str = "ECB") -> str:
     try:
         from gmssl.sm4 import CryptSM4, SM4_DECRYPT
@@ -557,3 +561,4 @@ def sm4_decrypt(ciphertext_b64: str, password: str, mode: str = "ECB") -> str:
 
     else:
         raise ValueError("gmssl supports ONLY ECB and CBC modes")
+
