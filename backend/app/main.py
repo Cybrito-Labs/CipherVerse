@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api import (
     classical_routes,
     symmetric_routes,
@@ -18,6 +19,15 @@ app = FastAPI(
     title="CipherVerse API",
     version="1.0.0",
     description="A production-grade cryptographic and forensics API"
+)
+
+# CORS Configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permits all origins; adjust for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Register Routers
