@@ -45,8 +45,8 @@ def image_lsb_decode(img_path: str) -> str:
         for x in range(img.width):
             r, g, b = pixels[x, y]
             bits += str(r & 1) + str(g & 1) + str(b & 1)
-            if bits.endswith("1111111111111110"):
-                clean_bits = bits[:-16]
+            if "1111111111111110" in bits:
+                clean_bits = bits[:bits.find("1111111111111110")]
                 chars = [clean_bits[i:i+8] for i in range(0, len(clean_bits), 8)]
                 return "".join(chr(int(b, 2)) for b in chars if len(b) == 8)
     return ""
