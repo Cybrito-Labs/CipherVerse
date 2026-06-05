@@ -21,11 +21,11 @@ def password_strength_route(request: PasswordStrengthRequest):
 
 @router.post("/salt/generate", response_model=dict)
 def salt_generate_route(request: SaltRequest):
-    return {"salt": utilities.generate_salt(request.length)}
+    return {"result": utilities.generate_salt(request.length)}
 
 @router.post("/checksum/fletcher16", response_model=dict)
 def fletcher16_route(request: ChecksumRequest):
-    return {"checksum": utilities.fletcher16(request.data.encode())}
+    return {"result": str(utilities.fletcher16(request.data.encode()))}
 
 @router.post("/jwt/sign", response_model=dict)
 def jwt_sign_route(request: JWTRequest):

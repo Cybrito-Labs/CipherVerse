@@ -3,7 +3,8 @@ from app.core import certificates
 from app.models.certificates_models import (
     X509Response,
     TLSRequest,
-    FingerprintRequest
+    FingerprintRequest,
+    X509ParseRequest
 )
 
 router = APIRouter(
@@ -12,8 +13,8 @@ router = APIRouter(
 )
 
 @router.post("/x509/parse", response_model=X509Response)
-def x509_parse_route(cert_data: bytes):
-    return certificates.parse_x509_certificate(cert_data)
+def x509_parse_route(request: X509ParseRequest):
+    return certificates.parse_x509_certificate(request.cert_data.encode())
 
 @router.post("/tls/analyze", response_model=X509Response)
 def tls_analyze_route(request: TLSRequest):
@@ -22,4 +23,4 @@ def tls_analyze_route(request: TLSRequest):
 @router.post("/x509/fingerprint", response_model=dict)
 def x509_fingerprint_route(request: FingerprintRequest):
     result = certificates.generate_fingerprint(request.data.encode(), request.algorithm)
-    return {"fingerprint": result}
+    return {"result": result}

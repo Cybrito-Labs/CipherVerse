@@ -27,4 +27,4 @@ def merkle_route(request: MerkleRequest):
 
 @router.post("/wif/encode", response_model=dict)
 def wif_encode_route(request: WIFRequest):
-    return {"wif": blockchain.wif_encode(request.private_key_hex, request.compressed, request.testnet)}
+    return {"result": blockchain.wif_encode(request.private_key_hex, request.compressed, request.testnet)}

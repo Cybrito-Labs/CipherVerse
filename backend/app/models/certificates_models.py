@@ -18,3 +18,6 @@ class TLSRequest(BaseModel):
 class FingerprintRequest(BaseModel):
     data: str
     algorithm: str = "sha256"
+
+class X509ParseRequest(BaseModel):
+    cert_data: str

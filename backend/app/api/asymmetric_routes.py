@@ -44,3 +44,13 @@ def rsa_verify_route(request: RSAVerifyRequest):
 def dsa_generate_keys_route():
     pub, priv = asymmetric.dsa_generate_keys()
     return {"public_key": pub, "private_key": priv}
+
+@router.post("/dsa/sign", response_model=AsymmetricResponse)
+def dsa_sign_route(request: RSASignRequest):
+    result = asymmetric.dsa_sign(request.message, request.private_key)
+    return {"result": result}
+
+@router.post("/dsa/verify", response_model=AsymmetricResponse)
+def dsa_verify_route(request: RSAVerifyRequest):
+    valid = asymmetric.dsa_verify(request.message, request.signature, request.public_key)
+    return {"result": "Valid" if valid else "Invalid", "valid": valid}
