@@ -37,7 +37,7 @@ export function ToolPageLayout({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          !noGrid && "grid grid-cols-1 lg:grid-cols-[45%_55%] gap-6 items-start"
+          !noGrid && "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[45%_55%] gap-6 items-start"
         )}
       >
         {children}

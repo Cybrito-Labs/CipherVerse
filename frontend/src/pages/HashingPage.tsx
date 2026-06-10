@@ -50,13 +50,21 @@ interface KdfResponse {
   iterations?: number;
 }
 
+interface ScryptResponse {
+  salt: string;
+  hash: string;
+  n: number;
+  r: number;
+  p: number;
+}
+
 export default function HashingPage() {
   const [activeTab, setActiveTab] = useState<'hash' | 'hmac' | 'pbkdf2' | 'scrypt' | 'bcrypt'>('hash');
 
   const hashMutation = useToolExecution<z.infer<typeof hashSchema>, HashResponse>({ endpoint: '/hashing/hash' });
   const hmacMutation = useToolExecution<z.infer<typeof hmacSchema>, HashResponse>({ endpoint: '/hashing/hmac' });
   const pbkdf2Mutation = useToolExecution<z.infer<typeof pbkdf2Schema>, KdfResponse>({ endpoint: '/hashing/pbkdf2' });
-  const scryptMutation = useToolExecution<z.infer<typeof scryptSchema>, KdfResponse>({ endpoint: '/hashing/scrypt' });
+  const scryptMutation = useToolExecution<z.infer<typeof scryptSchema>, ScryptResponse>({ endpoint: '/hashing/scrypt' });
   const bcryptMutation = useToolExecution<z.infer<typeof bcryptSchema> & { algorithm: string }, HashResponse>({ endpoint: '/hashing/bcrypt/hash' });
 
   const hashForm = useForm<z.infer<typeof hashSchema>>({ resolver: zodResolver(hashSchema) as any, defaultValues: { text: '', algorithm: 'sha256' } });
@@ -397,7 +405,7 @@ export default function HashingPage() {
           activeTab === 'hash' ? hashMutation.data?.result :
           activeTab === 'hmac' ? hmacMutation.data?.result :
           activeTab === 'pbkdf2' ? pbkdf2Mutation.data?.derived_key :
-          activeTab === 'scrypt' ? scryptMutation.data?.derived_key :
+          activeTab === 'scrypt' ? scryptMutation.data?.hash :
           bcryptMutation.data?.result
         }
         isLoading={isPending}
@@ -448,9 +456,27 @@ export default function HashingPage() {
               <ShieldCheck className="w-4 h-4 text-[#14532D]" />
               <h4 className="text-[13px] font-semibold text-foreground">Security Report</h4>
             </div>
-            <div className="bg-background border border-border rounded-lg p-3">
-              <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Generated Salt</div>
-              <div className="text-[13px] font-mono text-foreground truncate">{scryptMutation.data.salt}</div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-background border border-border rounded-lg p-3 col-span-2">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Generated Salt</div>
+                <div className="text-[13px] font-mono text-foreground truncate">{scryptMutation.data.salt}</div>
+              </div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">N (Cost)</div>
+                <div className="text-[13px] font-mono text-foreground">{scryptMutation.data.n.toLocaleString()}</div>
+              </div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">r (Block Size)</div>
+                <div className="text-[13px] font-mono text-foreground">{scryptMutation.data.r}</div>
+              </div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">p (Parallelization)</div>
+                <div className="text-[13px] font-mono text-foreground">{scryptMutation.data.p}</div>
+              </div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Key Length</div>
+                <div className="text-[13px] font-mono text-foreground">{scryptForm.getValues('dklen')} bytes</div>
+              </div>
             </div>
           </div>
         )}
