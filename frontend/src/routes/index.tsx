@@ -72,6 +72,7 @@ const TypexPage = lazy(() => import('@/pages/historic/TypexPage'));
 
 const ApiExplorerPage = lazy(() => import('@/pages/ApiExplorerPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function SuspenseWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -205,6 +206,7 @@ export const router = createBrowserRouter([
       },
       { path: 'api-explorer', element: <SuspenseWrapper><ApiExplorerPage /></SuspenseWrapper> },
       { path: 'settings', element: <SuspenseWrapper><SettingsPage /></SuspenseWrapper> },
+      { path: '*', element: <SuspenseWrapper><NotFound /></SuspenseWrapper> },
     ],
   },
 ]);
