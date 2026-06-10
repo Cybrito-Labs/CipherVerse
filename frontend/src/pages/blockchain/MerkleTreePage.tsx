@@ -25,7 +25,7 @@ interface MerkleResponse {
 }
 
 export default function MerkleTreePage() {
-  const mutation = useToolExecution<z.infer<typeof schema>, MerkleResponse>({ endpoint: '/blockchain/merkle' });
+  const mutation = useToolExecution<{ items: string[], algorithm: string }, MerkleResponse>({ endpoint: '/blockchain/merkle' });
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: { items: [{ value: 'Item 1' }, { value: 'Item 2' }], algorithm: 'sha256' }

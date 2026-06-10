@@ -21,7 +21,7 @@ const schema = z.object({
   payloadStr: z.string().min(2, 'Payload must be a valid JSON object string'),
   secret: z.string().min(1, 'Secret is required'),
   algo: z.enum(['HS256', 'HS384', 'HS512']),
-  exp_seconds: z.coerce.number().min(0, 'Must be positive'),
+  exp_seconds: z.number().min(0, 'Must be positive'),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -128,7 +128,7 @@ export default function JwtSignPage() {
               <Input
                 type="number"
                 className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
-                {...form.register('exp_seconds')}
+                {...form.register('exp_seconds', { valueAsNumber: true })}
               />
             </div>
           </div>

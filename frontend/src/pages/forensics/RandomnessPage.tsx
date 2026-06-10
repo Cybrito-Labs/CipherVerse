@@ -111,7 +111,7 @@ export default function RandomnessPage() {
                     <Tooltip
                       contentStyle={{ backgroundColor: '#0A0A0A', borderColor: '#27272A', borderRadius: '8px' }}
                       itemStyle={{ color: '#00e5ff' }}
-                      formatter={(val: number) => [`${val.toFixed(2)}%`, 'Frequency']}
+                      formatter={(val: any) => [`${Number(val).toFixed(2)}%`, 'Frequency']}
                     />
                     <Bar dataKey="value" fill="#00e5ff" radius={[4, 4, 0, 0]} maxBarSize={60} />
                   </BarChart>

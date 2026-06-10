@@ -1,4 +1,8 @@
-export function LoadingState() {
+interface LoadingStateProps {
+  message?: string;
+}
+
+export function LoadingState({ message }: LoadingStateProps) {
   return (
     <div className="space-y-4">
       {/* Vercel-style skeleton loaders */}

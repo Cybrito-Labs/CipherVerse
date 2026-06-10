@@ -28,12 +28,11 @@ export default function TypexPage() {
 
   const mutation = useMutation<TypexResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
-      const res = await api.post('/historic/typex', {
+      return await api.post<TypexResponse>('/historic/typex', {
         text: data.text,
         rotors: 5,
         positions: positions
       });
-      return res.data;
     },
   });
 

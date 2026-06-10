@@ -31,12 +31,11 @@ interface BombeResponse {
 export default function BombePage() {
   const mutation = useMutation<BombeResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
-      const res = await api.post('/historic/bombe', {
+      return await api.post<BombeResponse>('/historic/bombe', {
         ciphertext: data.ciphertext,
         crib: data.crib,
         rotor_order: [data.r1_type, data.r2_type, data.r3_type],
       });
-      return res.data;
     },
   });
 

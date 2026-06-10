@@ -33,15 +33,13 @@ export default function TextStegoPage() {
 
   const encMutation = useMutation<StegoResponse, Error, z.infer<typeof encSchema>>({
     mutationFn: async (data) => {
-      const res = await api.post('/steganography/text/encode', data);
-      return res.data;
+      return await api.post<StegoResponse>('/steganography/text/encode', data);
     },
   });
 
   const decMutation = useMutation<StegoResponse, Error, z.infer<typeof decSchema>>({
     mutationFn: async (data) => {
-      const res = await api.post(`/steganography/text/decode?text=${encodeURIComponent(data.text)}`);
-      return res.data;
+      return await api.post<StegoResponse>('/steganography/text/decode', data);
     },
   });
 

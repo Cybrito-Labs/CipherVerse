@@ -32,12 +32,11 @@ export default function EnigmaPage() {
 
   const mutation = useMutation<EnigmaResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
-      const res = await api.post('/historic/enigma', {
+      return await api.post<EnigmaResponse>('/historic/enigma', {
         text: data.text,
         rotor_order: [data.r1_type, data.r2_type, data.r3_type],
         rotor_positions: positions
       });
-      return res.data;
     },
   });
 
