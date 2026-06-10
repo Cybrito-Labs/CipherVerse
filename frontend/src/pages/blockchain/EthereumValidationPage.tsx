@@ -43,10 +43,10 @@ export default function EthereumValidationPage() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Ethereum Address</Label>
+            <Label className="text-foreground">Ethereum Address</Label>
             <Input 
               placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" 
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono" 
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono" 
               {...form.register('address')} 
             />
             {form.formState.errors.address && <p className="text-sm text-destructive">{form.formState.errors.address.message}</p>}
@@ -78,9 +78,9 @@ export default function EthereumValidationPage() {
             
             {res.valid && (
               <div className="w-full mt-4 space-y-2">
-                <div className="flex justify-between p-2 rounded bg-[#000000] border border-[#27272A] text-sm">
-                  <span className="text-[#A1A1AA]">Type:</span>
-                  <span className="font-mono font-bold text-[#EDEDED]">{res.address_type}</span>
+                <div className="flex justify-between p-2 rounded bg-background border border-border text-sm">
+                  <span className="text-muted-foreground">Type:</span>
+                  <span className="font-mono font-bold text-foreground">{res.address_type}</span>
                 </div>
               </div>
             )}

@@ -89,9 +89,9 @@ export default function JwtSignPage() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">JSON Payload</Label>
+            <Label className="text-foreground">JSON Payload</Label>
             <Textarea
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono min-h-[150px] text-xs"
+              className="bg-background border-border focus:border-muted-foreground text-foreground font-mono min-h-[150px] text-xs"
               {...form.register('payloadStr')}
             />
             {form.formState.errors.payloadStr && <p className="text-sm text-destructive">{form.formState.errors.payloadStr.message}</p>}
@@ -99,10 +99,10 @@ export default function JwtSignPage() {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Secret Key</Label>
+            <Label className="text-foreground">Secret Key</Label>
             <Input
               type="password"
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+              className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
               {...form.register('secret')}
             />
             {form.formState.errors.secret && <p className="text-sm text-destructive">{form.formState.errors.secret.message}</p>}
@@ -110,24 +110,24 @@ export default function JwtSignPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-3">
-              <Label className="text-[#EDEDED]">Algorithm</Label>
+              <Label className="text-foreground">Algorithm</Label>
               <Select onValueChange={(val) => form.setValue('algo', val as "HS256" | "HS384" | "HS512")} defaultValue={form.getValues('algo')}>
-                <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+                <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
                   <SelectValue placeholder="Algorithm" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                  <SelectItem value="HS256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC SHA-256</SelectItem>
-                  <SelectItem value="HS384" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC SHA-384</SelectItem>
-                  <SelectItem value="HS512" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC SHA-512</SelectItem>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="HS256" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC SHA-256</SelectItem>
+                  <SelectItem value="HS384" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC SHA-384</SelectItem>
+                  <SelectItem value="HS512" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC SHA-512</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-3">
-              <Label className="text-[#EDEDED]">Expires In (seconds)</Label>
+              <Label className="text-foreground">Expires In (seconds)</Label>
               <Input
                 type="number"
-                className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                 {...form.register('exp_seconds')}
               />
             </div>
@@ -152,7 +152,7 @@ export default function JwtSignPage() {
       >
         {res && (
           <div className="space-y-4 pt-2">
-            <div className="bg-[#000000] border border-[#27272A] rounded-xl p-6">
+            <div className="bg-background border border-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                   Encoded Token
@@ -160,19 +160,19 @@ export default function JwtSignPage() {
                 <CopyButton text={res.token} />
               </div>
 
-              <div className="font-mono text-sm break-all leading-relaxed bg-[#0A0A0A] p-4 rounded-lg border border-[#27272A]">
+              <div className="font-mono text-sm break-all leading-relaxed bg-card p-4 rounded-lg border border-border">
                 {res.token.split('.').map((part, i) => (
                   <span key={i} className={
                     i === 0 ? 'text-[#F87171] font-bold' :
                     i === 1 ? 'text-primary font-bold' :
                     'text-[#4ADE80] font-bold'
                   }>
-                    {part}{i < 2 ? <span className="text-[#52525B]">.</span> : ''}
+                    {part}{i < 2 ? <span className="text-muted-foreground">.</span> : ''}
                   </span>
                 ))}
               </div>
 
-              <div className="flex justify-start gap-4 text-xs font-mono mt-4 opacity-70 text-[#A1A1AA]">
+              <div className="flex justify-start gap-4 text-xs font-mono mt-4 opacity-70 text-muted-foreground">
                 <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-[#F87171]"></div> Header</div>
                 <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-primary"></div> Payload</div>
                 <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-[#4ADE80]"></div> Signature</div>

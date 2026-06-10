@@ -28,14 +28,14 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'fixed left-0 top-0 z-40 h-screen flex flex-col',
-        'bg-[#000000] border-r border-[#27272A]'
+        'bg-background border-r border-border'
       )}
     >
       {/* Logo */}
-      <div className="flex items-center h-16 px-4 border-b border-[#27272A]">
+      <div className="flex items-center h-16 px-4 border-b border-border">
         <NavLink to="/" className="flex items-center gap-3 min-w-0">
-          <div className="flex-shrink-0 w-8 h-8 rounded-md bg-[#EDEDED] flex items-center justify-center">
-            <Shield className="w-4 h-4 text-[#000000]" />
+          <div className="flex-shrink-0 w-8 h-8 rounded-md bg-foreground flex items-center justify-center">
+            <Shield className="w-4 h-4 text-background" />
           </div>
           <AnimatePresence>
             {!collapsed && (
@@ -46,7 +46,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden whitespace-nowrap"
               >
-                <span className="text-base font-semibold tracking-tight text-[#EDEDED]">
+                <span className="text-base font-semibold tracking-tight text-foreground">
                   CipherVerse
                 </span>
               </motion.div>
@@ -65,12 +65,12 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </ScrollArea>
 
       {/* Collapse Toggle */}
-      <div className="border-t border-[#27272A] p-3">
+      <div className="border-t border-border p-3">
         <button
           onClick={onToggle}
           className={cn(
             'flex items-center justify-center w-full py-2 rounded-md',
-            'text-[#A1A1AA] hover:text-[#EDEDED] hover:bg-[#171717]',
+            'text-muted-foreground hover:text-foreground hover:bg-secondary',
             'transition-colors duration-150'
           )}
         >
@@ -112,10 +112,10 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
             className="flex items-center justify-between px-3 mb-2 cursor-pointer group/label"
             onClick={() => setExpanded(!expanded)}
           >
-            <p className="text-[11px] font-medium text-[#A1A1AA] uppercase tracking-wider group-hover/label:text-[#EDEDED] transition-colors">
+            <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider group-hover/label:text-foreground transition-colors">
               {group.label}
             </p>
-            <ChevronDown className={cn("w-3.5 h-3.5 text-[#52525B] transition-transform duration-200", expanded ? "" : "-rotate-90")} />
+            <ChevronDown className={cn("w-3.5 h-3.5 text-muted-foreground transition-transform duration-200", expanded ? "" : "-rotate-90")} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -141,21 +141,21 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
                     'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
                     'transition-colors duration-150 group relative',
                     isActive
-                      ? 'bg-[#171717] text-[#EDEDED]'
-                      : 'text-[#A1A1AA] hover:bg-[#0A0A0A] hover:text-[#EDEDED]'
+                      ? 'bg-secondary text-foreground'
+                      : 'text-muted-foreground hover:bg-card hover:text-foreground'
                   )}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="sidebar-indicator"
-                      className="absolute left-0 top-[20%] bottom-[20%] w-[3px] rounded-r-md bg-[#EDEDED]"
+                      className="absolute left-0 top-[20%] bottom-[20%] w-[3px] rounded-r-md bg-foreground"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                   )}
                   <Icon
                     className={cn(
                       'w-[16px] h-[16px] flex-shrink-0 transition-colors',
-                      isActive ? 'text-[#EDEDED]' : 'text-[#A1A1AA] group-hover:text-[#EDEDED]'
+                      isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
                     )}
                   />
                   <AnimatePresence>
@@ -171,7 +171,7 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
                         {item.toolCount && (
                           <Badge
                             variant="secondary"
-                            className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-[#27272A] text-[#EDEDED] border-none font-medium"
+                            className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-input text-foreground border-none font-medium"
                           >
                             {item.toolCount}
                           </Badge>
@@ -186,9 +186,9 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
                 return (
                   <Tooltip key={item.path} delayDuration={0}>
                     <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={12} className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED]">
+                    <TooltipContent side="right" sideOffset={12} className="bg-card border-border text-foreground">
                       <p className="font-medium">{item.label}</p>
-                      <p className="text-xs text-[#A1A1AA]">{item.description}</p>
+                      <p className="text-xs text-muted-foreground">{item.description}</p>
                     </TooltipContent>
                   </Tooltip>
                 );

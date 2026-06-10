@@ -62,8 +62,8 @@ export default function MerkleTreePage() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <Label className="text-[#EDEDED]">Data Items (Leaves)</Label>
-              <Button type="button" variant="outline" size="sm" onClick={() => append({ value: '' })} className="border-[#27272A] text-[#A1A1AA] hover:text-[#EDEDED] hover:bg-[#171717]">
+              <Label className="text-foreground">Data Items (Leaves)</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => append({ value: '' })} className="border-border text-muted-foreground hover:text-foreground hover:bg-secondary">
                 <Plus className="w-4 h-4 mr-1" /> Add
               </Button>
             </div>
@@ -73,7 +73,7 @@ export default function MerkleTreePage() {
                 <div key={field.id} className="flex items-center gap-2">
                   <Input
                     placeholder={`Data Item ${index + 1}`}
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                     {...form.register(`items.${index}.value`)}
                   />
                   <Button
@@ -92,16 +92,16 @@ export default function MerkleTreePage() {
             {form.formState.errors.items && <p className="text-sm text-destructive">{form.formState.errors.items.message}</p>}
           </div>
 
-          <div className="space-y-3 pt-4 border-t border-[#27272A]">
-            <Label className="text-[#EDEDED]">Hash Algorithm</Label>
+          <div className="space-y-3 pt-4 border-t border-border">
+            <Label className="text-foreground">Hash Algorithm</Label>
             <Select onValueChange={(val) => form.setValue('algorithm', val as "sha256" | "sha1" | "md5")} defaultValue={form.getValues('algorithm')}>
-              <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+              <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
                 <SelectValue placeholder="Algorithm" />
               </SelectTrigger>
-              <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                <SelectItem value="sha256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-256 (Bitcoin standard)</SelectItem>
-                <SelectItem value="sha1" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-1</SelectItem>
-                <SelectItem value="md5" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">MD5</SelectItem>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="sha256" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-256 (Bitcoin standard)</SelectItem>
+                <SelectItem value="sha1" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-1</SelectItem>
+                <SelectItem value="md5" className="text-foreground hover:bg-secondary focus:bg-secondary">MD5</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -127,19 +127,19 @@ export default function MerkleTreePage() {
           <div className="space-y-8 overflow-x-auto pb-4 pt-2">
             <div className="p-4 rounded-xl border bg-primary/10 border-primary/30 text-center">
               <p className="text-xs font-semibold text-primary uppercase mb-1">Merkle Root</p>
-              <p className="font-mono text-sm break-all font-bold text-[#EDEDED]">{res.root}</p>
+              <p className="font-mono text-sm break-all font-bold text-foreground">{res.root}</p>
             </div>
 
             <div className="flex flex-col items-center gap-8 relative">
               {levels.map((levelIndex) => (
                 <div key={levelIndex} className="flex flex-col items-center w-full">
-                  <p className="text-[10px] uppercase text-[#A1A1AA] font-bold mb-2 tracking-widest">
+                  <p className="text-[10px] uppercase text-muted-foreground font-bold mb-2 tracking-widest">
                     {levelIndex === levels[0] ? 'Root Level' : levelIndex === 0 ? 'Leaves (Hashed)' : `Level ${levelIndex}`}
                   </p>
                   <div className="flex justify-center flex-wrap gap-4 w-full">
                     {res.tree[levelIndex].map((node, i) => (
                       <div key={i} className="flex flex-col items-center relative">
-                        <div className="px-3 py-2 rounded-lg border border-[#27272A] bg-[#000000] text-[10px] font-mono shadow-sm truncate max-w-[150px] sm:max-w-[200px] text-[#A1A1AA]" title={node}>
+                        <div className="px-3 py-2 rounded-lg border border-border bg-background text-[10px] font-mono shadow-sm truncate max-w-[150px] sm:max-w-[200px] text-muted-foreground" title={node}>
                           {node.substring(0, 16)}...{node.substring(node.length - 8)}
                         </div>
                       </div>

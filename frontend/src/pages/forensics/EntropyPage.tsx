@@ -52,10 +52,10 @@ export default function EntropyPage() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Target Filepath</Label>
+            <Label className="text-foreground">Target Filepath</Label>
             <Input
               placeholder="C:/evidence/suspect.exe"
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono"
               {...form.register('filepath')}
             />
             {form.formState.errors.filepath && <p className="text-sm text-destructive">{form.formState.errors.filepath.message}</p>}
@@ -88,10 +88,10 @@ export default function EntropyPage() {
               riskLevel={risk}
             />
 
-            <div className="bg-[#000000] border border-[#27272A] rounded-[14px] p-6 shadow-sm flex flex-col gap-6">
+            <div className="bg-background border border-border rounded-[14px] p-6 shadow-sm flex flex-col gap-6">
               <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">Entropy Scale</h4>
 
-              <div className="flex justify-between text-xs text-[#A1A1AA] mb-2">
+              <div className="flex justify-between text-xs text-muted-foreground mb-2">
                 <span>0.0 (Empty)</span>
                 <span>Text (~4-5)</span>
                 <span>Native Exec (~6-6.5)</span>

@@ -42,21 +42,21 @@ export default function TlsPage() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Hostname / Domain</Label>
+            <Label className="text-foreground">Hostname / Domain</Label>
             <Input 
               placeholder="example.com" 
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]" 
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground" 
               {...form.register('hostname')} 
             />
             {form.formState.errors.hostname && <p className="text-sm text-destructive">{form.formState.errors.hostname.message}</p>}
           </div>
           
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Port</Label>
+            <Label className="text-foreground">Port</Label>
             <Input 
               type="number"
               placeholder="443" 
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono" 
+              className="bg-background border-border focus:border-muted-foreground text-foreground font-mono" 
               {...form.register('port', { valueAsNumber: true })} 
             />
             {form.formState.errors.port && <p className="text-sm text-destructive">{form.formState.errors.port.message}</p>}

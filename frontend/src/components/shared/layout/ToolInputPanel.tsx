@@ -14,7 +14,7 @@ export function ToolInputPanel({ children, className }: ToolInputPanelProps) {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        "bg-[#0A0A0A] border border-[#27272A] rounded-[14px] p-6 shadow-sm flex flex-col gap-6",
+        "bg-card border border-border rounded-[14px] p-6 shadow-sm flex flex-col gap-6",
         className
       )}
     >

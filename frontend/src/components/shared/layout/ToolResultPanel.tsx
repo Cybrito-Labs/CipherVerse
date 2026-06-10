@@ -52,11 +52,11 @@ export function ToolResultPanel({
       </ResultPanel>
       
       {isEmpty && (
-        <div className="rounded-[14px] border border-[#27272A] border-dashed bg-[#000000] p-12 text-center flex flex-col items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#171717] flex items-center justify-center border border-[#27272A]">
-            <Settings2 className="w-5 h-5 text-[#52525B]" />
+        <div className="rounded-[14px] border border-border border-dashed bg-background p-12 text-center flex flex-col items-center justify-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center border border-border">
+            <Settings2 className="w-5 h-5 text-muted-foreground" />
           </div>
-          <p className="text-sm text-[#A1A1AA] max-w-[250px]">
+          <p className="text-sm text-muted-foreground max-w-[250px]">
             {emptyMessage}
           </p>
         </div>

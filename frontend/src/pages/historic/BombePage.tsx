@@ -69,39 +69,39 @@ export default function BombePage() {
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="grid grid-cols-3 gap-2">
             <div className="space-y-2">
-              <Label className="text-xs text-[#A1A1AA]">Left Rotor</Label>
+              <Label className="text-xs text-muted-foreground">Left Rotor</Label>
               <Select onValueChange={(val) => form.setValue('r1_type', val)} defaultValue={form.getValues('r1_type')}>
-                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
-                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                <SelectTrigger className="bg-background border-border text-foreground"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs text-[#A1A1AA]">Mid Rotor</Label>
+              <Label className="text-xs text-muted-foreground">Mid Rotor</Label>
               <Select onValueChange={(val) => form.setValue('r2_type', val)} defaultValue={form.getValues('r2_type')}>
-                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
-                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                <SelectTrigger className="bg-background border-border text-foreground"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs text-[#A1A1AA]">Right Rotor</Label>
+              <Label className="text-xs text-muted-foreground">Right Rotor</Label>
               <Select onValueChange={(val) => form.setValue('r3_type', val)} defaultValue={form.getValues('r3_type')}>
-                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
-                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                <SelectTrigger className="bg-background border-border text-foreground"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Intercepted Ciphertext</Label>
+            <Label className="text-foreground">Intercepted Ciphertext</Label>
             <Textarea
               placeholder="Enter Enigma encrypted text..."
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono min-h-[100px] uppercase"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono min-h-[100px] uppercase"
               {...form.register('ciphertext')}
               onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
             />
@@ -109,14 +109,14 @@ export default function BombePage() {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Plaintext Crib Guess</Label>
+            <Label className="text-foreground">Plaintext Crib Guess</Label>
             <Input
               placeholder="e.g., WETTER"
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono uppercase"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono uppercase"
               {...form.register('crib')}
               onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
             />
-            <p className="text-[11px] text-[#A1A1AA]">The crib must be equal to or shorter than the ciphertext.</p>
+            <p className="text-[11px] text-muted-foreground">The crib must be equal to or shorter than the ciphertext.</p>
             {form.formState.errors.crib && <p className="text-sm text-destructive">{form.formState.errors.crib.message}</p>}
           </div>
 
@@ -143,15 +143,15 @@ export default function BombePage() {
               {res.result}
             </div>
 
-            <h4 className="text-sm font-semibold text-[#A1A1AA] uppercase tracking-wider mt-4">Potential Initial Settings (Matches)</h4>
+            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-4">Potential Initial Settings (Matches)</h4>
             {res.matches.length === 0 ? (
-              <div className="p-8 text-center text-[#A1A1AA] border border-dashed border-[#27272A] rounded-xl">
+              <div className="p-8 text-center text-muted-foreground border border-dashed border-border rounded-xl">
                 No matching rotor positions found for this crib.
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[400px] overflow-y-auto pr-2">
                 {res.matches.map((match, i) => (
-                  <div key={i} className="p-3 bg-[#000000] border border-[#27272A] rounded-lg text-center font-mono font-bold tracking-widest text-[#EDEDED]">
+                  <div key={i} className="p-3 bg-background border border-border rounded-lg text-center font-mono font-bold tracking-widest text-foreground">
                     {match}
                   </div>
                 ))}
@@ -159,7 +159,7 @@ export default function BombePage() {
             )}
 
             {res.matches.length > 0 && (
-              <p className="text-xs text-[#A1A1AA] mt-4">
+              <p className="text-xs text-muted-foreground mt-4">
                 Take these 3-letter settings and test them in the Enigma Machine tool to see if the full message decrypts into readable German.
               </p>
             )}

@@ -65,7 +65,7 @@ export default function TypexPage() {
     >
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
-          <div className="p-4 rounded-xl border border-[#27272A] bg-[#000000] overflow-x-auto">
+          <div className="p-4 rounded-xl border border-border bg-background overflow-x-auto">
             <div className="flex justify-center gap-4 min-w-max pb-2">
               {[4, 3, 2, 1, 0].map((rotorIdx) => (
                 <RotorControl
@@ -80,10 +80,10 @@ export default function TypexPage() {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Plaintext / Ciphertext</Label>
+            <Label className="text-foreground">Plaintext / Ciphertext</Label>
             <Textarea
               placeholder="Enter text to encrypt or decrypt..."
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono min-h-[120px] uppercase"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono min-h-[120px] uppercase"
               {...form.register('text')}
               onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
             />

@@ -103,11 +103,11 @@ export default function HashingPage() {
           {activeTab === 'hash' && (
             <form onSubmit={hashForm.handleSubmit((d: any) => hashMutation.mutate(d))} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="text" className="text-[#EDEDED]">Text to Hash</Label>
+                <Label htmlFor="text" className="text-foreground">Text to Hash</Label>
                 <Textarea
                   id="text"
                   placeholder="Enter text to hash..."
-                  className="min-h-[120px] resize-y bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="min-h-[120px] resize-y bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...hashForm.register('text')}
                 />
                 {hashForm.formState.errors.text && (
@@ -116,19 +116,19 @@ export default function HashingPage() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="algorithm" className="text-[#EDEDED]">Algorithm</Label>
+                <Label htmlFor="algorithm" className="text-foreground">Algorithm</Label>
                 <Select value={hashForm.watch('algorithm')} onValueChange={(value) => hashForm.setValue('algorithm', value)}>
-                  <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+                  <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
                     <SelectValue placeholder="Select algorithm" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    <SelectItem value="sha256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-256</SelectItem>
-                    <SelectItem value="sha512" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-512</SelectItem>
-                    <SelectItem value="sha1" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-1</SelectItem>
-                    <SelectItem value="md5" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">MD5</SelectItem>
-                    <SelectItem value="blake2b" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">BLAKE2b</SelectItem>
-                    <SelectItem value="blake2s" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">BLAKE2s</SelectItem>
-                    <SelectItem value="sha3_256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA3-256</SelectItem>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="sha256" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-256</SelectItem>
+                    <SelectItem value="sha512" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-512</SelectItem>
+                    <SelectItem value="sha1" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-1</SelectItem>
+                    <SelectItem value="md5" className="text-foreground hover:bg-secondary focus:bg-secondary">MD5</SelectItem>
+                    <SelectItem value="blake2b" className="text-foreground hover:bg-secondary focus:bg-secondary">BLAKE2b</SelectItem>
+                    <SelectItem value="blake2s" className="text-foreground hover:bg-secondary focus:bg-secondary">BLAKE2s</SelectItem>
+                    <SelectItem value="sha3_256" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA3-256</SelectItem>
                   </SelectContent>
                 </Select>
                 {hashForm.formState.errors.algorithm && (
@@ -148,11 +148,11 @@ export default function HashingPage() {
           {activeTab === 'hmac' && (
             <form onSubmit={hmacForm.handleSubmit((d: any) => hmacMutation.mutate(d))} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="hmac_message" className="text-[#EDEDED]">Message</Label>
+                <Label htmlFor="hmac_message" className="text-foreground">Message</Label>
                 <Textarea
                   id="hmac_message"
                   placeholder="Enter message to authenticate..."
-                  className="min-h-[120px] resize-y bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="min-h-[120px] resize-y bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...hmacForm.register('message')}
                 />
                 {hmacForm.formState.errors.message && (
@@ -161,12 +161,12 @@ export default function HashingPage() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="hmac_key" className="text-[#EDEDED]">Secret Key</Label>
+                <Label htmlFor="hmac_key" className="text-foreground">Secret Key</Label>
                 <Input
                   id="hmac_key"
                   type="password"
                   placeholder="Enter secret key..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...hmacForm.register('key')}
                 />
                 {hmacForm.formState.errors.key && (
@@ -175,16 +175,16 @@ export default function HashingPage() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="hmac_algorithm" className="text-[#EDEDED]">Hash Algorithm</Label>
+                <Label htmlFor="hmac_algorithm" className="text-foreground">Hash Algorithm</Label>
                 <Select value={hmacForm.watch('algorithm')} onValueChange={(value) => hmacForm.setValue('algorithm', value)}>
-                  <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+                  <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
                     <SelectValue placeholder="Select algorithm" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    <SelectItem value="sha256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC-SHA256</SelectItem>
-                    <SelectItem value="sha512" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC-SHA512</SelectItem>
-                    <SelectItem value="sha1" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC-SHA1</SelectItem>
-                    <SelectItem value="md5" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">HMAC-MD5</SelectItem>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="sha256" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC-SHA256</SelectItem>
+                    <SelectItem value="sha512" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC-SHA512</SelectItem>
+                    <SelectItem value="sha1" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC-SHA1</SelectItem>
+                    <SelectItem value="md5" className="text-foreground hover:bg-secondary focus:bg-secondary">HMAC-MD5</SelectItem>
                   </SelectContent>
                 </Select>
                 {hmacForm.formState.errors.algorithm && (
@@ -204,12 +204,12 @@ export default function HashingPage() {
           {activeTab === 'pbkdf2' && (
             <form onSubmit={pbkdf2Form.handleSubmit((d: any) => pbkdf2Mutation.mutate(d))} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="pbkdf2_password" className="text-[#EDEDED]">Password / Passphrase</Label>
+                <Label htmlFor="pbkdf2_password" className="text-foreground">Password / Passphrase</Label>
                 <Input
                   id="pbkdf2_password"
                   type="password"
                   placeholder="Enter password to derive key from..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...pbkdf2Form.register('password')}
                 />
                 {pbkdf2Form.formState.errors.password && (
@@ -219,12 +219,12 @@ export default function HashingPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <Label htmlFor="iterations" className="text-[#EDEDED]">Iterations</Label>
+                  <Label htmlFor="iterations" className="text-foreground">Iterations</Label>
                   <Input
                     id="iterations"
                     type="number"
                     min="1"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...pbkdf2Form.register('iterations')}
                   />
                   {pbkdf2Form.formState.errors.iterations && (
@@ -233,12 +233,12 @@ export default function HashingPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="dklen" className="text-[#EDEDED]">Derived Key Length (bytes)</Label>
+                  <Label htmlFor="dklen" className="text-foreground">Derived Key Length (bytes)</Label>
                   <Input
                     id="dklen"
                     type="number"
                     min="16"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...pbkdf2Form.register('dklen')}
                   />
                   {pbkdf2Form.formState.errors.dklen && (
@@ -248,15 +248,15 @@ export default function HashingPage() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="hash_name" className="text-[#EDEDED]">Underlying Hash</Label>
+                <Label htmlFor="hash_name" className="text-foreground">Underlying Hash</Label>
                 <Select value={pbkdf2Form.watch('hash_name')} onValueChange={(value) => pbkdf2Form.setValue('hash_name', value)}>
-                  <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+                  <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
                     <SelectValue placeholder="Select hash" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    <SelectItem value="sha256" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-256</SelectItem>
-                    <SelectItem value="sha512" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-512</SelectItem>
-                    <SelectItem value="sha1" className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">SHA-1</SelectItem>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="sha256" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-256</SelectItem>
+                    <SelectItem value="sha512" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-512</SelectItem>
+                    <SelectItem value="sha1" className="text-foreground hover:bg-secondary focus:bg-secondary">SHA-1</SelectItem>
                   </SelectContent>
                 </Select>
                 {pbkdf2Form.formState.errors.hash_name && (
@@ -276,12 +276,12 @@ export default function HashingPage() {
           {activeTab === 'scrypt' && (
             <form onSubmit={scryptForm.handleSubmit((d: any) => scryptMutation.mutate(d))} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="scrypt_password" className="text-[#EDEDED]">Password / Passphrase</Label>
+                <Label htmlFor="scrypt_password" className="text-foreground">Password / Passphrase</Label>
                 <Input
                   id="scrypt_password"
                   type="password"
                   placeholder="Enter password to derive key from..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...scryptForm.register('password')}
                 />
                 {scryptForm.formState.errors.password && (
@@ -291,42 +291,42 @@ export default function HashingPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <Label htmlFor="n" className="text-[#EDEDED]">N (Cost Parameter)</Label>
+                  <Label htmlFor="n" className="text-foreground">N (Cost Parameter)</Label>
                   <Input
                     id="n"
                     type="number"
                     min="2"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...scryptForm.register('n')}
                   />
-                  <p className="text-[11px] text-[#A1A1AA]">CPU/Memory cost (power of 2)</p>
+                  <p className="text-[11px] text-muted-foreground">CPU/Memory cost (power of 2)</p>
                   {scryptForm.formState.errors.n && (
                     <p className="text-sm text-destructive">{scryptForm.formState.errors.n.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="r" className="text-[#EDEDED]">r (Block Size)</Label>
+                  <Label htmlFor="r" className="text-foreground">r (Block Size)</Label>
                   <Input
                     id="r"
                     type="number"
                     min="1"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...scryptForm.register('r')}
                   />
-                  <p className="text-[11px] text-[#A1A1AA]">Block size parameter</p>
+                  <p className="text-[11px] text-muted-foreground">Block size parameter</p>
                   {scryptForm.formState.errors.r && (
                     <p className="text-sm text-destructive">{scryptForm.formState.errors.r.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="p" className="text-[#EDEDED]">p (Parallelization)</Label>
+                  <Label htmlFor="p" className="text-foreground">p (Parallelization)</Label>
                   <Input
                     id="p"
                     type="number"
                     min="1"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...scryptForm.register('p')}
                   />
                   {scryptForm.formState.errors.p && (
@@ -335,12 +335,12 @@ export default function HashingPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="scrypt_dklen" className="text-[#EDEDED]">Derived Key Length</Label>
+                  <Label htmlFor="scrypt_dklen" className="text-foreground">Derived Key Length</Label>
                   <Input
                     id="scrypt_dklen"
                     type="number"
                     min="16"
-                    className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono"
+                    className="bg-background border-border focus:border-muted-foreground text-foreground font-mono"
                     {...scryptForm.register('dklen')}
                   />
                   {scryptForm.formState.errors.dklen && (
@@ -361,15 +361,15 @@ export default function HashingPage() {
           {activeTab === 'bcrypt' && (
             <form onSubmit={bcryptForm.handleSubmit((d: any) => bcryptMutation.mutate({ ...d, algorithm: 'bcrypt' }))} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="bcrypt_text" className="text-[#EDEDED]">Password</Label>
+                <Label htmlFor="bcrypt_text" className="text-foreground">Password</Label>
                 <Input
                   id="bcrypt_text"
                   type="password"
                   placeholder="Enter password to hash..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
                   {...bcryptForm.register('text')}
                 />
-                <p className="text-[11px] text-[#A1A1AA]">Bcrypt automatically handles salt generation and multiple rounds.</p>
+                <p className="text-[11px] text-muted-foreground">Bcrypt automatically handles salt generation and multiple rounds.</p>
                 {bcryptForm.formState.errors.text && (
                   <p className="text-sm text-destructive">{bcryptForm.formState.errors.text.message}</p>
                 )}
@@ -425,32 +425,32 @@ export default function HashingPage() {
         }
       >
         {activeTab === 'pbkdf2' && pbkdf2Mutation.data && (
-          <div className="mt-4 border-t border-[#27272A] pt-4 space-y-3">
+          <div className="mt-4 border-t border-border pt-4 space-y-3">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-4 h-4 text-[#14532D]" />
-              <h4 className="text-[13px] font-semibold text-[#EDEDED]">Security Report</h4>
+              <h4 className="text-[13px] font-semibold text-foreground">Security Report</h4>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-[#000000] border border-[#27272A] rounded-lg p-3">
-                <div className="text-[11px] text-[#A1A1AA] uppercase tracking-wider mb-1">Generated Salt</div>
-                <div className="text-[13px] font-mono text-[#EDEDED] truncate">{pbkdf2Mutation.data.salt}</div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Generated Salt</div>
+                <div className="text-[13px] font-mono text-foreground truncate">{pbkdf2Mutation.data.salt}</div>
               </div>
-              <div className="bg-[#000000] border border-[#27272A] rounded-lg p-3">
-                <div className="text-[11px] text-[#A1A1AA] uppercase tracking-wider mb-1">Iterations</div>
-                <div className="text-[13px] font-mono text-[#EDEDED]">{pbkdf2Form.getValues('iterations').toLocaleString()}</div>
+              <div className="bg-background border border-border rounded-lg p-3">
+                <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Iterations</div>
+                <div className="text-[13px] font-mono text-foreground">{pbkdf2Form.getValues('iterations').toLocaleString()}</div>
               </div>
             </div>
           </div>
         )}
         {activeTab === 'scrypt' && scryptMutation.data && (
-          <div className="mt-4 border-t border-[#27272A] pt-4 space-y-3">
+          <div className="mt-4 border-t border-border pt-4 space-y-3">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-4 h-4 text-[#14532D]" />
-              <h4 className="text-[13px] font-semibold text-[#EDEDED]">Security Report</h4>
+              <h4 className="text-[13px] font-semibold text-foreground">Security Report</h4>
             </div>
-            <div className="bg-[#000000] border border-[#27272A] rounded-lg p-3">
-              <div className="text-[11px] text-[#A1A1AA] uppercase tracking-wider mb-1">Generated Salt</div>
-              <div className="text-[13px] font-mono text-[#EDEDED] truncate">{scryptMutation.data.salt}</div>
+            <div className="bg-background border border-border rounded-lg p-3">
+              <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">Generated Salt</div>
+              <div className="text-[13px] font-mono text-foreground truncate">{scryptMutation.data.salt}</div>
             </div>
           </div>
         )}

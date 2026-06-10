@@ -79,11 +79,11 @@ export default function XorPage() {
           {activeTab === 'encrypt' && (
             <form onSubmit={encryptForm.handleSubmit((d) => encryptMutation.mutate(d))} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="enc_text" className="text-[#EDEDED]">Text</Label>
+                <Label htmlFor="enc_text" className="text-foreground">Text</Label>
                 <Textarea 
                   id="enc_text" 
                   placeholder="Enter text to encrypt..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px] font-mono text-sm" 
                   {...encryptForm.register('text')} 
                 />
                 {encryptForm.formState.errors.text && (
@@ -91,11 +91,11 @@ export default function XorPage() {
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="enc_key" className="text-[#EDEDED]">Key</Label>
+                <Label htmlFor="enc_key" className="text-foreground">Key</Label>
                 <Input 
                   id="enc_key" 
                   placeholder="Enter encryption key..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono" 
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono" 
                   {...encryptForm.register('key')} 
                 />
                 {encryptForm.formState.errors.key && (
@@ -114,11 +114,11 @@ export default function XorPage() {
           {activeTab === 'decrypt' && (
             <form onSubmit={decryptForm.handleSubmit((d) => decryptMutation.mutate(d))} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="dec_hex" className="text-[#EDEDED]">Hex Data</Label>
+                <Label htmlFor="dec_hex" className="text-foreground">Hex Data</Label>
                 <Textarea 
                   id="dec_hex" 
                   placeholder="Enter Hex data to decrypt..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px] font-mono text-sm" 
                   {...decryptForm.register('hex_data')} 
                 />
                 {decryptForm.formState.errors.hex_data && (
@@ -126,11 +126,11 @@ export default function XorPage() {
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="dec_key" className="text-[#EDEDED]">Key</Label>
+                <Label htmlFor="dec_key" className="text-foreground">Key</Label>
                 <Input 
                   id="dec_key" 
                   placeholder="Enter decryption key..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono" 
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono" 
                   {...decryptForm.register('key')} 
                 />
                 {decryptForm.formState.errors.key && (
@@ -149,14 +149,14 @@ export default function XorPage() {
           {activeTab === 'bruteforce' && (
             <form onSubmit={bruteForm.handleSubmit((d) => bruteMutation.mutate(d))} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="brute_hex" className="text-[#EDEDED]">Hex Data</Label>
+                <Label htmlFor="brute_hex" className="text-foreground">Hex Data</Label>
                 <Textarea 
                   id="brute_hex" 
                   placeholder="Enter Hex data to bruteforce..."
-                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px] font-mono text-sm" 
                   {...bruteForm.register('hex_data')} 
                 />
-                <p className="text-[11px] text-[#A1A1AA] mt-1">Bruteforces a single-byte XOR key.</p>
+                <p className="text-[11px] text-muted-foreground mt-1">Bruteforces a single-byte XOR key.</p>
                 {bruteForm.formState.errors.hex_data && (
                   <p className="text-sm text-destructive">{bruteForm.formState.errors.hex_data.message}</p>
                 )}
@@ -187,11 +187,11 @@ export default function XorPage() {
         {activeTab === 'bruteforce' && bruteMutation.data && (
           <div className="space-y-2 mt-4 max-h-[400px] overflow-auto pr-2">
             {bruteMutation.data.results.map(([key, text], idx) => (
-              <div key={idx} className="p-3 rounded-lg bg-[#000000] border border-[#27272A] text-sm flex gap-4">
+              <div key={idx} className="p-3 rounded-lg bg-background border border-border text-sm flex gap-4">
                 <div className="font-mono text-primary font-bold w-12 flex-shrink-0">
                   0x{key.toString(16).padStart(2, '0').toUpperCase()}
                 </div>
-                <div className="font-mono text-[#EDEDED] break-all">{text}</div>
+                <div className="font-mono text-foreground break-all">{text}</div>
               </div>
             ))}
           </div>

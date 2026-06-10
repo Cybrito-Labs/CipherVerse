@@ -80,13 +80,13 @@ export default function TextStegoPage() {
         {activeTab === 'encode' && (
           <form className="space-y-6">
             <div className="space-y-3">
-              <Label className="text-[#EDEDED]">Cover Text (Normal visible text)</Label>
-              <Textarea className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px]" placeholder="e.g., Hello World" {...encForm.register('cover_text')} />
+              <Label className="text-foreground">Cover Text (Normal visible text)</Label>
+              <Textarea className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px]" placeholder="e.g., Hello World" {...encForm.register('cover_text')} />
               {encForm.formState.errors.cover_text && <p className="text-sm text-destructive">{encForm.formState.errors.cover_text.message}</p>}
             </div>
             <div className="space-y-3">
-              <Label className="text-[#EDEDED]">Secret Message (Hidden)</Label>
-              <Textarea className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px]" placeholder="e.g., Attack at dawn" {...encForm.register('secret')} />
+              <Label className="text-foreground">Secret Message (Hidden)</Label>
+              <Textarea className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px]" placeholder="e.g., Attack at dawn" {...encForm.register('secret')} />
               {encForm.formState.errors.secret && <p className="text-sm text-destructive">{encForm.formState.errors.secret.message}</p>}
             </div>
           </form>
@@ -95,8 +95,8 @@ export default function TextStegoPage() {
         {activeTab === 'decode' && (
           <form className="space-y-6">
             <div className="space-y-3">
-              <Label className="text-[#EDEDED]">Stego Text (Text containing zero-width characters)</Label>
-              <Textarea className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] h-[180px]" placeholder="Paste the text containing the hidden message here..." {...decForm.register('text')} />
+              <Label className="text-foreground">Stego Text (Text containing zero-width characters)</Label>
+              <Textarea className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground h-[180px]" placeholder="Paste the text containing the hidden message here..." {...decForm.register('text')} />
               {decForm.formState.errors.text && <p className="text-sm text-destructive">{decForm.formState.errors.text.message}</p>}
             </div>
           </form>

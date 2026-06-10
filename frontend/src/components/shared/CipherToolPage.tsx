@@ -100,7 +100,7 @@ export default function CipherToolPage({
   const renderField = (field: FieldConfig) => (
     <div key={field.name} className={`space-y-2 ${field.type === 'checkbox' ? 'flex flex-row items-center gap-2 space-y-0' : ''}`}>
       {field.type !== 'checkbox' && (
-        <Label htmlFor={field.name} className="text-[#EDEDED]">
+        <Label htmlFor={field.name} className="text-foreground">
           {field.label}
         </Label>
       )}
@@ -108,7 +108,7 @@ export default function CipherToolPage({
         <Textarea
           id={field.name}
           placeholder={field.placeholder}
-          className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm"
+          className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground min-h-[100px] font-mono text-sm"
           {...form.register(field.name)}
         />
       ) : field.type === 'number' ? (
@@ -116,7 +116,7 @@ export default function CipherToolPage({
           id={field.name}
           type="number"
           placeholder={field.placeholder}
-          className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono"
+          className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono"
           {...form.register(field.name, { valueAsNumber: true })}
         />
       ) : field.type === 'select' ? (
@@ -124,12 +124,12 @@ export default function CipherToolPage({
           onValueChange={(value) => form.setValue(field.name, value)}
           defaultValue={field.defaultValue?.toString()}
         >
-          <SelectTrigger className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED]">
+          <SelectTrigger className="bg-background border-border focus:border-muted-foreground text-foreground">
             <SelectValue placeholder={field.placeholder} />
           </SelectTrigger>
-          <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
+          <SelectContent className="bg-card border-border">
             {field.options?.map((opt) => (
-              <SelectItem key={opt.value} value={opt.value} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">
+              <SelectItem key={opt.value} value={opt.value} className="text-foreground hover:bg-secondary focus:bg-secondary">
                 {opt.label}
               </SelectItem>
             ))}
@@ -140,10 +140,10 @@ export default function CipherToolPage({
           <input
             id={field.name}
             type="checkbox"
-            className="w-4 h-4 rounded border-[#27272A] bg-[#000000] text-primary focus:ring-primary"
+            className="w-4 h-4 rounded border-border bg-background text-primary focus:ring-primary"
             {...form.register(field.name)}
           />
-          <Label htmlFor={field.name} className="text-sm font-medium cursor-pointer text-[#EDEDED]">
+          <Label htmlFor={field.name} className="text-sm font-medium cursor-pointer text-foreground">
             {field.label}
           </Label>
         </div>
@@ -152,15 +152,15 @@ export default function CipherToolPage({
           id={field.name}
           type="text"
           placeholder={field.placeholder}
-          className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]"
+          className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground"
           {...form.register(field.name)}
         />
       )}
       {field.description && field.type !== 'checkbox' && (
-        <p className="text-[11px] text-[#A1A1AA]">{field.description}</p>
+        <p className="text-[11px] text-muted-foreground">{field.description}</p>
       )}
       {field.description && field.type === 'checkbox' && (
-        <p className="text-[11px] text-[#A1A1AA] ml-6">{field.description}</p>
+        <p className="text-[11px] text-muted-foreground ml-6">{field.description}</p>
       )}
       {form.formState.errors[field.name] && (
         <p className="text-sm text-destructive">
@@ -184,7 +184,7 @@ export default function CipherToolPage({
             variant="ghost"
             size="sm"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="text-xs text-[#A1A1AA] hover:text-[#EDEDED] hover:bg-[#171717] p-2 h-auto"
+            className="text-xs text-muted-foreground hover:text-foreground hover:bg-secondary p-2 h-auto"
           >
             <Settings2 className="w-3.5 h-3.5 mr-1.5" />
             Advanced Settings
@@ -200,7 +200,7 @@ export default function CipherToolPage({
             animate={{ height: showAdvanced ? 'auto' : 0, opacity: showAdvanced ? 1 : 0 }}
             className="overflow-hidden"
           >
-            <div className="space-y-6 pt-4 border-t border-[#27272A] mt-3">
+            <div className="space-y-6 pt-4 border-t border-border mt-3">
               {advancedFields.map(renderField)}
             </div>
           </motion.div>

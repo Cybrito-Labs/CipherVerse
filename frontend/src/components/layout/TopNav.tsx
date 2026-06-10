@@ -18,7 +18,7 @@ export function TopNav({ sidebarCollapsed, onSearchOpen }: TopNavProps) {
       className={cn(
         'fixed top-0 right-0 z-30 h-16',
         'flex items-center justify-between px-6 gap-4',
-        'border-b border-[#27272A] bg-[#000000]/80 backdrop-blur-xl',
+        'border-b border-border bg-background/80 backdrop-blur-xl',
         'transition-all duration-300 ease-out',
         sidebarCollapsed ? 'left-[72px]' : 'left-[260px]'
       )}
@@ -28,14 +28,14 @@ export function TopNav({ sidebarCollapsed, onSearchOpen }: TopNavProps) {
         {breadcrumbs.map((crumb, idx) => (
           <div key={crumb.path} className="flex items-center gap-2">
             {idx > 0 && (
-              <span className="text-[#52525B]">/</span>
+              <span className="text-muted-foreground">/</span>
             )}
             {idx === breadcrumbs.length - 1 ? (
-              <span className="text-[#EDEDED]">{crumb.label}</span>
+              <span className="text-foreground">{crumb.label}</span>
             ) : (
               <Link
                 to={crumb.path}
-                className="text-[#A1A1AA] hover:text-[#EDEDED] transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 {crumb.label}
               </Link>
@@ -50,33 +50,57 @@ export function TopNav({ sidebarCollapsed, onSearchOpen }: TopNavProps) {
           onClick={onSearchOpen}
           className={cn(
             'flex items-center gap-2 px-3 py-1.5 rounded-md w-full max-w-md',
-            'text-sm font-medium text-[#A1A1AA]',
-            'border border-[#27272A] hover:border-[#52525B]',
-            'bg-[#0A0A0A] hover:bg-[#171717]',
+            'text-sm font-medium text-muted-foreground',
+            'border border-border hover:border-muted-foreground',
+            'bg-card hover:bg-secondary',
             'transition-colors duration-200 shadow-sm'
           )}
         >
           <Search className="w-4 h-4" />
           <span className="hidden sm:inline flex-1 text-left">Search documentation or tools...</span>
-          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-[4px] bg-[#171717] text-[11px] font-sans border border-[#27272A] text-[#A1A1AA]">
+          <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-[4px] bg-secondary text-[11px] font-sans border border-border text-muted-foreground">
             <Command className="w-3 h-3" />K
           </kbd>
         </button>
       </div>
 
       {/* Right: Actions */}
-      <div className="flex items-center justify-end gap-3 flex-1">
-        <button className="p-2 text-[#A1A1AA] hover:text-[#EDEDED] hover:bg-[#171717] rounded-md transition-colors" title="Recent Tools">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </button>
-        <button className="p-2 text-[#A1A1AA] hover:text-[#EDEDED] hover:bg-[#171717] rounded-md transition-colors" title="Toggle Theme">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-        </button>
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 border border-[#27272A] flex items-center justify-center text-xs font-bold text-white shadow-sm cursor-pointer ml-1">
-          U
-        </div>
+      <div className="flex items-center justify-end flex-1">
+        <ThemeToggle />
       </div>
     </header>
+  );
+}
+
+import { useTheme } from 'next-themes';
+import { Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-colors w-9 h-9">
+        <span className="sr-only">Toggle theme</span>
+      </button>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-colors w-9 h-9 flex items-center justify-center"
+      title="Toggle Theme"
+    >
+      {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+      <span className="sr-only">Toggle theme</span>
+    </button>
   );
 }
 

@@ -38,10 +38,10 @@ export default function X509Page() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Certificate Data (PEM format)</Label>
+            <Label className="text-foreground">Certificate Data (PEM format)</Label>
             <Textarea 
               placeholder="-----BEGIN CERTIFICATE-----..." 
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono text-xs h-[300px]" 
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono text-xs h-[300px]" 
               {...form.register('cert_data')} 
             />
             {form.formState.errors.cert_data && <p className="text-sm text-destructive">{form.formState.errors.cert_data.message}</p>}

@@ -74,14 +74,14 @@ export default function EnigmaPage() {
     >
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
-          <div className="p-4 rounded-xl border border-[#27272A] bg-[#000000] flex justify-center gap-8">
+          <div className="p-4 rounded-xl border border-border bg-background flex justify-center gap-8">
             <div className="space-y-4">
               <div className="text-center">
-                <Label className="text-xs text-[#A1A1AA] uppercase tracking-widest">Fast Rotor (Right)</Label>
+                <Label className="text-xs text-muted-foreground uppercase tracking-widest">Fast Rotor (Right)</Label>
                 <Select onValueChange={(val) => form.setValue('r3_type', val)} defaultValue={form.getValues('r3_type')}>
-                  <SelectTrigger className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED] w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                  <SelectTrigger className="bg-card border-border text-foreground w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -90,11 +90,11 @@ export default function EnigmaPage() {
 
             <div className="space-y-4">
               <div className="text-center">
-                <Label className="text-xs text-[#A1A1AA] uppercase tracking-widest">Mid Rotor</Label>
+                <Label className="text-xs text-muted-foreground uppercase tracking-widest">Mid Rotor</Label>
                 <Select onValueChange={(val) => form.setValue('r2_type', val)} defaultValue={form.getValues('r2_type')}>
-                  <SelectTrigger className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED] w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                  <SelectTrigger className="bg-card border-border text-foreground w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -103,11 +103,11 @@ export default function EnigmaPage() {
 
             <div className="space-y-4">
               <div className="text-center">
-                <Label className="text-xs text-[#A1A1AA] uppercase tracking-widest">Slow Rotor (Left)</Label>
+                <Label className="text-xs text-muted-foreground uppercase tracking-widest">Slow Rotor (Left)</Label>
                 <Select onValueChange={(val) => form.setValue('r1_type', val)} defaultValue={form.getValues('r1_type')}>
-                  <SelectTrigger className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED] w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
-                  <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                  <SelectTrigger className="bg-card border-border text-foreground w-24 mt-1 mx-auto"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-foreground hover:bg-secondary focus:bg-secondary">{r}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -116,10 +116,10 @@ export default function EnigmaPage() {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Plaintext / Ciphertext</Label>
+            <Label className="text-foreground">Plaintext / Ciphertext</Label>
             <Textarea
               placeholder="Enter text to encrypt or decrypt..."
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono min-h-[120px] uppercase"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono min-h-[120px] uppercase"
               {...form.register('text')}
               onChange={(e) => {
                 e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();

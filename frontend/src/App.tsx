@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import { router } from '@/routes';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,17 +20,19 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider delayDuration={200}>
-        <RouterProvider router={router} />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            className: 'glass border-border',
-          }}
-        />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider delayDuration={200}>
+          <RouterProvider router={router} />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className: 'glass border-border',
+            }}
+          />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

@@ -51,10 +51,10 @@ export default function RandomnessPage() {
       <ToolInputPanel>
         <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-[#EDEDED]">Target Filepath</Label>
+            <Label className="text-foreground">Target Filepath</Label>
             <Input
               placeholder="C:/evidence/suspect.exe"
-              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono"
+              className="bg-background border-border focus:border-muted-foreground text-foreground placeholder:text-muted-foreground font-mono"
               {...form.register('filepath')}
             />
             {form.formState.errors.filepath && <p className="text-sm text-destructive">{form.formState.errors.filepath.message}</p>}
@@ -86,7 +86,7 @@ export default function RandomnessPage() {
                 <MetricRow label="Total Runs" value={res.runs.toLocaleString()} />
               </MetricsPanel>
 
-              <div className="bg-[#000000] border border-[#27272A] rounded-xl p-4 flex flex-col items-center justify-center">
+              <div className="bg-background border border-border rounded-xl p-4 flex flex-col items-center justify-center">
                  <h4 className="text-sm font-semibold text-primary uppercase tracking-wider self-start mb-2">Verdict (Estimates)</h4>
                  <div className="text-center">
                     {res.entropy > 7.9 && res.chi_square < 300 ? (
@@ -100,7 +100,7 @@ export default function RandomnessPage() {
               </div>
             </div>
 
-            <div className="bg-[#000000] border border-[#27272A] rounded-xl p-6">
+            <div className="bg-background border border-border rounded-xl p-6">
               <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-6">Bit Distribution (0s vs 1s)</h4>
               <div className="h-[200px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -117,7 +117,7 @@ export default function RandomnessPage() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <p className="text-xs text-center text-[#A1A1AA] mt-4">
+              <p className="text-xs text-center text-muted-foreground mt-4">
                 Perfect randomness approaches exactly 50.00% for both bits.
               </p>
             </div>

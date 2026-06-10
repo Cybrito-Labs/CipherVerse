@@ -34,9 +34,9 @@ export function ToolCard({ title, description, icon: Icon, path, badge, classNam
       onMouseMove={handleMouseMove}
       className={cn(
         'group relative w-full text-left p-6 rounded-xl',
-        'bg-[#0A0A0A] border border-[#27272A]',
+        'bg-card border border-border',
         'transition-all duration-300',
-        'hover:border-[#52525B] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]',
+        'hover:border-muted-foreground hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]',
         'overflow-hidden',
         className
       )}
@@ -55,25 +55,25 @@ export function ToolCard({ title, description, icon: Icon, path, badge, classNam
       />
       
       <div className="relative z-10 flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-lg bg-[#171717] border border-[#27272A] flex items-center justify-center group-hover:bg-[#27272A] transition-colors duration-300">
-          <Icon className="w-5 h-5 text-[#EDEDED]" />
+        <div className="w-10 h-10 rounded-lg bg-secondary border border-border flex items-center justify-center group-hover:bg-input transition-colors duration-300">
+          <Icon className="w-5 h-5 text-foreground" />
         </div>
         {badge && (
-          <Badge variant="secondary" className="text-[10px] bg-[#171717] border border-[#27272A]">
+          <Badge variant="secondary" className="text-[10px] bg-secondary border border-border">
             {badge}
           </Badge>
         )}
       </div>
       
-      <h3 className="relative z-10 font-semibold text-[#EDEDED] mb-2 group-hover:text-white transition-colors duration-300 tracking-tight">
+      <h3 className="relative z-10 font-semibold text-foreground mb-2 group-hover:text-white transition-colors duration-300 tracking-tight">
         {title}
       </h3>
       
-      <p className="relative z-10 text-xs text-[#A1A1AA] line-clamp-2 leading-relaxed">
+      <p className="relative z-10 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
         {description}
       </p>
       
-      <div className="relative z-10 mt-4 flex items-center text-xs font-medium text-[#EDEDED] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+      <div className="relative z-10 mt-4 flex items-center text-xs font-medium text-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
         Open tool
         <ArrowRight className="w-3 h-3 ml-1" />
       </div>
