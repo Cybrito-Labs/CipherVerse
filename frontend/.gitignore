@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Un-ignore src/lib which is ignored by the root python .gitignore
+!src/lib/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
