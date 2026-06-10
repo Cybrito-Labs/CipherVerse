@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# CipherVerse - Frontend Architecture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend component of CipherVerse, built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS, `class-variance-authority`, `tailwind-merge`
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Data Fetching**: TanStack Query (React Query), Axios
+- **Form Handling**: React Hook Form, Zod
+- **Routing**: React Router DOM (v6)
 
-## React Compiler
+## Architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The frontend uses a highly unified layout system for over 90 different cryptographic tools:
 
-## Expanding the ESLint configuration
+1. **`ToolPageLayout`**: The foundational wrapper enforcing the sleek 45/55 grid layout.
+2. **`ToolInputPanel`**: Houses dynamic forms and options.
+3. **`ToolResultPanel`**: Displays asynchronous outputs with built-in empty, loading, error, and success states.
+4. **`useToolExecution`**: A custom wrapper around TanStack Query to seamlessly connect inputs to the FastAPI backend.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Local Development
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Install dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Make sure to specify the backend URL in your deployment platform:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_API_BASE_URL=http://localhost:8000  # Default local value
 ```

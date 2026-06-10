@@ -1,257 +1,104 @@
-# CipherVerse - Cryptography Toolkit
+# CipherVerse - The Modern Cryptography Toolkit
 
-![Status](https://img.shields.io/badge/Status-Backend%20Completed-success)
-![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20Vite%20%7C%20Tailwind-blue)
+![Backend](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-green)
 
-**CipherVerse** is a comprehensive cryptography toolkit designed for educational purposes, CTF challenges, and cryptographic experimentation. It lists a wide array of classical and modern ciphers, encoding schemes, historical machine emulators, and crypto-analysis tools.
+**CipherVerse** is a beautiful, comprehensive, and interactive cryptography toolkit. Designed for educational purposes, CTF challenges, and cryptographic experimentation, it provides a massive array of classical and modern ciphers, encoding schemes, historical machine emulators, and crypto-analysis tools—all wrapped in a sleek, dark-themed cybersecurity aesthetic.
 
-> **Note:** The backend logic is currently fully implemented in `CipherVerse_backend.py`.
+## 🚀 The Architecture
 
-## Features
+CipherVerse has been entirely rebuilt into a modern web application:
 
-The toolkit includes **91+** cryptographic functions across various categories:
+* **Frontend**: Built with React, Vite, Tailwind CSS, and Framer Motion. It features a responsive, unified 45/55 split-pane layout for all tools, interactive visualizations (like Merkle Trees and Rotor Machines), and a premium "hacker" aesthetic.
+* **Backend**: Powered by FastAPI (Python), providing a robust, stateless REST API for over 90+ cryptographic functions.
+
+## 🛠️ Features (91+ Cryptographic Tools)
 
 ### 🏛️ Classical Ciphers
-- **Caesar Cipher** (Encode/Decode)
-- **Vigenère Cipher** (Encode/Decode)
-- **Atbash Cipher**
-- **Bacon Cipher** (Encode/Decode)
-- **Bifid Cipher** (Encode/Decode)
-- **Affine Cipher** (Encode/Decode)
-- **A1Z26 Cipher** (Encode/Decode)
-- **Rail Fence Cipher** (Encode/Decode)
-- **Substitution Cipher**
+- **Caesar**, **Vigenère**, **Atbash**, **Bacon**, **Bifid**, **Affine**, **A1Z26**, **Rail Fence**, **Substitution**
 
 ### 🔐 Block & Stream Ciphers
-- **XOR** (Cipher / Brute Force)
-- **ROT13 / ROT47**
-- **CipherSaber2** (Encrypt/Decrypt)
-- **RC2, RC4** (Encrypt/Decrypt)
 - **AES, DES, Triple DES** (Encrypt/Decrypt)
 - **Blowfish, SM4** (Encrypt/Decrypt)
+- **RC2, RC4, RC4-Drop**
+- **CipherSaber2** 
+- **XOR** (Cipher / Brute Force), **ROT13 / ROT47**
 
 ### 📜 Historic Machines
-- **Enigma**
-- **Bombe**
-- **Multiple Bombe**
-- **Typex**
-- **Lorenz**
-- **Colossus**
-- **SIGABA**
+- **Enigma Machine** (Interactive rotor simulation)
+- **Bombe & Multiple Bombe**
+- **Typex, Lorenz, Colossus, SIGABA**
 
-### 🔄 Encoding / Decoding
-- **Base64, Base32**
-- **Hexadecimal**
-- **URL Encoding**
-- **Binary, ASCII**
-- **Morse Code**
+### 🔄 Encoding & Decoding
+- **Base64, Base32**, **Hexadecimal**, **URL Encoding**, **Binary, ASCII**, **Morse Code**
 
 ### 🔑 Public Key Cryptography
 - **RSA** (Encrypt/Decrypt/Sign/Verify)
-- **Diffie-Hellman (DH)** & **ECDH**
-- **DSA** & **ECDSA**
-- **Ed25519 / EdDSA**
-- **X25519 Key Exchange**
+- **DSA & ECDSA**
+- **Diffie-Hellman (DH) & ECDH**
+- **Ed25519 / EdDSA**, **X25519 Key Exchange**
 
 ### 🛡️ Hashing & Analysis
 - **MD2, MD4, MD5, MD6**
-- **SHA0, SHA1, SHA2, SHA3**
-- **SM3, Keccak, Shake**
-- **RIPEMD, Whirlpool**
-- **BLAKE2b, BLAKE2s**
-- **HMAC, Bcrypt**
+- **SHA0, SHA1, SHA2 (SHA-256/512), SHA3**
+- **SM3, Keccak, Shake**, **RIPEMD, Whirlpool**, **BLAKE2b, BLAKE2s**
+- **HMAC, Bcrypt, PBKDF2, Scrypt**
 
-### 🛠️ Utilities & Forensics
-- **File Hashing & Integrity Checkers**
+### 🧩 Blockchain & Steganography
+- **Bitcoin & Ethereum Address Validation**
+- **Merkle Tree Visualization**
+- **WIF Checksum Generation**
+- **Text, Image, and Audio Steganography**
+
+### 🔍 Forensics & Utilities
+- **File Hashing & Integrity Checkers** (MD5/SHA1/SHA256)
+- **PE Header Malware Analysis**
+- **TLSH Fuzzy Hash Comparison**
 - **Password Strength Estimator**
 - **JWT Sign/Verify**
-- **Certificate Parsing (X.509, TLS)**
-- **Blockchain Address Validators (Bitcoin, Ethereum)**
-- **Steganography (Text, Image, Audio)**
+- **Certificate Parsing** (X.509, TLS)
 
-## Installation
+## 🌐 Deployment
 
-Ensure you have Python installed. You will need to install a few dependencies for full functionality:
+CipherVerse is fully containerized and deployable to modern cloud platforms:
 
-```bash
-pip install pycryptodome cryptography pysha3 pillow pefile py-tlsh ssdeep bcrypt
-```
+* **Frontend**: Easily deployed on **Vercel** with automatic SPA routing.
+* **Backend**: Deployable on **Render** (or any Docker/FastAPI hosting provider).
 
-*Note: Some modules like `ssdeep` or `py-tlsh` may require system-level libraries.*
+## 💻 Local Development
 
-## Usage
+### 1. Start the Backend (FastAPI)
 
-Run the backend script directly to access the interactive menu:
+Navigate to the root directory and set up your Python environment:
 
 ```bash
-python CipherVerse/CipherVerse_backend.py
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the FastAPI server (starts on http://localhost:8000)
+uvicorn app.main:app --reload
 ```
 
-Follow the on-screen prompts to select a category and a specific tool.
+### 2. Start the Frontend (Vite/React)
 
-## Project Structure
+Navigate to the `frontend` directory:
 
-- `CipherVerse_backend.py`: Main script containing all cryptographic implementations and the interactive menu interface.
+```bash
+cd frontend
+
+# Install Node dependencies
+npm install
+
+# Start the Vite development server (starts on http://localhost:5173)
+npm run dev
+```
+
+Your frontend will automatically communicate with the local backend!
 
 ---
-*Disclaimer: This tool is for educational and testing purposes only. Do not use for illegal activities.*
-# CipherVerse - Cryptography Toolkit
-
-![Status](https://img.shields.io/badge/Status-Backend%20Completed-success)
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-
-**CipherVerse** is a comprehensive cryptography toolkit designed for educational purposes, CTF challenges, and cryptographic experimentation. It lists a wide array of classical and modern ciphers, encoding schemes, historical machine emulators, and crypto-analysis tools.
-
-> **Note:** The backend logic is currently fully implemented in `CipherVerse_backend.py`.
-
-## Features
-
-The toolkit includes **91+** cryptographic functions across various categories:
-
-### 🏛️ Classical Ciphers
-- **Caesar Cipher** (Encode/Decode)
-- **Vigenère Cipher** (Encode/Decode)
-- **Atbash Cipher**
-- **Bacon Cipher** (Encode/Decode)
-- **Bifid Cipher** (Encode/Decode)
-- **Affine Cipher** (Encode/Decode)
-- **A1Z26 Cipher** (Encode/Decode)
-- **Rail Fence Cipher** (Encode/Decode)
-- **Substitution Cipher**
-
-### 🔐 Block & Stream Ciphers
-- **XOR** (Cipher / Brute Force)
-- **ROT13 / ROT47**
-- **CipherSaber2** (Encrypt/Decrypt)
-- **RC2, RC4** (Encrypt/Decrypt)
-- **AES, DES, Triple DES** (Encrypt/Decrypt)
-- **Blowfish, SM4** (Encrypt/Decrypt)
-
-### 📜 Historic Machines
-- **Enigma**
-- **Bombe**
-- **Multiple Bombe**
-- **Typex**
-- **Lorenz**
-- **Colossus**
-- **SIGABA**
-
-### 🔄 Encoding / Decoding
-- **Base64, Base32**
-- **Hexadecimal**
-- **URL Encoding**
-- **Binary, ASCII**
-- **Morse Code**
-
-### 🔑 Public Key Cryptography
-- **RSA** (Encrypt/Decrypt/Sign/Verify)
-- **Diffie-Hellman (DH)** & **ECDH**
-- **DSA** & **ECDSA**
-- **Ed25519 / EdDSA**
-- **X25519 Key Exchange**
-
-### 🛡️ Hashing & Analysis
-- **MD2, MD4, MD5, MD6**
-- **SHA0, SHA1, SHA2, SHA3**
-- **SM3, Keccak, Shake**
-- **RIPEMD, Whirlpool**
-- **BLAKE2b, BLAKE2s**
-- **HMAC, Bcrypt**
-
-### 🛠️ Utilities & Forensics
-- **File Hashing & Integrity Checkers**
-- **Password Strength Estimator**
-- **JWT Sign/Verify**
-- **Certificate Parsing (X.509, TLS)**
-- **Blockchain Address Validators (Bitcoin, Ethereum)**
-- **Steganography (Text, Image, Audio)**
-
-## Installation
-
-Ensure you have Python installed. You will need to install a few dependencies for full functionality:
-
-```bash
-pip install pycryptodome cryptography pysha3 pillow pefile py-tlsh ssdeep bcrypt
-```
-
-*Note: Some modules like `ssdeep` or `py-tlsh` may require system-level libraries.*
-
-## Usage
-
-Run the backend script directly to access the interactive menu:
-
-```bash
-python CipherVerse/CipherVerse_backend.py
-```
-
-Follow the on-screen prompts to select a category and a specific tool.
-
-## Project Structure
-
-- `CipherVerse_backend.py`: Main script containing all cryptographic implementations and the interactive menu interface.
-
----
-*Disclaimer: This tool is for educational and testing purposes only. Do not use for illegal activities.*
-
-
-cipherverse-backend/
-│
-├── app/
-│   ├── __init__.py
-│   ├── main.py                     # FastAPI entry point
-│
-│   ├── core/                       # Pure crypto logic (NO input(), NO print())
-│   │   ├── __init__.py
-│   │   ├── classical.py
-│   │   ├── encoding.py
-│   │   ├── hashing.py
-│   │   ├── symmetric.py
-│   │   ├── asymmetric.py
-│   │   ├── historic.py
-│   │   ├── certificates.py
-│   │   ├── file_tools.py
-│   │   ├── analysis.py
-│   │   ├── blockchain.py
-│   │   ├── steganography.py
-│   │   ├── utilities.py
-│
-│   ├── api/                        # FastAPI route layers
-│   │   ├── __init__.py
-│   │   ├── classical_routes.py
-│   │   ├── encoding_routes.py
-│   │   ├── hashing_routes.py
-│   │   ├── symmetric_routes.py
-│   │   ├── asymmetric_routes.py
-│   │   ├── historic_routes.py
-│   │   ├── certificates_routes.py
-│   │   ├── file_routes.py
-│   │   ├── blockchain_routes.py
-│   │   ├── steganography_routes.py
-│   │   ├── analysis_routes.py
-│   │   ├── utilities_routes.py
-│
-│   ├── models/                     # Pydantic schemas
-│   │   ├── __init__.py
-│   │   ├── classical_models.py
-│   │   ├── encoding_models.py
-│   │   ├── hashing_models.py
-│   │   ├── symmetric_models.py
-│   │   ├── asymmetric_models.py
-│   │   ├── file_models.py
-│   │   ├── blockchain_models.py
-│   │   ├── utility_models.py
-│
-│   ├── utils/                      # Internal helpers
-│   │   ├── __init__.py
-│   │   ├── security.py
-│   │   ├── validators.py
-│   │   ├── file_helpers.py
-│   │   ├── constants.py
-│
-│   ├── config.py                   # Environment & app config
-│
-├── requirements.txt
-├── Dockerfile
-├── .env
-├── .gitignore
-└── README.md
+*Disclaimer: This toolkit is built exclusively for educational, ethical testing, and CTF purposes. Do not use these tools for illegal activities.*
