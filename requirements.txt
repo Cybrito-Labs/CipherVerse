@@ -14,7 +14,6 @@ pillow==10.2.0
 pefile==2023.2.7
 python-jose[cryptography]==3.3.0
 pyjwt==2.8.0
-pysha3==1.0.2
 python-multipart==0.0.9
 gmssl
 tlsh
