@@ -58,7 +58,7 @@ export default function XorPage() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="glass rounded-xl p-6">
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "encrypt" | "decrypt" | "bruteforce")}>
             <TabsList className="mb-4 bg-background/50 grid w-full grid-cols-3">
               <TabsTrigger value="encrypt">Encrypt</TabsTrigger>
               <TabsTrigger value="decrypt">Decrypt</TabsTrigger>

@@ -28,7 +28,7 @@ interface EnigmaResponse {
 export default function EnigmaPage() {
   const [positions, setPositions] = useState<[number, number, number]>([0, 0, 0]);
 
-  const mutation = useMutation<EnigmaResponse, Error, any>({
+  const mutation = useMutation<EnigmaResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
       const res = await api.post('/historic/enigma', {
         text: data.text,

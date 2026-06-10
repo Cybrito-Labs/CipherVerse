@@ -5,7 +5,6 @@ import type { z, ZodObject, ZodRawShape } from 'zod';
 import { motion } from 'framer-motion';
 import { Play, RotateCcw, Settings2, ChevronDown, ChevronUp } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ToolPageLayout } from '@/components/shared/ToolPageLayout';
 import { ResultPanel } from '@/components/shared/ResultPanel';
 import { Button } from '@/components/ui/button';
@@ -38,7 +37,7 @@ interface CipherToolPageProps {
   hasTabs?: boolean;
   encryptEndpoint?: string;
   decryptEndpoint?: string;
-  transformPayload?: (data: any, tab: 'encrypt' | 'decrypt') => any;
+  transformPayload?: (data: Record<string, unknown>, tab: 'encrypt' | 'decrypt') => Record<string, unknown>;
 }
 
 export default function CipherToolPage({

@@ -53,7 +53,7 @@ export default function FileHashPage() {
             
             <div className="space-y-2 pt-2">
               <Label>Hash Algorithm</Label>
-              <Select onValueChange={(val) => form.setValue('algorithm', val as any)} defaultValue={form.getValues('algorithm')}>
+              <Select onValueChange={(val) => form.setValue('algorithm', val as "md5" | "sha1" | "sha256" | "sha384" | "sha512" | "sha3-256" | "sha3-512")} defaultValue={form.getValues('algorithm')}>
                 <SelectTrigger className="bg-background/50">
                   <SelectValue placeholder="Algorithm" />
                 </SelectTrigger>

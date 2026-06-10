@@ -27,7 +27,7 @@ interface BombeResponse {
 }
 
 export default function BombePage() {
-  const mutation = useMutation<BombeResponse, Error, any>({
+  const mutation = useMutation<BombeResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
       const res = await api.post('/historic/bombe', {
         ciphertext: data.ciphertext,

@@ -25,7 +25,7 @@ export default function TypexPage() {
   // Typex uses 5 rotors instead of Enigma's 3
   const [positions, setPositions] = useState<number[]>([0, 0, 0, 0, 0]);
 
-  const mutation = useMutation<TypexResponse, Error, any>({
+  const mutation = useMutation<TypexResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
       const res = await api.post('/historic/typex', {
         text: data.text,

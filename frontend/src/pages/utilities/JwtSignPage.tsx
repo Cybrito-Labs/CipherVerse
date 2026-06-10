@@ -29,7 +29,7 @@ interface JwtResponse {
 export default function JwtSignPage() {
   const [jsonError, setJsonError] = useState('');
 
-  const mutation = useMutation<JwtResponse, Error, any>({
+  const mutation = useMutation<JwtResponse, Error, z.infer<typeof schema>>({
     mutationFn: async (data) => {
       const res = await api.post('/utilities/jwt/sign', data);
       return res.data;
@@ -56,14 +56,14 @@ export default function JwtSignPage() {
 
   const onSubmit = (d: z.infer<typeof schema>) => {
     setJsonError('');
-    let parsedPayload = {};
+    let parsedPayload: Record<string, unknown>;
     try {
       parsedPayload = JSON.parse(d.payloadStr);
       if (typeof parsedPayload !== 'object' || parsedPayload === null) {
         throw new Error("Payload must be a JSON object");
       }
-    } catch (e: any) {
-      setJsonError(`Invalid JSON format: ${e.message}`);
+    } catch (e) {
+      setJsonError(`Invalid JSON format: ${e instanceof Error ? e.message : String(e)}`);
       return;
     }
 
@@ -108,7 +108,7 @@ export default function JwtSignPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2 pt-2">
                 <Label>Algorithm</Label>
-                <Select onValueChange={(val) => form.setValue('algo', val as any)} defaultValue={form.getValues('algo')}>
+                <Select onValueChange={(val) => form.setValue('algo', val as "HS256" | "HS384" | "HS512")} defaultValue={form.getValues('algo')}>
                   <SelectTrigger className="bg-background/50">
                     <SelectValue placeholder="Algorithm" />
                   </SelectTrigger>

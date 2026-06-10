@@ -10,7 +10,7 @@ interface RotorControlProps {
   showLetters?: boolean;
 }
 
-export function RotorControl({ id, label, value, onChange, max = 25, showLetters = true }: RotorControlProps) {
+export function RotorControl({ label, value, onChange, max = 25, showLetters = true }: RotorControlProps) {
   const handleIncrement = () => {
     onChange(value >= max ? 0 : value + 1);
   };

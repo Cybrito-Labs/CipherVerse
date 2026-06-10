@@ -3,11 +3,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
-import { Play, RotateCcw, Lock, KeyRound, ShieldCheck } from 'lucide-react';
+import { Play, Lock, KeyRound, ShieldCheck } from 'lucide-react';
 import { ToolPageLayout } from '@/components/shared/ToolPageLayout';
 import { ResultPanel } from '@/components/shared/ResultPanel';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,7 +15,6 @@ import { DownloadButton } from '@/components/shared/DownloadButton';
 import { useToolExecution } from '@/hooks/useToolExecution';
 import type { RSAKeyResponse, AsymmetricResponse } from '@/types/api';
 
-const generateSchema = z.object({});
 const encryptSchema = z.object({ text: z.string().min(1), public_key: z.string().min(1) });
 const decryptSchema = z.object({ encrypted_base64: z.string().min(1), private_key: z.string().min(1) });
 const signSchema = z.object({ message: z.string().min(1), private_key: z.string().min(1) });
@@ -25,7 +23,7 @@ const verifySchema = z.object({ message: z.string().min(1), signature: z.string(
 export default function RsaPage() {
   const [activeTab, setActiveTab] = useState('generate');
 
-  const genMutation = useToolExecution<{}, RSAKeyResponse>({ endpoint: '/asymmetric/rsa/generate-keys' });
+  const genMutation = useToolExecution<Record<string, never>, RSAKeyResponse>({ endpoint: '/asymmetric/rsa/generate-keys' });
   const encMutation = useToolExecution<z.infer<typeof encryptSchema>, AsymmetricResponse>({ endpoint: '/asymmetric/rsa/encrypt' });
   const decMutation = useToolExecution<z.infer<typeof decryptSchema>, AsymmetricResponse>({ endpoint: '/asymmetric/rsa/decrypt' });
   const signMutation = useToolExecution<z.infer<typeof signSchema>, AsymmetricResponse>({ endpoint: '/asymmetric/rsa/sign' });
@@ -36,10 +34,6 @@ export default function RsaPage() {
   const signForm = useForm<z.infer<typeof signSchema>>({ resolver: zodResolver(signSchema) });
   const verifyForm = useForm<z.infer<typeof verifySchema>>({ resolver: zodResolver(verifySchema) });
 
-  const handleClear = () => {
-    encForm.reset(); decForm.reset(); signForm.reset(); verifyForm.reset();
-    genMutation.reset(); encMutation.reset(); decMutation.reset(); signMutation.reset(); verifyMutation.reset();
-  };
 
   const isPending = genMutation.isPending || encMutation.isPending || decMutation.isPending || signMutation.isPending || verifyMutation.isPending;
 

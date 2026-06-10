@@ -42,6 +42,7 @@ export function SearchPalette({ open, onOpenChange, onNavigate }: SearchPaletteP
   }, [query, allItems]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedIndex(0);
   }, [query, open]);
 

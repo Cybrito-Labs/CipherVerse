@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/api/client';
 
-interface UseToolExecutionOptions<TRequest, TResponse> {
+interface UseToolExecutionOptions<TResponse> {
   endpoint: string;
   method?: 'post' | 'get' | 'getWithParams';
   onSuccess?: (data: TResponse) => void;
@@ -13,7 +13,7 @@ export function useToolExecution<TRequest = unknown, TResponse = unknown>({
   method = 'post',
   onSuccess,
   onError,
-}: UseToolExecutionOptions<TRequest, TResponse>) {
+}: UseToolExecutionOptions<TResponse>) {
   return useMutation<TResponse, Error, TRequest>({
     mutationFn: async (data: TRequest) => {
       switch (method) {

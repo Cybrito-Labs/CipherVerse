@@ -93,7 +93,7 @@ export default function MerkleTreePage() {
 
             <div className="space-y-2 pt-4 border-t border-border">
               <Label>Hash Algorithm</Label>
-              <Select onValueChange={(val) => form.setValue('algorithm', val as any)} defaultValue={form.getValues('algorithm')}>
+              <Select onValueChange={(val) => form.setValue('algorithm', val as "sha256" | "sha1" | "md5")} defaultValue={form.getValues('algorithm')}>
                 <SelectTrigger className="bg-background/50">
                   <SelectValue placeholder="Algorithm" />
                 </SelectTrigger>

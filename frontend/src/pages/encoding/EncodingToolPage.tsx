@@ -18,7 +18,8 @@ const fields: FieldConfig[] = [
   },
 ];
 
-const toolConfigs: Record<string, { title: string; description: string; icon: any; endpoint: string }> = {
+import React from 'react';
+const toolConfigs: Record<string, { title: string; description: string; icon: React.ElementType; endpoint: string }> = {
   base64: {
     title: 'Base64',
     description: 'Encode and decode Base64 strings. Widely used for encoding binary data as text.',

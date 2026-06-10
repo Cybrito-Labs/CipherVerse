@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 export function LoadingState() {
   return (
     <div className="space-y-4">
