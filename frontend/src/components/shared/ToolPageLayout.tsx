@@ -7,6 +7,7 @@ interface ToolPageLayoutProps {
   title: string;
   description: string;
   icon: LucideIcon;
+  badges?: { label: string; variant?: 'default' | 'success' | 'warning' }[];
   children: ReactNode;
   className?: string;
 }
@@ -15,11 +16,12 @@ export function ToolPageLayout({
   title,
   description,
   icon: Icon,
+  badges,
   children,
   className,
 }: ToolPageLayoutProps) {
   return (
-    <div className={cn('max-w-[1200px] mx-auto space-y-8 pb-12', className)}>
+    <div className={cn('max-w-[1200px] mx-auto space-y-6 pb-12', className)}>
       {/* Page Header */}
       <motion.div
         initial={{ opacity: 0, y: -4 }}
@@ -27,12 +29,31 @@ export function ToolPageLayout({
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="flex items-start gap-5 border-b border-[#27272A] pb-6"
       >
-        <div className="w-12 h-12 rounded-lg bg-[#0A0A0A] border border-[#27272A] flex items-center justify-center flex-shrink-0 shadow-sm">
+        <div className="w-12 h-12 rounded-lg bg-[#0A0A0A] border border-[#27272A] flex items-center justify-center flex-shrink-0 shadow-sm mt-0.5">
           <Icon className="w-5 h-5 text-[#EDEDED]" />
         </div>
-        <div className="pt-0.5">
-          <h1 className="text-2xl font-semibold text-[#EDEDED] tracking-tight">{title}</h1>
-          <p className="text-[15px] text-[#A1A1AA] mt-1.5 max-w-3xl leading-relaxed">{description}</p>
+        <div className="pt-0.5 flex-1">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-2xl font-semibold text-[#EDEDED] tracking-tight">{title}</h1>
+            {badges && badges.length > 0 && (
+              <div className="flex gap-2">
+                {badges.map((badge, idx) => (
+                  <span
+                    key={idx}
+                    className={cn(
+                      "px-2 py-0.5 text-xs font-medium rounded-md border",
+                      badge.variant === 'success' ? "bg-[#14532D]/30 border-[#14532D] text-[#F0FDF4]" :
+                      badge.variant === 'warning' ? "bg-[#78350F]/30 border-[#78350F] text-[#FFFBEB]" :
+                      "bg-[#171717] border-[#27272A] text-[#A1A1AA]"
+                    )}
+                  >
+                    {badge.label}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <p className="text-[15px] text-[#A1A1AA] mt-2 max-w-3xl leading-relaxed">{description}</p>
         </div>
       </motion.div>
 

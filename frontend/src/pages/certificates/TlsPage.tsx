@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
-import { Play, RotateCcw, ShieldSearch } from 'lucide-react';
-import { ToolPageLayout } from '@/components/shared/ToolPageLayout';
-import { Button } from '@/components/ui/button';
+import { ShieldCheck } from 'lucide-react';
+import { 
+  ToolPageLayout, 
+  ToolInputPanel, 
+  ToolResultPanel, 
+  ToolActions 
+} from '@/components/shared/layout';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToolExecution } from '@/hooks/useToolExecution';
@@ -33,65 +36,51 @@ export default function TlsPage() {
     <ToolPageLayout
       title="TLS Analyzer"
       description="Connect to a remote server and analyze its SSL/TLS certificate chain. Extracts the X.509 certificate directly from the live connection to verify its current status, validity, and cryptographic properties."
-      icon={ShieldSearch}
+      icon={ShieldCheck}
+      badges={[{ label: 'Network', variant: 'warning' }, { label: 'Live', variant: 'success' }]}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="glass rounded-xl p-6 lg:col-span-4 h-fit">
-          <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-4">
-            <div className="space-y-2">
-              <Label>Hostname / Domain</Label>
-              <Input 
-                placeholder="example.com" 
-                className="bg-background/50" 
-                {...form.register('hostname')} 
-              />
-              {form.formState.errors.hostname && <p className="text-xs text-destructive">{form.formState.errors.hostname.message}</p>}
-            </div>
-            
-            <div className="space-y-2">
-              <Label>Port</Label>
-              <Input 
-                type="number"
-                placeholder="443" 
-                className="bg-background/50 font-mono" 
-                {...form.register('port', { valueAsNumber: true })} 
-              />
-              {form.formState.errors.port && <p className="text-xs text-destructive">{form.formState.errors.port.message}</p>}
-            </div>
+      <ToolInputPanel>
+        <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
+          <div className="space-y-3">
+            <Label className="text-[#EDEDED]">Hostname / Domain</Label>
+            <Input 
+              placeholder="example.com" 
+              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B]" 
+              {...form.register('hostname')} 
+            />
+            {form.formState.errors.hostname && <p className="text-sm text-destructive">{form.formState.errors.hostname.message}</p>}
+          </div>
+          
+          <div className="space-y-3">
+            <Label className="text-[#EDEDED]">Port</Label>
+            <Input 
+              type="number"
+              placeholder="443" 
+              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] font-mono" 
+              {...form.register('port', { valueAsNumber: true })} 
+            />
+            {form.formState.errors.port && <p className="text-sm text-destructive">{form.formState.errors.port.message}</p>}
+          </div>
 
-            <div className="flex items-center gap-3 pt-2">
-              <Button type="submit" disabled={mutation.isPending} className="w-full bg-primary text-primary-foreground gap-2">
-                <Play className="w-4 h-4"/> {mutation.isPending ? 'Connecting...' : 'Analyze TLS'}
-              </Button>
-              <Button type="button" variant="outline" onClick={handleClear} className="px-3">
-                <RotateCcw className="w-4 h-4" />
-              </Button>
-            </div>
+          <ToolActions
+            isExecuting={mutation.isPending}
+            onExecute={() => form.handleSubmit((d) => mutation.mutate(d))()}
+            onClear={handleClear}
+            executeLabel="Analyze TLS"
+          />
+        </form>
+      </ToolInputPanel>
 
-            {mutation.error && (
-              <div className="p-3 mt-4 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
-                {mutation.error.message}
-              </div>
-            )}
-          </form>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="lg:col-span-8">
-          {!cert && !mutation.isPending ? (
-            <div className="glass rounded-xl p-12 text-center text-muted-foreground flex flex-col items-center justify-center h-full min-h-[400px]">
-              <ShieldSearch className="w-16 h-16 mb-4 opacity-20" />
-              <p>Enter a domain to fetch and analyze its live certificate.</p>
-            </div>
-          ) : mutation.isPending ? (
-            <div className="glass rounded-xl p-12 text-center text-muted-foreground flex flex-col items-center justify-center h-full min-h-[400px]">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p>Establishing secure connection and retrieving certificate...</p>
-            </div>
-          ) : cert ? (
-            <CertificateReport cert={cert} />
-          ) : null}
-        </motion.div>
-      </div>
+      <ToolResultPanel
+        title="TLS Certificate Chain"
+        isLoading={mutation.isPending}
+        error={mutation.error}
+        onRetry={() => form.handleSubmit((d) => mutation.mutate(d))()}
+        onClear={handleClear}
+        emptyMessage="Enter a domain to fetch and analyze its live certificate."
+      >
+        {cert && <CertificateReport cert={cert} />}
+      </ToolResultPanel>
     </ToolPageLayout>
   );
 }

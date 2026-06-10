@@ -1,107 +1,113 @@
 import { motion } from 'framer-motion';
-import { Shield, Zap, Lock, Hash, FileCode, Award, Blocks, Image, FileSearch, Bug, Wrench, Clock, KeyRound, ShieldCheck } from 'lucide-react';
-import { CategoryCard } from '@/components/shared/CategoryCard';
+import { Link } from 'react-router-dom';
+import { Shield, Lock, FileKey, Zap, ArrowRight, ArrowUpRight } from 'lucide-react';
 
-const categories = [
-  { title: 'Classical Ciphers', description: 'Caesar, Vigenère, Atbash, Affine, Bifid, and more classical encryption algorithms', icon: KeyRound, path: '/classical', toolCount: 9 },
-  { title: 'Symmetric Cryptography', description: 'AES, DES, 3DES, Blowfish, SM4, RC4, XOR encryption and decryption', icon: ShieldCheck, path: '/symmetric', toolCount: 10 },
-  { title: 'Asymmetric Cryptography', description: 'RSA and DSA key generation, encryption, signing, and verification', icon: Lock, path: '/asymmetric', toolCount: 6 },
-  { title: 'Hashing & KDFs', description: 'SHA, MD5, HMAC, PBKDF2, Scrypt, bcrypt key derivation functions', icon: Hash, path: '/hashing', toolCount: 5 },
-  { title: 'Encoding & Decoding', description: 'Base64, Hex, URL, Binary, and Morse code encoding tools', icon: FileCode, path: '/encoding', toolCount: 5 },
-  { title: 'Certificates & TLS', description: 'X.509 certificate parsing, TLS analysis, and fingerprint generation', icon: Award, path: '/certificates', toolCount: 3 },
-  { title: 'Blockchain Tools', description: 'Bitcoin and Ethereum validation, Merkle trees, WIF encoding', icon: Blocks, path: '/blockchain', toolCount: 4 },
-  { title: 'Steganography', description: 'Hide and extract data in text, images, and audio files', icon: Image, path: '/steganography', toolCount: 4 },
-  { title: 'File Forensics', description: 'File hashing, entropy analysis, and randomness testing', icon: FileSearch, path: '/file-forensics', toolCount: 4 },
-  { title: 'Malware Analysis', description: 'Hash analysis, TLSH comparison, and PE file analysis', icon: Bug, path: '/malware-analysis', toolCount: 3 },
-  { title: 'Utilities', description: 'Password strength, salt generation, JWT signing, checksums', icon: Wrench, path: '/utilities', toolCount: 4 },
-  { title: 'Historical Machines', description: 'Enigma, Bombe, and Typex cipher machine simulators', icon: Clock, path: '/historical', toolCount: 3 },
+const popularTools = [
+  { name: 'AES Encryption', path: '/symmetric/aes', icon: Lock, desc: 'Advanced standard for file and API encryption' },
+  { name: 'RSA Encryption', path: '/asymmetric/rsa', icon: FileKey, desc: 'Public key system for secure data transmission' },
+  { name: 'SHA-256 Hash', path: '/hashing/sha256', icon: Zap, desc: 'Generate cryptographic fingerprints for integrity' }
 ];
 
-const stats = [
-  { label: 'Tools Available', value: '60+', icon: Zap },
-  { label: 'Categories', value: '12', icon: Shield },
-  { label: 'API Endpoints', value: '50+', icon: Lock },
-  { label: 'Algorithms', value: '40+', icon: Hash },
-];
-
-export default function Dashboard() {
+export default function DashboardPage() {
   return (
-    <div className="max-w-7xl mx-auto space-y-10">
-      {/* Hero Section */}
+    <div className="max-w-[1200px] mx-auto space-y-10 pb-12">
+      {/* Header Area */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative overflow-hidden rounded-2xl glass p-8 md:p-12"
+        transition={{ duration: 0.4 }}
+        className="flex flex-col gap-2"
       >
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center animate-pulse-glow">
-              <Shield className="w-7 h-7 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                Cipher<span className="text-primary">Verse</span>
-              </h1>
-              <p className="text-muted-foreground text-sm">
-                Professional Cybersecurity & Cryptography Platform
-              </p>
-            </div>
-          </div>
-          <p className="text-muted-foreground max-w-2xl text-sm md:text-base leading-relaxed mt-4">
-            A comprehensive suite of cryptographic tools, forensics analyzers, and security utilities.
-            Built for security researchers, ethical hackers, digital forensics analysts, and cryptography enthusiasts.
-          </p>
+        <div className="flex items-center gap-2 text-[#EDEDED] mb-2">
+          <Shield className="w-6 h-6" />
+          <h1 className="text-3xl font-semibold tracking-tight">CipherVerse Workspace</h1>
+        </div>
+        <p className="text-[#A1A1AA] text-[15px] max-w-2xl leading-relaxed">
+          The ultimate cryptography and cybersecurity toolkit. Encrypt, decrypt, hash, and encode data using modern, secure standards designed for developers and security engineers.
+        </p>
+      </motion.div>
+
+      {/* Grid: Popular Tools */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <h2 className="text-lg font-semibold text-[#EDEDED] mb-4">Popular Tools</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {popularTools.map((tool) => (
+            <Link key={tool.path} to={tool.path} className="group block">
+              <div className="bg-[#0A0A0A] border border-[#27272A] rounded-[14px] p-5 shadow-sm transition-all duration-200 hover:border-[#52525B] hover:shadow-md h-full flex flex-col gap-3">
+                <div className="w-10 h-10 rounded-lg bg-[#171717] border border-[#27272A] flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-200">
+                  <tool.icon className="w-5 h-5 text-[#EDEDED]" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-[15px] font-semibold text-[#EDEDED] flex items-center justify-between">
+                    {tool.name}
+                    <ArrowUpRight className="w-4 h-4 text-[#52525B] group-hover:text-[#EDEDED] transition-colors" />
+                  </h3>
+                  <p className="text-sm text-[#A1A1AA] mt-1 line-clamp-2">{tool.desc}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </motion.div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {stats.map((stat, idx) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="glass rounded-xl p-5 text-center"
-            >
-              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Icon className="w-5 h-5 text-primary" />
+      {/* Grid: Comparisons & Resources */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
+        {/* Security Standards Comparison */}
+        <div className="bg-[#0A0A0A] border border-[#27272A] rounded-[14px] p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-6 border-b border-[#27272A] pb-4">
+            <h2 className="text-lg font-semibold text-[#EDEDED]">Algorithm Standards</h2>
+            <Link to="/classical" className="text-sm text-[#A1A1AA] hover:text-[#EDEDED] flex items-center gap-1 transition-colors">
+              View all <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-start gap-4">
+              <div className="w-12 pt-1 font-mono text-[11px] text-[#A1A1AA] font-bold">AES-GCM</div>
+              <div>
+                <p className="text-[13px] text-[#EDEDED] font-medium">Recommended for high-speed symmetric encryption</p>
+                <p className="text-[12px] text-[#52525B] mt-0.5">Authenticated encryption providing both confidentiality and integrity.</p>
               </div>
-              <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Categories Grid */}
-      <div>
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-xl font-semibold text-foreground mb-5"
-        >
-          Tool Categories
-        </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categories.map((cat, idx) => (
-            <CategoryCard
-              key={cat.path}
-              title={cat.title}
-              description={cat.description}
-              icon={cat.icon}
-              path={cat.path}
-              toolCount={cat.toolCount}
-              delay={0.05 * idx}
-            />
-          ))}
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 pt-1 font-mono text-[11px] text-[#A1A1AA] font-bold">RSA-OAEP</div>
+              <div>
+                <p className="text-[13px] text-[#EDEDED] font-medium">Secure asymmetric padding</p>
+                <p className="text-[12px] text-[#52525B] mt-0.5">Optimal Asymmetric Encryption Padding resists chosen-ciphertext attacks.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 pt-1 font-mono text-[11px] text-[#A1A1AA] font-bold">SHA-3</div>
+              <div>
+                <p className="text-[13px] text-[#EDEDED] font-medium">Modern hashing standard</p>
+                <p className="text-[12px] text-[#52525B] mt-0.5">Based on Keccak sponge construction, highly resistant to collision.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        {/* Recent Activity / Quick Actions */}
+        <div className="bg-[#000000] border border-[#27272A] rounded-[14px] p-6 shadow-sm border-dashed flex flex-col items-center justify-center text-center gap-4 min-h-[300px]">
+           <div className="w-12 h-12 rounded-full bg-[#171717] border border-[#27272A] flex items-center justify-center mb-2 shadow-inner">
+             <Zap className="w-5 h-5 text-[#EDEDED]" />
+           </div>
+           <div>
+             <h3 className="text-[#EDEDED] font-semibold">Quick Actions</h3>
+             <p className="text-sm text-[#A1A1AA] mt-1 max-w-sm">Press <kbd className="font-mono text-[10px] bg-[#171717] px-1 py-0.5 rounded border border-[#27272A] text-[#EDEDED]">Cmd+K</kbd> anywhere to quickly search for algorithms, encodings, or certificates.</p>
+           </div>
+           <button className="mt-2 px-4 py-2 bg-[#EDEDED] text-[#000000] rounded-md font-medium text-sm hover:bg-[#D4D4D8] transition-colors shadow-sm">
+             Open Command Palette
+           </button>
+        </div>
+      </motion.div>
     </div>
   );
 }

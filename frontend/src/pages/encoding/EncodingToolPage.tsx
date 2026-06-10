@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { z } from 'zod';
 import { FileCode, Hash, Link as LinkIcon, Binary, Code } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import CipherToolPage from '@/components/shared/CipherToolPage';
 import type { FieldConfig } from '@/components/shared/CipherToolPage';
 
@@ -18,8 +19,7 @@ const fields: FieldConfig[] = [
   },
 ];
 
-import React from 'react';
-const toolConfigs: Record<string, { title: string; description: string; icon: React.ElementType; endpoint: string }> = {
+const toolConfigs: Record<string, { title: string; description: string; icon: LucideIcon; endpoint: string }> = {
   base64: {
     title: 'Base64',
     description: 'Encode and decode Base64 strings. Widely used for encoding binary data as text.',
@@ -72,6 +72,8 @@ export default function EncodingToolPage() {
       hasTabs
       encryptEndpoint={`${config.endpoint}/encode`}
       decryptEndpoint={`${config.endpoint}/decode`}
+      encryptLabel="Encode"
+      decryptLabel="Decode"
     />
   );
 }

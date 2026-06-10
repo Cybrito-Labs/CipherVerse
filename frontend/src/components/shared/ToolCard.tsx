@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
-import { MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 
 interface ToolCardProps {
   title: string;

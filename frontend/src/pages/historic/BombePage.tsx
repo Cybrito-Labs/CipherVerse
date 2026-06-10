@@ -1,13 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
-import { Play, RotateCcw, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api';
-import { ToolPageLayout } from '@/components/shared/ToolPageLayout';
-import { ResultPanel } from '@/components/shared/ResultPanel';
-import { Button } from '@/components/ui/button';
+import {
+  ToolPageLayout,
+  ToolInputPanel,
+  ToolResultPanel,
+  ToolActions
+} from '@/components/shared/layout';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -38,15 +40,15 @@ export default function BombePage() {
     },
   });
 
-  const form = useForm<z.infer<typeof schema>>({ 
-    resolver: zodResolver(schema), 
-    defaultValues: { 
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: {
       ciphertext: '',
       crib: '',
       r1_type: 'I',
       r2_type: 'II',
       r3_type: 'III'
-    } 
+    }
   });
 
   const res = mutation.data;
@@ -61,117 +63,109 @@ export default function BombePage() {
       title="Turing Bombe Simulator"
       description="Simulate Alan Turing's Bombe to cryptanalyze Enigma. Provide the intercepted ciphertext and a 'crib' (a known plaintext guess like 'WETTERBERICHT') to brute-force the possible rotor starting positions."
       icon={Search}
+      badges={[{ label: 'Historical', variant: 'warning' }, { label: 'Cryptanalysis', variant: 'default' }]}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="glass rounded-xl p-6 lg:col-span-5 h-fit">
-          <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
-            
-            <div className="grid grid-cols-3 gap-2">
-              <div className="space-y-2">
-                <Label className="text-xs">Left Rotor</Label>
-                <Select onValueChange={(val) => form.setValue('r1_type', val)} defaultValue={form.getValues('r1_type')}>
-                  <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-xs">Mid Rotor</Label>
-                <Select onValueChange={(val) => form.setValue('r2_type', val)} defaultValue={form.getValues('r2_type')}>
-                  <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-xs">Right Rotor</Label>
-                <Select onValueChange={(val) => form.setValue('r3_type', val)} defaultValue={form.getValues('r3_type')}>
-                  <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
+      <ToolInputPanel>
+        <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="space-y-6">
+          <div className="grid grid-cols-3 gap-2">
             <div className="space-y-2">
-              <Label>Intercepted Ciphertext</Label>
-              <Textarea 
-                placeholder="Enter Enigma encrypted text..." 
-                className="bg-background/50 font-mono min-h-[100px] uppercase" 
-                {...form.register('ciphertext')} 
-                onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
-              />
-              {form.formState.errors.ciphertext && <p className="text-xs text-destructive">{form.formState.errors.ciphertext.message}</p>}
+              <Label className="text-xs text-[#A1A1AA]">Left Rotor</Label>
+              <Select onValueChange={(val) => form.setValue('r1_type', val)} defaultValue={form.getValues('r1_type')}>
+                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                </SelectContent>
+              </Select>
             </div>
-
             <div className="space-y-2">
-              <Label>Plaintext Crib Guess</Label>
-              <Input 
-                placeholder="e.g., WETTER" 
-                className="bg-background/50 font-mono uppercase" 
-                {...form.register('crib')} 
-                onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
-              />
-              <p className="text-xs text-muted-foreground">The crib must be equal to or shorter than the ciphertext.</p>
-              {form.formState.errors.crib && <p className="text-xs text-destructive">{form.formState.errors.crib.message}</p>}
+              <Label className="text-xs text-[#A1A1AA]">Mid Rotor</Label>
+              <Select onValueChange={(val) => form.setValue('r2_type', val)} defaultValue={form.getValues('r2_type')}>
+                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs text-[#A1A1AA]">Right Rotor</Label>
+              <Select onValueChange={(val) => form.setValue('r3_type', val)} defaultValue={form.getValues('r3_type')}>
+                <SelectTrigger className="bg-[#000000] border-[#27272A] text-[#EDEDED]"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-[#0A0A0A] border-[#27272A]">
+                  {['I','II','III','IV','V'].map(r => <SelectItem key={r} value={r} className="text-[#EDEDED] hover:bg-[#171717] focus:bg-[#171717]">{r}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <Label className="text-[#EDEDED]">Intercepted Ciphertext</Label>
+            <Textarea
+              placeholder="Enter Enigma encrypted text..."
+              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono min-h-[100px] uppercase"
+              {...form.register('ciphertext')}
+              onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
+            />
+            {form.formState.errors.ciphertext && <p className="text-sm text-destructive">{form.formState.errors.ciphertext.message}</p>}
+          </div>
+
+          <div className="space-y-3">
+            <Label className="text-[#EDEDED]">Plaintext Crib Guess</Label>
+            <Input
+              placeholder="e.g., WETTER"
+              className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono uppercase"
+              {...form.register('crib')}
+              onChange={(e) => e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()}
+            />
+            <p className="text-[11px] text-[#A1A1AA]">The crib must be equal to or shorter than the ciphertext.</p>
+            {form.formState.errors.crib && <p className="text-sm text-destructive">{form.formState.errors.crib.message}</p>}
+          </div>
+
+          <ToolActions
+            isExecuting={mutation.isPending}
+            onExecute={() => form.handleSubmit((d) => mutation.mutate(d))()}
+            onClear={handleClear}
+            executeLabel="Run Bombe Analysis"
+          />
+        </form>
+      </ToolInputPanel>
+
+      <ToolResultPanel
+        title="Analysis Output"
+        isLoading={mutation.isPending}
+        error={mutation.error}
+        onRetry={() => form.handleSubmit((d) => mutation.mutate(d))()}
+        onClear={handleClear}
+        emptyMessage="Configure your crib and run the analysis."
+      >
+        {res && (
+          <div className="space-y-4 pt-2">
+            <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-primary text-sm font-semibold">
+              {res.result}
             </div>
 
-            <div className="flex items-center gap-3 pt-2">
-              <Button type="submit" disabled={mutation.isPending} className="w-full bg-primary text-primary-foreground gap-2">
-                <Play className="w-4 h-4"/> Run Bombe Analysis
-              </Button>
-              <Button type="button" variant="outline" onClick={handleClear} className="px-3">
-                <RotateCcw className="w-4 h-4" />
-              </Button>
-            </div>
-          </form>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="lg:col-span-7">
-          <ResultPanel
-            title="Analysis Output"
-            isLoading={mutation.isPending}
-            error={mutation.error}
-          >
-            {res && (
-              <div className="space-y-4">
-                <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-primary text-sm font-semibold">
-                  {res.result}
-                </div>
-                
-                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-4">Potential Initial Settings (Matches)</h4>
-                {res.matches.length === 0 ? (
-                  <div className="p-8 text-center text-muted-foreground border border-dashed border-border rounded-xl">
-                    No matching rotor positions found for this crib.
+            <h4 className="text-sm font-semibold text-[#A1A1AA] uppercase tracking-wider mt-4">Potential Initial Settings (Matches)</h4>
+            {res.matches.length === 0 ? (
+              <div className="p-8 text-center text-[#A1A1AA] border border-dashed border-[#27272A] rounded-xl">
+                No matching rotor positions found for this crib.
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[400px] overflow-y-auto pr-2">
+                {res.matches.map((match, i) => (
+                  <div key={i} className="p-3 bg-[#000000] border border-[#27272A] rounded-lg text-center font-mono font-bold tracking-widest text-[#EDEDED]">
+                    {match}
                   </div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[400px] overflow-y-auto pr-2">
-                    {res.matches.map((match, i) => (
-                      <div key={i} className="p-3 bg-background/50 border border-border rounded-lg text-center font-mono font-bold tracking-widest">
-                        {match}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                {res.matches.length > 0 && (
-                  <p className="text-xs text-muted-foreground mt-4">
-                    Take these 3-letter settings and test them in the Enigma Machine tool to see if the full message decrypts into readable German.
-                  </p>
-                )}
+                ))}
               </div>
             )}
-            {!res && !mutation.isPending && !mutation.error && (
-              <div className="text-center text-muted-foreground mt-12">
-                Configure your crib and run the analysis.
-              </div>
+
+            {res.matches.length > 0 && (
+              <p className="text-xs text-[#A1A1AA] mt-4">
+                Take these 3-letter settings and test them in the Enigma Machine tool to see if the full message decrypts into readable German.
+              </p>
             )}
-          </ResultPanel>
-        </motion.div>
-      </div>
+          </div>
+        )}
+      </ToolResultPanel>
     </ToolPageLayout>
   );
 }

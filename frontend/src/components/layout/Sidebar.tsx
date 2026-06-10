@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Shield } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Shield, ChevronDown } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigationGroups } from '@/constants/navigation';
 import { Badge } from '@/components/ui/badge';
@@ -57,91 +59,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       <ScrollArea className="flex-1 py-4">
         <nav className="space-y-6 px-3">
           {navigationGroups.map((group) => (
-            <div key={group.label}>
-              <AnimatePresence>
-                {!collapsed && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="px-3 mb-2 text-[11px] font-medium text-[#A1A1AA] uppercase tracking-wider"
-                  >
-                    {group.label}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-              <div className="space-y-0.5">
-                {group.items.map((item) => {
-                  const isActive =
-                    item.path === '/'
-                      ? location.pathname === '/'
-                      : location.pathname.startsWith(item.path);
-                  const Icon = item.icon;
-
-                  const linkContent = (
-                    <NavLink
-                      to={item.path}
-                      className={cn(
-                        'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
-                        'transition-colors duration-150 group relative',
-                        isActive
-                          ? 'bg-[#171717] text-[#EDEDED]'
-                          : 'text-[#A1A1AA] hover:bg-[#0A0A0A] hover:text-[#EDEDED]'
-                      )}
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="sidebar-indicator"
-                          className="absolute left-0 top-[20%] bottom-[20%] w-[3px] rounded-r-md bg-[#EDEDED]"
-                          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                      <Icon
-                        className={cn(
-                          'w-[16px] h-[16px] flex-shrink-0 transition-colors',
-                          isActive ? 'text-[#EDEDED]' : 'text-[#A1A1AA] group-hover:text-[#EDEDED]'
-                        )}
-                      />
-                      <AnimatePresence>
-                        {!collapsed && (
-                          <motion.div
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: 'auto' }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.15 }}
-                            className="flex items-center justify-between flex-1 overflow-hidden"
-                          >
-                            <span className="whitespace-nowrap">{item.label}</span>
-                            {item.toolCount && (
-                              <Badge
-                                variant="secondary"
-                                className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-[#27272A] text-[#EDEDED] border-none font-medium"
-                              >
-                                {item.toolCount}
-                              </Badge>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </NavLink>
-                  );
-
-                  if (collapsed) {
-                    return (
-                      <Tooltip key={item.path} delayDuration={0}>
-                        <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={12} className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED]">
-                          <p className="font-medium">{item.label}</p>
-                          <p className="text-xs text-[#A1A1AA]">{item.description}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    );
-                  }
-
-                  return <div key={item.path}>{linkContent}</div>;
-                })}
-              </div>
-            </div>
+            <NavGroup key={group.label} group={group} collapsed={collapsed} location={location} />
           ))}
         </nav>
       </ScrollArea>
@@ -164,5 +82,123 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </button>
       </div>
     </motion.aside>
+  );
+}
+
+interface NavItemType {
+  path: string;
+  label: string;
+  description?: string;
+  icon: LucideIcon;
+  toolCount?: number;
+}
+
+interface NavGroupType {
+  label: string;
+  items: NavItemType[];
+}
+
+function NavGroup({ group, collapsed, location }: { group: NavGroupType; collapsed: boolean; location: ReturnType<typeof useLocation> }) {
+  const [expanded, setExpanded] = useState(true);
+
+  return (
+    <div>
+      <AnimatePresence>
+        {!collapsed && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex items-center justify-between px-3 mb-2 cursor-pointer group/label"
+            onClick={() => setExpanded(!expanded)}
+          >
+            <p className="text-[11px] font-medium text-[#A1A1AA] uppercase tracking-wider group-hover/label:text-[#EDEDED] transition-colors">
+              {group.label}
+            </p>
+            <ChevronDown className={cn("w-3.5 h-3.5 text-[#52525B] transition-transform duration-200", expanded ? "" : "-rotate-90")} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence initial={false}>
+        {(expanded || collapsed) && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="space-y-0.5 overflow-hidden"
+          >
+            {group.items.map((item: NavItemType) => {
+              const isActive =
+                item.path === '/'
+                  ? location.pathname === '/'
+                  : location.pathname.startsWith(item.path);
+              const Icon = item.icon;
+
+              const linkContent = (
+                <NavLink
+                  to={item.path}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
+                    'transition-colors duration-150 group relative',
+                    isActive
+                      ? 'bg-[#171717] text-[#EDEDED]'
+                      : 'text-[#A1A1AA] hover:bg-[#0A0A0A] hover:text-[#EDEDED]'
+                  )}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-indicator"
+                      className="absolute left-0 top-[20%] bottom-[20%] w-[3px] rounded-r-md bg-[#EDEDED]"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <Icon
+                    className={cn(
+                      'w-[16px] h-[16px] flex-shrink-0 transition-colors',
+                      isActive ? 'text-[#EDEDED]' : 'text-[#A1A1AA] group-hover:text-[#EDEDED]'
+                    )}
+                  />
+                  <AnimatePresence>
+                    {!collapsed && (
+                      <motion.div
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: 'auto' }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="flex items-center justify-between flex-1 overflow-hidden"
+                      >
+                        <span className="whitespace-nowrap">{item.label}</span>
+                        {item.toolCount && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-[#27272A] text-[#EDEDED] border-none font-medium"
+                          >
+                            {item.toolCount}
+                          </Badge>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </NavLink>
+              );
+
+              if (collapsed) {
+                return (
+                  <Tooltip key={item.path} delayDuration={0}>
+                    <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
+                    <TooltipContent side="right" sideOffset={12} className="bg-[#0A0A0A] border-[#27272A] text-[#EDEDED]">
+                      <p className="font-medium">{item.label}</p>
+                      <p className="text-xs text-[#A1A1AA]">{item.description}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              }
+
+              return <div key={item.path}>{linkContent}</div>;
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

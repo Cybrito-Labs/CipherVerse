@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
-import { Play, RotateCcw, Shuffle } from 'lucide-react';
-import { ToolPageLayout } from '@/components/shared/ToolPageLayout';
-import { ResultPanel } from '@/components/shared/ResultPanel';
-import { Button } from '@/components/ui/button';
+import { Shuffle } from 'lucide-react';
+import { 
+  ToolPageLayout, 
+  ToolInputPanel, 
+  ToolResultPanel, 
+  ToolTabs, 
+  ToolActions 
+} from '@/components/shared/layout';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToolExecution } from '@/hooks/useToolExecution';
 import type { SymmetricResponse, XORBruteforceResponse } from '@/types/api';
 
@@ -56,100 +58,145 @@ export default function XorPage() {
       description="The XOR cipher applies the exclusive OR bitwise operation to the plaintext and key. It is the basis for many stream ciphers and the One-Time Pad."
       icon={Shuffle}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="glass rounded-xl p-6">
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "encrypt" | "decrypt" | "bruteforce")}>
-            <TabsList className="mb-4 bg-background/50 grid w-full grid-cols-3">
-              <TabsTrigger value="encrypt">Encrypt</TabsTrigger>
-              <TabsTrigger value="decrypt">Decrypt</TabsTrigger>
-              <TabsTrigger value="bruteforce">Bruteforce</TabsTrigger>
-            </TabsList>
+      <ToolInputPanel>
+        <div className="flex flex-col gap-6">
+          <ToolTabs
+            tabs={[
+              { id: 'encrypt', label: 'Encrypt' },
+              { id: 'decrypt', label: 'Decrypt' },
+              { id: 'bruteforce', label: 'Bruteforce' }
+            ]}
+            activeTab={activeTab}
+            onTabChange={(v) => {
+              setActiveTab(v as 'encrypt' | 'decrypt' | 'bruteforce');
+              encryptMutation.reset();
+              decryptMutation.reset();
+              bruteMutation.reset();
+            }}
+            className="max-w-[350px]"
+          />
 
-            <TabsContent value="encrypt">
-              <form onSubmit={encryptForm.handleSubmit((d) => encryptMutation.mutate(d))} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="enc_text">Text</Label>
-                  <Textarea id="enc_text" className="bg-background/50 font-mono" {...encryptForm.register('text')} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="enc_key">Key</Label>
-                  <Input id="enc_key" className="bg-background/50" {...encryptForm.register('key')} />
-                </div>
-                <div className="flex items-center gap-3 pt-2">
-                  <Button type="submit" disabled={isPending} className="bg-primary text-primary-foreground gap-2"><Play className="w-4 h-4"/> Encrypt</Button>
-                  <Button type="button" variant="outline" onClick={handleClear} className="gap-2"><RotateCcw className="w-4 h-4"/> Clear</Button>
-                </div>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="decrypt">
-              <form onSubmit={decryptForm.handleSubmit((d) => decryptMutation.mutate(d))} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="dec_hex">Hex Data</Label>
-                  <Textarea id="dec_hex" className="bg-background/50 font-mono" {...decryptForm.register('hex_data')} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="dec_key">Key</Label>
-                  <Input id="dec_key" className="bg-background/50" {...decryptForm.register('key')} />
-                </div>
-                <div className="flex items-center gap-3 pt-2">
-                  <Button type="submit" disabled={isPending} className="bg-primary text-primary-foreground gap-2"><Play className="w-4 h-4"/> Decrypt</Button>
-                  <Button type="button" variant="outline" onClick={handleClear} className="gap-2"><RotateCcw className="w-4 h-4"/> Clear</Button>
-                </div>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="bruteforce">
-              <form onSubmit={bruteForm.handleSubmit((d) => bruteMutation.mutate(d))} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="brute_hex">Hex Data</Label>
-                  <Textarea id="brute_hex" className="bg-background/50 font-mono" {...bruteForm.register('hex_data')} />
-                  <p className="text-xs text-muted-foreground">Bruteforces a single-byte XOR key.</p>
-                </div>
-                <div className="flex items-center gap-3 pt-2">
-                  <Button type="submit" disabled={isPending} className="bg-primary text-primary-foreground gap-2"><Play className="w-4 h-4"/> Bruteforce</Button>
-                  <Button type="button" variant="outline" onClick={handleClear} className="gap-2"><RotateCcw className="w-4 h-4"/> Clear</Button>
-                </div>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-          {activeTab !== 'bruteforce' ? (
-            <ResultPanel
-              title={activeTab === 'encrypt' ? 'Encrypted Result' : 'Decrypted Result'}
-              result={activeTab === 'encrypt' ? encryptMutation.data?.result : decryptMutation.data?.result}
-              isLoading={isPending}
-              error={activeTab === 'encrypt' ? encryptMutation.error : decryptMutation.error}
-            />
-          ) : (
-            <ResultPanel
-              title="Bruteforce Results"
-              isLoading={bruteMutation.isPending}
-              error={bruteMutation.error}
-            >
-              {bruteMutation.data && (
-                <div className="space-y-2 mt-4 max-h-[400px] overflow-auto pr-2">
-                  {bruteMutation.data.results.map(([key, text], idx) => (
-                    <div key={idx} className="p-3 rounded-lg bg-background/50 border border-border text-sm flex gap-4">
-                      <div className="font-mono text-primary font-bold w-12 flex-shrink-0">
-                        0x{key.toString(16).padStart(2, '0').toUpperCase()}
-                      </div>
-                      <div className="font-mono text-foreground break-all">{text}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </ResultPanel>
+          {activeTab === 'encrypt' && (
+            <form onSubmit={encryptForm.handleSubmit((d) => encryptMutation.mutate(d))} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="enc_text" className="text-[#EDEDED]">Text</Label>
+                <Textarea 
+                  id="enc_text" 
+                  placeholder="Enter text to encrypt..."
+                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  {...encryptForm.register('text')} 
+                />
+                {encryptForm.formState.errors.text && (
+                  <p className="text-sm text-destructive">{encryptForm.formState.errors.text.message}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="enc_key" className="text-[#EDEDED]">Key</Label>
+                <Input 
+                  id="enc_key" 
+                  placeholder="Enter encryption key..."
+                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono" 
+                  {...encryptForm.register('key')} 
+                />
+                {encryptForm.formState.errors.key && (
+                  <p className="text-sm text-destructive">{encryptForm.formState.errors.key.message}</p>
+                )}
+              </div>
+              <ToolActions
+                isExecuting={encryptMutation.isPending}
+                onExecute={() => encryptForm.handleSubmit((d) => encryptMutation.mutate(d))()}
+                onClear={handleClear}
+                executeLabel="Encrypt"
+              />
+            </form>
           )}
-          {!isPending && !encryptMutation.data && !decryptMutation.data && !bruteMutation.data && (
-            <div className="glass rounded-xl p-12 text-center mt-6">
-              <p className="text-sm text-muted-foreground">Enter your data and click Execute to see results</p>
-            </div>
+
+          {activeTab === 'decrypt' && (
+            <form onSubmit={decryptForm.handleSubmit((d) => decryptMutation.mutate(d))} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="dec_hex" className="text-[#EDEDED]">Hex Data</Label>
+                <Textarea 
+                  id="dec_hex" 
+                  placeholder="Enter Hex data to decrypt..."
+                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  {...decryptForm.register('hex_data')} 
+                />
+                {decryptForm.formState.errors.hex_data && (
+                  <p className="text-sm text-destructive">{decryptForm.formState.errors.hex_data.message}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dec_key" className="text-[#EDEDED]">Key</Label>
+                <Input 
+                  id="dec_key" 
+                  placeholder="Enter decryption key..."
+                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] font-mono" 
+                  {...decryptForm.register('key')} 
+                />
+                {decryptForm.formState.errors.key && (
+                  <p className="text-sm text-destructive">{decryptForm.formState.errors.key.message}</p>
+                )}
+              </div>
+              <ToolActions
+                isExecuting={decryptMutation.isPending}
+                onExecute={() => decryptForm.handleSubmit((d) => decryptMutation.mutate(d))()}
+                onClear={handleClear}
+                executeLabel="Decrypt"
+              />
+            </form>
           )}
-        </motion.div>
-      </div>
+
+          {activeTab === 'bruteforce' && (
+            <form onSubmit={bruteForm.handleSubmit((d) => bruteMutation.mutate(d))} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="brute_hex" className="text-[#EDEDED]">Hex Data</Label>
+                <Textarea 
+                  id="brute_hex" 
+                  placeholder="Enter Hex data to bruteforce..."
+                  className="bg-[#000000] border-[#27272A] focus:border-[#52525B] text-[#EDEDED] placeholder:text-[#52525B] min-h-[100px] font-mono text-sm" 
+                  {...bruteForm.register('hex_data')} 
+                />
+                <p className="text-[11px] text-[#A1A1AA] mt-1">Bruteforces a single-byte XOR key.</p>
+                {bruteForm.formState.errors.hex_data && (
+                  <p className="text-sm text-destructive">{bruteForm.formState.errors.hex_data.message}</p>
+                )}
+              </div>
+              <ToolActions
+                isExecuting={bruteMutation.isPending}
+                onExecute={() => bruteForm.handleSubmit((d) => bruteMutation.mutate(d))()}
+                onClear={handleClear}
+                executeLabel="Bruteforce"
+              />
+            </form>
+          )}
+        </div>
+      </ToolInputPanel>
+
+      <ToolResultPanel
+        title={activeTab === 'encrypt' ? 'Encrypted Result' : activeTab === 'decrypt' ? 'Decrypted Result' : 'Bruteforce Results'}
+        result={activeTab === 'encrypt' ? encryptMutation.data?.result : activeTab === 'decrypt' ? decryptMutation.data?.result : undefined}
+        isLoading={isPending}
+        error={activeTab === 'encrypt' ? encryptMutation.error : activeTab === 'decrypt' ? decryptMutation.error : bruteMutation.error}
+        onRetry={
+          activeTab === 'encrypt' ? () => encryptForm.handleSubmit((d) => encryptMutation.mutate(d))() :
+          activeTab === 'decrypt' ? () => decryptForm.handleSubmit((d) => decryptMutation.mutate(d))() :
+          () => bruteForm.handleSubmit((d) => bruteMutation.mutate(d))()
+        }
+        onClear={handleClear}
+      >
+        {activeTab === 'bruteforce' && bruteMutation.data && (
+          <div className="space-y-2 mt-4 max-h-[400px] overflow-auto pr-2">
+            {bruteMutation.data.results.map(([key, text], idx) => (
+              <div key={idx} className="p-3 rounded-lg bg-[#000000] border border-[#27272A] text-sm flex gap-4">
+                <div className="font-mono text-primary font-bold w-12 flex-shrink-0">
+                  0x{key.toString(16).padStart(2, '0').toUpperCase()}
+                </div>
+                <div className="font-mono text-[#EDEDED] break-all">{text}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ToolResultPanel>
     </ToolPageLayout>
   );
 }
