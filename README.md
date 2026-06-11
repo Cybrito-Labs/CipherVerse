@@ -1,5 +1,9 @@
 # CipherVerse - The Modern Cryptography Toolkit
 
+<p align="center">
+  <img src="assets/logo.png" alt="CipherVerse Logo" width="300" />
+</p>
+
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 ![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20Vite%20%7C%20Tailwind-blue)
 ![Backend](https://img.shields.io/badge/Backend-FastAPI%20%7C%20Python-green)
