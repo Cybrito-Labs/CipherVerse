@@ -4,6 +4,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import { router } from '@/routes';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { ChatbotWidget } from '@/components/shared/ChatbotWidget';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider delayDuration={200}>
           <RouterProvider router={router} />
+          <ChatbotWidget />
           <Toaster
             position="bottom-right"
             toastOptions={{
