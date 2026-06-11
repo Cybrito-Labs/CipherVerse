@@ -34,24 +34,10 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Logo */}
       <div className="flex items-center h-16 px-4 border-b border-border">
         <NavLink to="/" className="flex items-center gap-3 min-w-0">
-          <div className="flex-shrink-0 w-8 h-8 rounded-md bg-foreground flex items-center justify-center">
-            <Shield className="w-4 h-4 text-background" />
+          <div className="flex-shrink-0 w-8 h-8 rounded-md overflow-hidden flex items-center justify-center">
+            <img src="/logo.png" alt="CipherVerse Logo" className="w-full h-full object-cover" />
           </div>
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.div
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 'auto' }}
-                exit={{ opacity: 0, width: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden whitespace-nowrap"
-              >
-                <span className="text-base font-semibold tracking-tight text-foreground">
-                  CipherVerse
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+
         </NavLink>
       </div>
 
