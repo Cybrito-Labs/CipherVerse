@@ -5,7 +5,7 @@ import { Shield, Lock, FileKey, Zap, ArrowRight, ArrowUpRight } from 'lucide-rea
 const popularTools = [
   { name: 'AES Encryption', path: '/symmetric/aes', icon: Lock, desc: 'Advanced standard for file and API encryption' },
   { name: 'RSA Encryption', path: '/asymmetric/rsa', icon: FileKey, desc: 'Public key system for secure data transmission' },
-  { name: 'SHA-256 Hash', path: '/hashing/sha256', icon: Zap, desc: 'Generate cryptographic fingerprints for integrity' }
+  { name: 'SHA-256 Hash', path: '/hashing', icon: Zap, desc: 'Generate cryptographic fingerprints for integrity' }
 ];
 
 export default function DashboardPage() {
