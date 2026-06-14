@@ -12,8 +12,6 @@ import {
   Bug,
   Wrench,
   Clock,
-  Globe,
-  Settings,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -144,18 +142,6 @@ export const navigationGroups: NavGroup[] = [
         icon: Clock,
         description: 'Enigma, Bombe, Typex simulators',
         toolCount: 3,
-      },
-      {
-        label: 'API Explorer',
-        path: '/api-explorer',
-        icon: Globe,
-        description: 'Browse and test all API endpoints',
-      },
-      {
-        label: 'Settings',
-        path: '/settings',
-        icon: Settings,
-        description: 'Configuration and preferences',
       },
     ],
   },

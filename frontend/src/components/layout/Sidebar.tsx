@@ -6,7 +6,6 @@ import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigationGroups } from '@/constants/navigation';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Tooltip,
   TooltipContent,
@@ -42,13 +41,13 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <ScrollArea className="flex-1 py-4">
-        <nav className="space-y-6 px-3">
+      <div className="flex-1 py-4 flex flex-col">
+        <nav className="space-y-6 px-3 flex-1 overflow-hidden">
           {navigationGroups.map((group) => (
             <NavGroup key={group.label} group={group} collapsed={collapsed} location={location} />
           ))}
         </nav>
-      </ScrollArea>
+      </div>
 
       {/* Collapse Toggle */}
       <div className="border-t border-border p-3">
