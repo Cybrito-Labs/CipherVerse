@@ -17,6 +17,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="image" href="/logo.png" />
+
     <!-- Open Graph / Facebook / Discord -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CipherVerse" />
@@ -34,10 +37,14 @@
     <meta name="twitter:description" content="Explore 40+ interactive online cryptography, malware analysis, file forensics, steganography, and historical cipher tools in one high-performance platform." />
     <meta name="twitter:image" content="https://cipherverse.cybrito.tech/og-image.png" />
 
-    <!-- Preconnect & Fonts Performance Optimization -->
+    <!-- Non-Blocking Preconnect & Async Fonts Optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    </noscript>
 
     <!-- Organization & WebSite JSON-LD Schema -->
     <script type="application/ld+json">

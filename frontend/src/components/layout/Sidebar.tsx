@@ -32,6 +32,8 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onMobileClose}
+            role="button"
+            aria-label="Close mobile navigation overlay"
             className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
           />
         )}
@@ -61,7 +63,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
         >
           {/* Logo & Mobile Close */}
           <div className="flex items-center justify-between h-16 px-4 border-b border-border flex-shrink-0">
-            <NavLink to="/" onClick={onMobileClose} className="flex items-center gap-3 min-w-0">
+            <NavLink to="/" onClick={onMobileClose} className="flex items-center gap-3 min-w-0" aria-label="CipherVerse Home">
               <div className="flex-shrink-0 w-8 h-8 rounded-md overflow-hidden flex items-center justify-center">
                 <img src="/logo.png" alt="CipherVerse Logo" className="w-full h-full object-cover" />
               </div>
@@ -77,7 +79,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
             <button
               onClick={onMobileClose}
               className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary md:hidden"
-              aria-label="Close menu"
+              aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
             </button>
@@ -85,7 +87,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
 
           {/* Navigation Items */}
           <div className="flex-1 py-4 overflow-y-auto">
-            <nav className="space-y-6 px-3 pb-4">
+            <nav className="space-y-6 px-3 pb-4" aria-label="Main Navigation">
               {navigationGroups.map((group) => (
                 <NavGroup
                   key={group.label}
@@ -102,6 +104,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Side
           <div className="border-t border-border p-3 hidden md:block flex-shrink-0">
             <button
               onClick={onToggle}
+              aria-label={collapsed ? "Expand sidebar navigation" : "Collapse sidebar navigation"}
               className={cn(
                 'flex items-center justify-center w-full py-2 rounded-md',
                 'text-muted-foreground hover:text-foreground hover:bg-secondary',
