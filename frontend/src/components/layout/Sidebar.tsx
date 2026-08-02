@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Shield, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigationGroups } from '@/constants/navigation';
@@ -15,58 +15,109 @@ import {
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
+  mobileOpen: boolean;
+  onMobileClose: () => void;
 }
 
-export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: SidebarProps) {
   const location = useLocation();
 
   return (
-    <motion.aside
-      initial={false}
-      animate={{ width: collapsed ? 72 : 260 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        'fixed left-0 top-0 z-40 h-screen flex flex-col',
-        'bg-background border-r border-border'
-      )}
-    >
-      {/* Logo */}
-      <div className="flex items-center h-16 px-4 border-b border-border">
-        <NavLink to="/" className="flex items-center gap-3 min-w-0">
-          <div className="flex-shrink-0 w-8 h-8 rounded-md overflow-hidden flex items-center justify-center">
-            <img src="/logo.png" alt="CipherVerse Logo" className="w-full h-full object-cover" />
+    <>
+      {/* Mobile Backdrop */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onMobileClose}
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar Navigation Drawer */}
+      <aside
+        className={cn(
+          'fixed left-0 top-0 z-50 h-screen flex flex-col',
+          'bg-background border-r border-border',
+          'transition-all duration-300 ease-in-out',
+          // Mobile responsive drawer positioning
+          mobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'
+        )}
+        style={{
+          width: undefined, // Handled by CSS on mobile, style on desktop
+        }}
+      >
+        {/* Animated width wrapper for desktop */}
+        <div
+          className="h-full flex flex-col transition-all duration-300 ease-out overflow-hidden"
+          style={{
+            width: typeof window !== 'undefined' && window.innerWidth < 768
+              ? '280px'
+              : collapsed ? '72px' : '260px'
+          }}
+        >
+          {/* Logo & Mobile Close */}
+          <div className="flex items-center justify-between h-16 px-4 border-b border-border flex-shrink-0">
+            <NavLink to="/" onClick={onMobileClose} className="flex items-center gap-3 min-w-0">
+              <div className="flex-shrink-0 w-8 h-8 rounded-md overflow-hidden flex items-center justify-center">
+                <img src="/logo.png" alt="CipherVerse Logo" className="w-full h-full object-cover" />
+              </div>
+              <span className={cn(
+                "font-bold text-base tracking-tight text-foreground transition-opacity duration-200",
+                collapsed ? "md:hidden" : "block"
+              )}>
+                CipherVerse
+              </span>
+            </NavLink>
+            
+            {/* Mobile Close Button */}
+            <button
+              onClick={onMobileClose}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary md:hidden"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-        </NavLink>
-      </div>
+          {/* Navigation Items */}
+          <div className="flex-1 py-4 overflow-y-auto">
+            <nav className="space-y-6 px-3 pb-4">
+              {navigationGroups.map((group) => (
+                <NavGroup
+                  key={group.label}
+                  group={group}
+                  collapsed={collapsed}
+                  location={location}
+                  onMobileClose={onMobileClose}
+                />
+              ))}
+            </nav>
+          </div>
 
-      {/* Navigation */}
-      <div className="flex-1 py-4 overflow-y-auto">
-        <nav className="space-y-6 px-3 pb-4">
-          {navigationGroups.map((group) => (
-            <NavGroup key={group.label} group={group} collapsed={collapsed} location={location} />
-          ))}
-        </nav>
-      </div>
-
-      {/* Collapse Toggle */}
-      <div className="border-t border-border p-3">
-        <button
-          onClick={onToggle}
-          className={cn(
-            'flex items-center justify-center w-full py-2 rounded-md',
-            'text-muted-foreground hover:text-foreground hover:bg-secondary',
-            'transition-colors duration-150'
-          )}
-        >
-          {collapsed ? (
-            <ChevronRight className="w-4 h-4" />
-          ) : (
-            <ChevronLeft className="w-4 h-4" />
-          )}
-        </button>
-      </div>
-    </motion.aside>
+          {/* Desktop Collapse Toggle */}
+          <div className="border-t border-border p-3 hidden md:block flex-shrink-0">
+            <button
+              onClick={onToggle}
+              className={cn(
+                'flex items-center justify-center w-full py-2 rounded-md',
+                'text-muted-foreground hover:text-foreground hover:bg-secondary',
+                'transition-colors duration-150'
+              )}
+            >
+              {collapsed ? (
+                <ChevronRight className="w-4 h-4" />
+              ) : (
+                <ChevronLeft className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }
 
@@ -83,13 +134,23 @@ interface NavGroupType {
   items: NavItemType[];
 }
 
-function NavGroup({ group, collapsed, location }: { group: NavGroupType; collapsed: boolean; location: ReturnType<typeof useLocation> }) {
+function NavGroup({
+  group,
+  collapsed,
+  location,
+  onMobileClose,
+}: {
+  group: NavGroupType;
+  collapsed: boolean;
+  location: ReturnType<typeof useLocation>;
+  onMobileClose: () => void;
+}) {
   const [expanded, setExpanded] = useState(true);
 
   return (
     <div>
       <AnimatePresence>
-        {!collapsed && (
+        {(!collapsed || (typeof window !== 'undefined' && window.innerWidth < 768)) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -122,6 +183,7 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
               const linkContent = (
                 <NavLink
                   to={item.path}
+                  onClick={onMobileClose}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
                     'transition-colors duration-150 group relative',
@@ -143,31 +205,21 @@ function NavGroup({ group, collapsed, location }: { group: NavGroupType; collaps
                       isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
                     )}
                   />
-                  <AnimatePresence>
-                    {!collapsed && (
-                      <motion.div
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: 'auto' }}
-                        exit={{ opacity: 0, width: 0 }}
-                        transition={{ duration: 0.15 }}
-                        className="flex items-center justify-between flex-1 overflow-hidden"
+                  <div className="flex items-center justify-between flex-1 overflow-hidden">
+                    <span className="whitespace-nowrap">{item.label}</span>
+                    {item.toolCount && (
+                      <Badge
+                        variant="secondary"
+                        className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-input text-foreground border-none font-medium"
                       >
-                        <span className="whitespace-nowrap">{item.label}</span>
-                        {item.toolCount && (
-                          <Badge
-                            variant="secondary"
-                            className="ml-auto text-[10px] px-1.5 py-0 h-5 bg-input text-foreground border-none font-medium"
-                          >
-                            {item.toolCount}
-                          </Badge>
-                        )}
-                      </motion.div>
+                        {item.toolCount}
+                      </Badge>
                     )}
-                  </AnimatePresence>
+                  </div>
                 </NavLink>
               );
 
-              if (collapsed) {
+              if (collapsed && (typeof window === 'undefined' || window.innerWidth >= 768)) {
                 return (
                   <Tooltip key={item.path} delayDuration={0}>
                     <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
