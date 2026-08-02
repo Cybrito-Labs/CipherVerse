@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Directives
+Sitemap: https://cipherverse.vercel.app/sitemap.xml

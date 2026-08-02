@@ -41,8 +41,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 py-4 flex flex-col">
-        <nav className="space-y-6 px-3 flex-1 overflow-hidden">
+      <div className="flex-1 py-4 overflow-y-auto">
+        <nav className="space-y-6 px-3 pb-4">
           {navigationGroups.map((group) => (
             <NavGroup key={group.label} group={group} collapsed={collapsed} location={location} />
           ))}

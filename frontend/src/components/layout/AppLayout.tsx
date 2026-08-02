@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Sidebar } from './Sidebar';
 import { TopNav } from './TopNav';
 import { SearchPalette } from '@/components/shared/SearchPalette';
+import { SEOHead } from '@/components/shared/SEOHead';
 
 export function AppLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -29,6 +30,7 @@ export function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead />
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
