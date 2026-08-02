@@ -8,8 +8,8 @@ export interface PageSEO {
 }
 
 export const SITE_NAME = 'CipherVerse';
-export const SITE_URL = 'https://cipherverse.vercel.app';
-export const DEFAULT_OG_IMAGE = 'https://cipherverse.vercel.app/og-image.png';
+export const SITE_URL = 'https://cipherverse.cybrito.tech';
+export const DEFAULT_OG_IMAGE = 'https://cipherverse.cybrito.tech/og-image.png';
 export const DEFAULT_KEYWORDS = [
   'cybersecurity platform',
   'cryptography tools',

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://cipherverse.vercel.app/</loc>
+    <loc>https://cipherverse.cybrito.tech/</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -10,79 +10,79 @@
 
   <!-- Category Hubs -->
   <url>
-    <loc>https://cipherverse.vercel.app/classical</loc>
+    <loc>https://cipherverse.cybrito.tech/classical</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/encoding</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/asymmetric</loc>
+    <loc>https://cipherverse.cybrito.tech/asymmetric</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/hashing</loc>
+    <loc>https://cipherverse.cybrito.tech/hashing</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/certificates</loc>
+    <loc>https://cipherverse.cybrito.tech/certificates</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/blockchain</loc>
+    <loc>https://cipherverse.cybrito.tech/blockchain</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/steganography</loc>
+    <loc>https://cipherverse.cybrito.tech/steganography</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/malware-analysis</loc>
+    <loc>https://cipherverse.cybrito.tech/malware-analysis</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/file-forensics</loc>
+    <loc>https://cipherverse.cybrito.tech/file-forensics</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/utilities</loc>
+    <loc>https://cipherverse.cybrito.tech/utilities</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/historical</loc>
+    <loc>https://cipherverse.cybrito.tech/historical</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/api-explorer</loc>
+    <loc>https://cipherverse.cybrito.tech/api-explorer</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -90,55 +90,55 @@
 
   <!-- Classical Cipher Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/classical/caesar</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/caesar</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/vigenere</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/vigenere</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/atbash</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/atbash</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/bacon</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/bacon</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/bifid</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/bifid</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/affine</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/affine</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/a1z26</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/a1z26</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/rail-fence</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/rail-fence</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/classical/substitution</loc>
+    <loc>https://cipherverse.cybrito.tech/classical/substitution</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -146,31 +146,31 @@
 
   <!-- Encoding Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/encoding/base64</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding/base64</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/encoding/hex</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding/hex</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/encoding/url</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding/url</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/encoding/binary</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding/binary</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/encoding/morse</loc>
+    <loc>https://cipherverse.cybrito.tech/encoding/morse</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -178,61 +178,61 @@
 
   <!-- Symmetric Crypto Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/aes</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/aes</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/des</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/des</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/3des</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/3des</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/rc2</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/rc2</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/rc4</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/rc4</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/rc4-drop</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/rc4-drop</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/blowfish</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/blowfish</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/sm4</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/sm4</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/ciphersaber2</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/ciphersaber2</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/symmetric/xor</loc>
+    <loc>https://cipherverse.cybrito.tech/symmetric/xor</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -240,13 +240,13 @@
 
   <!-- Asymmetric Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/asymmetric/rsa</loc>
+    <loc>https://cipherverse.cybrito.tech/asymmetric/rsa</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/asymmetric/dsa</loc>
+    <loc>https://cipherverse.cybrito.tech/asymmetric/dsa</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -254,19 +254,19 @@
 
   <!-- Certificates Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/certificates/x509</loc>
+    <loc>https://cipherverse.cybrito.tech/certificates/x509</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/certificates/tls</loc>
+    <loc>https://cipherverse.cybrito.tech/certificates/tls</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/certificates/fingerprint</loc>
+    <loc>https://cipherverse.cybrito.tech/certificates/fingerprint</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -274,25 +274,25 @@
 
   <!-- Blockchain Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/blockchain/bitcoin</loc>
+    <loc>https://cipherverse.cybrito.tech/blockchain/bitcoin</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/blockchain/ethereum</loc>
+    <loc>https://cipherverse.cybrito.tech/blockchain/ethereum</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/blockchain/merkle</loc>
+    <loc>https://cipherverse.cybrito.tech/blockchain/merkle</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/blockchain/wif</loc>
+    <loc>https://cipherverse.cybrito.tech/blockchain/wif</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -300,19 +300,19 @@
 
   <!-- Steganography Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/steganography/text</loc>
+    <loc>https://cipherverse.cybrito.tech/steganography/text</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/steganography/image</loc>
+    <loc>https://cipherverse.cybrito.tech/steganography/image</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/steganography/audio</loc>
+    <loc>https://cipherverse.cybrito.tech/steganography/audio</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -320,19 +320,19 @@
 
   <!-- Malware Analysis Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/malware-analysis/hash</loc>
+    <loc>https://cipherverse.cybrito.tech/malware-analysis/hash</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/malware-analysis/tlsh</loc>
+    <loc>https://cipherverse.cybrito.tech/malware-analysis/tlsh</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/malware-analysis/pe</loc>
+    <loc>https://cipherverse.cybrito.tech/malware-analysis/pe</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -340,25 +340,25 @@
 
   <!-- File Forensics Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/file-forensics/hash</loc>
+    <loc>https://cipherverse.cybrito.tech/file-forensics/hash</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/file-forensics/multi-hash</loc>
+    <loc>https://cipherverse.cybrito.tech/file-forensics/multi-hash</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/file-forensics/entropy</loc>
+    <loc>https://cipherverse.cybrito.tech/file-forensics/entropy</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/file-forensics/randomness</loc>
+    <loc>https://cipherverse.cybrito.tech/file-forensics/randomness</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -366,25 +366,25 @@
 
   <!-- Utilities Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/utilities/password</loc>
+    <loc>https://cipherverse.cybrito.tech/utilities/password</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/utilities/jwt</loc>
+    <loc>https://cipherverse.cybrito.tech/utilities/jwt</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/utilities/salt</loc>
+    <loc>https://cipherverse.cybrito.tech/utilities/salt</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/utilities/fletcher16</loc>
+    <loc>https://cipherverse.cybrito.tech/utilities/fletcher16</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -392,19 +392,19 @@
 
   <!-- Historical Machine Tools -->
   <url>
-    <loc>https://cipherverse.vercel.app/historical/enigma</loc>
+    <loc>https://cipherverse.cybrito.tech/historical/enigma</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/historical/bombe</loc>
+    <loc>https://cipherverse.cybrito.tech/historical/bombe</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cipherverse.vercel.app/historical/typex</loc>
+    <loc>https://cipherverse.cybrito.tech/historical/typex</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
