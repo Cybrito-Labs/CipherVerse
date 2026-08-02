@@ -29,7 +29,7 @@ export const DEFAULT_KEYWORDS = [
 
 export const seoConfigMap: Record<string, PageSEO> = {
   '/': {
-    title: 'CipherVerse — Next-Gen Professional Cybersecurity & Cryptography Platform',
+    title: 'CipherVerse — Modern Cryptography & Security Suite',
     description: 'Explore 40+ interactive online cryptography, malware analysis, file forensics, steganography, and historical cipher tools in one high-performance platform.',
     keywords: ['cybersecurity platform', 'online cryptography', 'cipher tools', 'encryption tools', 'malware analysis online', 'steganography online'],
     category: 'Overview',
