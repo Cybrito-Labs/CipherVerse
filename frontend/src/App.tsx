@@ -1,5 +1,6 @@
 import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
 import { router } from '@/routes';
@@ -26,6 +27,7 @@ function App() {
         <TooltipProvider delayDuration={200}>
           <RouterProvider router={router} />
           <ChatbotWidget />
+          <Analytics />
           <Toaster
             position="bottom-right"
             toastOptions={{
