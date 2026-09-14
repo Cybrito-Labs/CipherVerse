@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { LoadingState } from '@/components/shared/LoadingState';
+import { RouteErrorBoundary } from '@/components/shared/RouteErrorBoundary';
 
 // Lazy load pages
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
@@ -86,6 +87,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,

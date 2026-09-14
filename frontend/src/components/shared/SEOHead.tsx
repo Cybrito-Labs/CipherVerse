@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSEOConfig, SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from '@/constants/seoConfig';
+import { getToolKnowledge } from '@/constants/toolKnowledge';
 
 export function SEOHead() {
   const location = useLocation();
@@ -96,12 +97,14 @@ export function SEOHead() {
       itemListElement: breadcrumbItems,
     });
 
+    const rawToolName = seo.title.split(/[—|]/)[0].trim();
+
     // WebApplication Schema for Tool Pages
     if (cleanPath !== '/' && cleanPath !== '/404') {
       schemas.push({
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: seo.title.split('—')[0].trim(),
+        name: rawToolName,
         url: currentCanonicalUrl,
         description: seo.description,
         applicationCategory: 'SecurityApplication',
@@ -115,12 +118,33 @@ export function SEOHead() {
       });
     }
 
+    // Retrieve unique tool/category knowledge (step-by-step how-to & FAQs)
+    const knowledge = getToolKnowledge(cleanPath, seo.category);
+    const howTo = knowledge.howTo;
+    const faqs = (seo.faqs && seo.faqs.length > 0) ? seo.faqs : knowledge.faqs;
+
+    // HowTo Schema for Step-by-Step guides on Tool Pages
+    if (cleanPath !== '/' && cleanPath !== '/404' && howTo && howTo.length > 0) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: knowledge.guideTitle || `How to Use ${rawToolName}`,
+        description: knowledge.guideSubtitle || `Step-by-step cryptographic instructions for using ${rawToolName} on CipherVerse.`,
+        step: howTo.map((st) => ({
+          '@type': 'HowToStep',
+          position: st.step,
+          name: st.title,
+          text: st.description,
+        })),
+      });
+    }
+
     // FAQPage Schema if FAQs exist
-    if (seo.faqs && seo.faqs.length > 0) {
+    if (faqs && faqs.length > 0) {
       schemas.push({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: seo.faqs.map((faq) => ({
+        mainEntity: faqs.map((faq) => ({
           '@type': 'Question',
           name: faq.question,
           acceptedAnswer: {

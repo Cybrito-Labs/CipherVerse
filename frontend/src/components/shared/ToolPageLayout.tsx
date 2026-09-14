@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react';
+import { ToolSEOSection } from './ToolSEOSection';
 
 interface ToolPageLayoutProps {
   title: string;
@@ -65,6 +66,8 @@ export function ToolPageLayout({
       >
         {children}
       </motion.div>
+
+      <ToolSEOSection currentTitle={title} />
     </div>
   );
 }

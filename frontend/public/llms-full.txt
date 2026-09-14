@@ -1,0 +1,824 @@
+# CipherVerse
+
+> Professional, Zero-Knowledge Cybersecurity & Cryptography Web Suite
+
+CipherVerse is a high-performance, client-side web application offering 40+ interactive cryptographic tools, malware triage utilities, binary forensics analyzers, and historical cipher machine simulators.
+All computations run 100% locally in the browser via the Web Crypto API, WebAssembly, and native JavaScript implementations - no private keys, passwords, or encrypted payloads are ever uploaded to a server.
+
+## Canonical Resources
+- [Interactive Workspace](https://cipherverse.cybrito.tech/): Full browser-based cryptographic suite.
+- [XML Sitemap](https://cipherverse.cybrito.tech/sitemap.xml): Complete machine-readable route directory.
+- [API Explorer](https://cipherverse.cybrito.tech/api-explorer): REST API documentation and endpoints.
+
+## Security Suites & Domain Directories
+
+### [Classical Ciphers](https://cipherverse.cybrito.tech/classical)
+Caesar, Vigenere, Atbash, and more
+
+- [Caesar Cipher Decoder, Encoder & ROT13 Solver](https://cipherverse.cybrito.tech/classical/caesar): Free online Caesar Cipher encoder, decoder, and brute-force solver. Shift text by any key instantly with detailed letter frequency analysis.
+- [Vigenere Cipher Encoder, Decoder & Key Solver](https://cipherverse.cybrito.tech/classical/vigenere): Encrypt and decrypt messages using the polyalphabetic Vigenere Cipher. Includes automatic keyword analysis and tabular visualization.
+- [Atbash Cipher Tool](https://cipherverse.cybrito.tech/classical/atbash): Fast online Atbash Cipher tool to substitute alphabet letters in reverse order (A to Z, B to Y) with instant reciprocal encryption and decryption.
+- [Baconian Cipher Encoder & Steganographic Decoder](https://cipherverse.cybrito.tech/classical/bacon): Encode and decode hidden messages using Francis Bacon's 5-letter binary steganographic cipher system with 24-letter and 26-letter alphabet options.
+- [Bifid Cipher Tool](https://cipherverse.cybrito.tech/classical/bifid): Encrypt and decrypt using the Bifid Cipher, combining Polybius square substitution with vertical transposition fractionation.
+- [Affine Cipher Solver & Mathematical Decoder](https://cipherverse.cybrito.tech/classical/affine): Online Affine Cipher tool to perform mathematical substitution encryption and cryptanalysis using linear modular arithmetic formulas E(x) = (ax + b) mod 26.
+- [A1Z26 Cipher & Number Substitution Tool](https://cipherverse.cybrito.tech/classical/a1z26): Convert text to numbers and numbers back to text instantly with the A1Z26 letter-number substitution converter, custom separators, and error handling.
+- [Rail Fence Cipher](https://cipherverse.cybrito.tech/classical/rail-fence): Online Rail Fence Cipher calculator. Encrypt and decrypt messages using multi-rail zigzag transposition paths with interactive rail offset controls.
+- [Monoalphabetic Substitution Cipher Solver](https://cipherverse.cybrito.tech/classical/substitution): Solve monoalphabetic substitution ciphers with custom alphabet key mappings, real-time letter frequency analysis, and automated pattern substitution.
+
+### [Symmetric Crypto](https://cipherverse.cybrito.tech/symmetric)
+AES, DES, Blowfish, RC4, XOR
+
+- [AES Encryption & Decryption Online (128/256-bit)](https://cipherverse.cybrito.tech/symmetric/aes): Secure online Advanced Encryption Standard (AES) calculator supporting CBC, GCM, CTR modes with cryptographic key generation and authentication tags.
+- [DES (Data Encryption Standard) Online Tool](https://cipherverse.cybrito.tech/symmetric/des): Explore the Data Encryption Standard (DES) with interactive encryption, decryption, CBC/ECB mode selection, and 16-round subkey schedule visualization.
+- [Triple DES (3DES / TDEA) Encryption Tool](https://cipherverse.cybrito.tech/symmetric/3des): Online Triple DES (3DES/TDEA) calculator supporting 2-key and 3-key EDE modes with custom IVs and padding configurations for legacy cryptographic inspection.
+- [RC2 Block Cipher Encryption & Decryption](https://cipherverse.cybrito.tech/symmetric/rc2): Encrypt and decrypt data using Ron Rivest's RC2 variable key-size block cipher with customizable effective key bit lengths and CBC/ECB mode options.
+- [RC4 Stream Cipher Generator & Decrypter](https://cipherverse.cybrito.tech/symmetric/rc4): Generate RC4 keystream sequences and encrypt or decrypt arbitrary data online with interactive Key Scheduling (KSA) and PRGA state array inspections.
+- [RC4-Drop Stream Cipher & Keystream Tool](https://cipherverse.cybrito.tech/symmetric/rc4-drop): Enhanced RC4-Drop implementation discarding initial N keystream bytes to eliminate Fluhrer-Mantin-Shamir (FMS) weak key vulnerabilities and state biases.
+- [Blowfish Encryption & Decryption Tool](https://cipherverse.cybrito.tech/symmetric/blowfish): Encrypt and decrypt data using Bruce Schneier's 64-bit Blowfish block cipher with variable key lengths up to 448 bits, custom IVs, and mode selections.
+- [SM4 National Standard Block Cipher Tool](https://cipherverse.cybrito.tech/symmetric/sm4): Encrypt and decrypt data using the Chinese National Standard SM4 128-bit block cipher (GB/T 32907-2016) with CBC and ECB mode configurations.
+- [CipherSaber-2 Key Stream Encryption Tool](https://cipherverse.cybrito.tech/symmetric/ciphersaber2): Encrypt and decrypt using the CipherSaber-2 cryptographic protocol, featuring 10-byte initialization vectors and configurable RC4 state array mixing rounds.
+- [XOR Cipher & Multi-Byte Key Bruteforce Tool](https://cipherverse.cybrito.tech/symmetric/xor): Encrypt, decrypt, and crack single-byte and multi-byte repeating XOR ciphers with automated Hamming distance key-size detection and English frequency analysis.
+
+### [Asymmetric Crypto](https://cipherverse.cybrito.tech/asymmetric)
+RSA, DSA key generation and operations
+
+- [RSA Key Generator, Encryption & Signatures](https://cipherverse.cybrito.tech/asymmetric/rsa): Online RSA tool to generate PEM keypairs (1024, 2048, 4096 bit), encrypt messages, decrypt ciphertexts, sign, and verify signatures.
+- [DSA Key Generator & Digital Signature Algorithm](https://cipherverse.cybrito.tech/asymmetric/dsa): Generate FIPS 186 Digital Signature Algorithm (DSA) key parameters, sign cryptographic digests, and verify digital signatures against public verification keys.
+
+### [Hashing & KDFs](https://cipherverse.cybrito.tech/hashing)
+SHA, MD5, HMAC, PBKDF2, Scrypt, bcrypt
+
+- [SHA-256 & Cryptographic Hash Generator](https://cipherverse.cybrito.tech/hashing): Calculate cryptographic hashes (SHA-256, SHA-512, MD5, SHA-3), HMAC signatures, and run PBKDF2, Scrypt, and bcrypt key derivation functions instantly.
+
+### [Encoding & Decoding](https://cipherverse.cybrito.tech/encoding)
+Base64, Hex, URL, Binary, Morse
+
+- [Base64 Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/base64): Instant online Base64 text and binary data encoder and decoder with UTF-8, URL-safe Base64URL, and hex output support for secure data transmission.
+- [Hexadecimal (Hex) Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/hex): Convert plain text to Hex bytes and decode Hex strings to readable ASCII text instantly with custom byte delimiters, prefix formatting, and validation.
+- [URL Percent Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/url): Encode special characters into percent-encoded URI strings and decode encoded query parameters safely with full UTF-8 and component encoding support.
+- [Text to Binary & Binary to Text Converter](https://cipherverse.cybrito.tech/encoding/binary): Convert ASCII and UTF-8 text into 8-bit binary numbers (0s and 1s) and decode binary byte streams instantly with customizable spacing and bit formats.
+- [Morse Code Translator](https://cipherverse.cybrito.tech/encoding/morse): Translate text into International Morse Code dots and dashes with real-time audio playback, custom WPM speeds, visual flashing, and audio download options.
+
+### [Certificates & TLS](https://cipherverse.cybrito.tech/certificates)
+X.509 parsing, TLS analysis
+
+- [X.509 SSL/TLS Certificate Parser Online](https://cipherverse.cybrito.tech/certificates/x509): Parse X.509 PEM and DER certificates to inspect subject, issuer, serial numbers, validity windows, SAN extensions, and extract public key parameters instantly.
+- [TLS Protocol & Cipher Suite Inspection Tool](https://cipherverse.cybrito.tech/certificates/tls): Analyze SSL/TLS handshake sequences, cipher suite negotiations, protocol versions (TLS 1.2/1.3), and forward secrecy parameters for secure web connections.
+- [SSL Certificate Fingerprint Calculator](https://cipherverse.cybrito.tech/certificates/fingerprint): Compute SHA-1, SHA-256, and MD5 thumbprints for X.509 SSL/TLS certificates instantly to verify host identity and validate pin headers in your application.
+
+### [Blockchain](https://cipherverse.cybrito.tech/blockchain)
+Bitcoin, Ethereum, Merkle trees
+
+- [Bitcoin Address Validator & Script Inspector](https://cipherverse.cybrito.tech/blockchain/bitcoin): Validate Bitcoin legacy (P2PKH), SegWit (P2SH), and native Bech32/Taproot addresses with Base58Check and BCH error-detecting checksum verifications online.
+- [Ethereum Address Validator & EIP-55 Tool](https://cipherverse.cybrito.tech/blockchain/ethereum): Verify Ethereum 0x hex wallet addresses and test EIP-55 mixed-case Keccak-256 checksum validity online to prevent costly mistyped transaction errors.
+- [Merkle Tree Construction & Visual Proof Generator](https://cipherverse.cybrito.tech/blockchain/merkle): Build interactive Merkle Trees from transaction hashes, calculate the cryptographic root hash, and verify audit path inclusion proofs with visual graphs.
+- [Wallet Import Format (WIF) Private Key Encoder](https://cipherverse.cybrito.tech/blockchain/wif): Encode and decode Bitcoin 256-bit ECDSA private keys into compressed and uncompressed Wallet Import Format (WIF) with Base58Check checksum validation.
+
+### [Steganography](https://cipherverse.cybrito.tech/steganography)
+Text, image, and audio steganography
+
+- [Zero-Width Text Steganography Encoder & Decoder](https://cipherverse.cybrito.tech/steganography/text): Conceal hidden secret messages inside ordinary plain text using zero-width invisible unicode characters (ZWSP, ZWNJ) undetectable to standard text viewers.
+- [Image Steganography Tool](https://cipherverse.cybrito.tech/steganography/image): Embed and extract hidden encrypted messages inside PNG and JPEG image pixels using Least Significant Bit (LSB) encoding with AES encryption and passphrases.
+- [Audio Steganography Tool](https://cipherverse.cybrito.tech/steganography/audio): Embed hidden secret messages into uncompressed WAV audio sample data using Least Significant Bit (LSB) encoding while preserving acoustic fidelity.
+
+### [File Forensics](https://cipherverse.cybrito.tech/file-forensics)
+File hashing, entropy, randomness tests
+
+- [Single File Hash Generator & Verifier](https://cipherverse.cybrito.tech/file-forensics/hash): Calculate cryptographic digests (MD5, SHA-1, SHA-256) for local files directly in your browser using Web Crypto API without uploading any bytes to a server.
+- [Multi-Algorithm Concurrent File Hasher](https://cipherverse.cybrito.tech/file-forensics/multi-hash): Compute MD5, SHA-1, SHA-256, SHA-512, and RIPEMD-160 checksums simultaneously in a single stream pass directly in your browser for rapid digital forensics.
+- [Shannon File Entropy Analyzer & Visualization](https://cipherverse.cybrito.tech/file-forensics/entropy): Calculate Shannon entropy distributions across binary files to detect packed executables, compressed sections, or hidden encrypted payloads with visual graphs.
+- [Cryptographic Randomness Test Suite](https://cipherverse.cybrito.tech/file-forensics/randomness): Evaluate random number generator outputs with NIST-inspired Chi-square tests, byte distribution histograms, and serial correlation tests for high entropy.
+
+### [Malware Analysis](https://cipherverse.cybrito.tech/malware-analysis)
+Hash analysis, TLSH, PE analysis
+
+- [Malware File Hash Lookup & Threat Triage](https://cipherverse.cybrito.tech/malware-analysis/hash): Generate and query MD5, SHA-1, and SHA-256 file hashes against threat intelligence databases to quickly triage malware samples and detect malicious binaries.
+- [TLSH Fuzzy Hash & Malware Comparator](https://cipherverse.cybrito.tech/malware-analysis/tlsh): Calculate Trend Micro Locality Sensitive Hashes (TLSH) and compute distance scores to detect polymorphic malware family variants and binary similarities.
+- [PE Header Parser & EXE Section Inspector](https://cipherverse.cybrito.tech/malware-analysis/pe): Parse Windows PE32/PE32+ executable headers, section tables (.text, .data, .rsrc), import/export directory tables, and compile timestamps in your browser.
+
+### [Utilities](https://cipherverse.cybrito.tech/utilities)
+Password strength, salt, JWT, checksums
+
+- [Password Strength & Entropy Calculator](https://cipherverse.cybrito.tech/utilities/password): Evaluate password entropy (bits), estimate brute-force cracking time, and detect common dictionary vulnerability patterns.
+- [JWT (JSON Web Token) HMAC Signer & Verifier](https://cipherverse.cybrito.tech/utilities/jwt): Sign and verify JSON Web Tokens (JWT) online using HS256, HS384, or HS512 HMAC secret keys with real-time decoded header and payload JSON inspections.
+- [Cryptographic Salt & Token Generator](https://cipherverse.cybrito.tech/utilities/salt): Generate high-entropy cryptographically secure random salts, IVs, and session tokens in Hex, Base64, and C-array formats using browser Web Crypto CSPRNG.
+- [Fletcher-16 Checksum & Integrity Tool](https://cipherverse.cybrito.tech/utilities/fletcher16): Calculate 16-bit Fletcher checksums online with modular block arithmetic to verify data integrity and detect transmission errors in digital data.
+
+### [Historical Machines](https://cipherverse.cybrito.tech/historical)
+Enigma, Bombe, Typex simulators
+
+- [Enigma Machine Simulator (I, M3, M4) Online](https://cipherverse.cybrito.tech/historical/enigma): Authentic 3-rotor and 4-rotor Enigma machine simulator. Configure rotors, ring settings, reflector, and plugboard (Steckerbrett).
+- [Alan Turing Bombe Crib Analysis Simulator](https://cipherverse.cybrito.tech/historical/bombe): Interactive simulation of Alan Turing's Bombe electromechanical machine used at Bletchley Park to break Enigma rotor keys.
+- [British Typex Cipher Machine Simulator](https://cipherverse.cybrito.tech/historical/typex): Simulate the British WWII Typex cipher machine with authentic multi-rotor stepping mechanisms, plugboard options, and statutory transposition decoding.
+
+
+## Comprehensive Technical Guide & Algorithmic Details
+
+---
+
+## Category: Classical Ciphers
+
+### Frequently Asked Questions
+- **Q: What is the fundamental difference between substitution and transposition ciphers?**
+  A: Substitution ciphers replace plaintext letters with different characters, numbers, or symbols while preserving their positions. Transposition ciphers keep the original letters intact but rearrange their physical order.
+- **Q: Which classical cipher was historically called "le chiffre indechiffrable" (the indecipherable cipher)?**
+  A: The Vigenere cipher held this reputation for nearly three centuries until Friedrich Kasiski published a mathematical method in 1863 to determine keyword length and break the cipher.
+- **Q: Are classical ciphers safe for modern data transmission?**
+  A: No. Modern computers can brute-force all classical key spaces in less than a second. Classical ciphers are studied today for education, cryptographic history, and CTF competitions.
+
+### Caesar Cipher Decoder, Encoder & ROT13 Solver (https://cipherverse.cybrito.tech/classical/caesar)
+Free online Caesar Cipher encoder, decoder, and brute-force solver. Shift text by any key instantly with detailed letter frequency analysis.
+
+**Step-by-Step Instructions:**
+1. **Input Plaintext or Ciphertext**: Enter the text you want to encrypt or decrypt into the main text area.
+2. **Set Shift Key (0-25) or Enable Brute Force**: Choose a numeric shift offset or toggle brute-force mode to test all 25 possible rotation keys simultaneously.
+3. **Inspect Output & Frequency Distribution**: View the shifted output instantly and review the letter frequency analysis comparing against standard English frequencies.
+
+**Technical FAQs:**
+- **What is the Caesar Cipher?**: The Caesar Cipher is a classic monoalphabetic substitution cipher where each letter in the plaintext is shifted by a fixed number of positions down the alphabet.
+- **What is ROT13 and how is it related to Caesar Cipher?**: ROT13 is a specific Caesar cipher with a shift key of 13. Because the English alphabet has 26 letters, shifting twice by 13 results in a complete 26-position rotation, making encryption and decryption completely identical.
+- **How do I decrypt a Caesar Cipher without knowing the key?**: Use the brute-force mode in CipherVerse to inspect all 25 possible shifts simultaneously and identify legible plain text automatically via English letter frequency analysis.
+
+### Vigenere Cipher Encoder, Decoder & Key Solver (https://cipherverse.cybrito.tech/classical/vigenere)
+Encrypt and decrypt messages using the polyalphabetic Vigenere Cipher. Includes automatic keyword analysis and tabular visualization.
+
+**Step-by-Step Instructions:**
+1. **Enter Plaintext and Keyword**: Type your secret message and provide an alphabetic keyword (e.g., "SECRET" or "CIPHER").
+2. **Polyalphabetic Shift Matching**: The keyword repeats cyclically across your message length to assign a distinct Caesar shift to each individual letter.
+3. **Inspect Vigenere Square Result**: Review the encrypted or decrypted text and observe the Tabula Recta row-column intersections.
+
+**Technical FAQs:**
+- **How does the Vigenere Cipher differ from a Caesar Cipher?**: While Caesar shifts every character by the same constant key, Vigenere uses a keyword to vary the shift per character, making simple frequency analysis much harder.
+- **How is the Vigenere Cipher broken?**: Historically, Vigenere was broken using Kasiski examination and the Friedman test (index of coincidence) to determine key length, followed by frequency analysis on each Caesar sub-cipher.
+
+### Atbash Cipher Tool (https://cipherverse.cybrito.tech/classical/atbash)
+Fast online Atbash Cipher tool to substitute alphabet letters in reverse order (A to Z, B to Y) with instant reciprocal encryption and decryption.
+
+**Step-by-Step Instructions:**
+1. **Input Message**: Type or paste the message you want to encrypt or decrypt.
+2. **Symmetric Alphabet Inversion**: The tool maps the alphabet in reverse order: A becomes Z, B becomes Y, C becomes X, and vice-versa.
+3. **Copy or Re-encode**: Copy your result. Running Atbash a second time automatically restores the original text because Atbash is an involution.
+
+**Technical FAQs:**
+- **What is the origin of the Atbash Cipher?**: The Atbash cipher is a classical substitution cipher originally used for the Hebrew alphabet. It maps the first letter (Aleph) to the last (Tav), and the second (Bet) to the second-to-last (Shin).
+- **Is a secret key required for Atbash?**: No secret key is required. The transformation is completely symmetric and deterministic based on the fixed reverse alphabet mapping.
+
+### Baconian Cipher Encoder & Steganographic Decoder (https://cipherverse.cybrito.tech/classical/bacon)
+Encode and decode hidden messages using Francis Bacon's 5-letter binary steganographic cipher system with 24-letter and 26-letter alphabet options.
+
+**Step-by-Step Instructions:**
+1. **Enter Secret Text**: Input the text to encode or the 5-character A/B steganographic sequence to decode.
+2. **Select Baconian Alphabet Variant**: Choose between the traditional 24-letter alphabet (I=J and U=V) or modern 26-letter standard.
+3. **Generate Binary Steganographic Output**: Inspect the resulting 5-character groups of A/B or binary digits ready for concealment in cover texts.
+
+**Technical FAQs:**
+- **What is Francis Bacon's Cipher?**: Invented by Francis Bacon in 1605, it is a binary steganographic system where each letter of the alphabet is represented by a 5-character group of two symbols (A and B).
+- **How was Bacon's cipher used for steganography?**: In printed books, Bacon encoded messages by using two slightly different typographic fonts (typeface A and typeface B), making the secret message invisible to casual readers.
+
+### Bifid Cipher Tool (https://cipherverse.cybrito.tech/classical/bifid)
+Encrypt and decrypt using the Bifid Cipher, combining Polybius square substitution with vertical transposition fractionation.
+
+**Step-by-Step Instructions:**
+1. **Enter Message and Polybius Keyword**: Type your message and enter a keyword to construct the 5x5 Polybius square matrix (I/J combined).
+2. **Vertical Coordinate Fractionation**: Each letter is mapped to (row, column) coordinates, written vertically underneath the plaintext.
+3. **Read Horizontally & Substitute**: The coordinate numbers are read horizontally in periodic groups and converted back into ciphertext letters.
+
+**Technical FAQs:**
+- **What makes the Bifid cipher unique in classical cryptography?**: Invented by Felix Delastelle around 1901, Bifid was the first classical cipher to achieve both substitution and transposition simultaneously through a process called fractionation.
+- **Why does Bifid use a 5x5 Polybius square?**: A 5x5 grid contains 25 cells, exactly enough to hold the 26 letters of the English alphabet when I and J share a single cell.
+
+### Affine Cipher Solver & Mathematical Decoder (https://cipherverse.cybrito.tech/classical/affine)
+Online Affine Cipher tool to perform mathematical substitution encryption and cryptanalysis using linear modular arithmetic formulas E(x) = (ax + b) mod 26.
+
+**Step-by-Step Instructions:**
+1. **Input Plaintext Message**: Enter the text you want to encrypt using modular arithmetic.
+2. **Set Multiplicative Key (a) and Shift Key (b)**: Select a key "a" that is coprime to 26 (e.g. 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25) and any shift "b" (0-25).
+3. **Compute E(x) = (ax + b) mod 26**: View the mathematically transformed ciphertext or compute modular inverses for decryption.
+
+**Technical FAQs:**
+- **Why must key "a" be coprime to 26 in the Affine cipher?**: If key "a" shares a common divisor with 26 (e.g. 2 or 13), distinct letters map to identical ciphertexts, making unique decryption mathematically impossible.
+- **How is an Affine cipher decrypted?**: Decryption uses the modular multiplicative inverse: D(y) = a⁻¹ · (y - b) mod 26, where a · a⁻¹ ≡ 1 (mod 26).
+
+### A1Z26 Cipher & Number Substitution Tool (https://cipherverse.cybrito.tech/classical/a1z26)
+Convert text to numbers and numbers back to text instantly with the A1Z26 letter-number substitution converter, custom separators, and error handling.
+
+**Step-by-Step Instructions:**
+1. **Select Conversion Direction**: Choose Text-to-Numbers (encryption) or Numbers-to-Text (decryption).
+2. **Choose Number Separator**: Select whether numbers are separated by hyphens (e.g. 3-9-16-8-5-18), spaces, or commas.
+3. **Inspect Letter-Number Values**: View the instant conversion where A=1, B=2, C=3, up to Z=26.
+
+**Technical FAQs:**
+- **What is the A1Z26 cipher?**: A1Z26 is a direct number substitution cipher where each alphabet letter is replaced by its 1-indexed position in the alphabet (A=1, Z=26).
+- **Is A1Z26 considered secure?**: No. A1Z26 provides no cryptographic security and is purely a numerical encoding scheme used in puzzles, geocaching, and ARG games.
+
+### Rail Fence Cipher (https://cipherverse.cybrito.tech/classical/rail-fence)
+Online Rail Fence Cipher calculator. Encrypt and decrypt messages using multi-rail zigzag transposition paths with interactive rail offset controls.
+
+**Step-by-Step Instructions:**
+1. **Enter Text to Transpose**: Provide the plaintext message to encode or zigzag ciphertext to reconstruct.
+2. **Choose Rail Count**: Select the number of rails (levels) for the zigzag path (typically 2 to 6 rails).
+3. **Trace Zigzag Paths**: The characters travel diagonally across the rails and are read row-by-row to form the transposed output.
+
+**Technical FAQs:**
+- **What type of cipher is the Rail Fence Cipher?**: It is a transposition cipher that alters the spatial positions of letters without changing their alphabetical identity, unlike substitution ciphers.
+- **How secure is the Rail Fence Cipher?**: It provides virtually no modern security. An attacker can test small rail numbers in seconds or use anagramming to reconstruct the message.
+
+### Monoalphabetic Substitution Cipher Solver (https://cipherverse.cybrito.tech/classical/substitution)
+Solve monoalphabetic substitution ciphers with custom alphabet key mappings, real-time letter frequency analysis, and automated pattern substitution.
+
+**Step-by-Step Instructions:**
+1. **Input Text & Target Alphabet**: Enter your message and specify a 26-character custom cipher alphabet (or generate a random permutation).
+2. **Review Character Mapping Matrix**: Check that every plaintext letter (A-Z) is uniquely mapped to exactly one cipher character without duplicates.
+3. **Analyze Letter Frequencies**: Compare ciphertext character counts against English frequency benchmarks to solve unknown keys.
+
+**Technical FAQs:**
+- **How many keys exist for a monoalphabetic substitution cipher?**: There are 26! (26 factorial) possible keys, which is approximately 4.03 × 10²⁶ keys-far too large for manual brute-force.
+- **If the key space is so large, why is monoalphabetic substitution easy to crack?**: Because letter frequencies are preserved. In English, 'E' occurs ~12.7% of the time, followed by 'T', 'A', and 'O'. Frequency analysis breaks simple substitution rapidly.
+
+---
+
+## Category: Symmetric Crypto
+
+### Frequently Asked Questions
+- **Q: What is the difference between block ciphers and stream ciphers?**
+  A: Block ciphers (like AES, DES, Blowfish) process data in fixed-size chunks (e.g. 128 bits) using modes of operation. Stream ciphers (like RC4, ChaCha20) generate a continuous pseudorandom keystream XORed bit-by-bit with the data.
+- **Q: Why is AES-GCM preferred over AES-CBC in modern applications?**
+  A: AES-GCM provides Authenticated Encryption with Associated Data (AEAD), ensuring both confidentiality and message integrity in a single pass while preventing padding-oracle and bit-flipping attacks.
+
+### AES Encryption & Decryption Online (128/256-bit) (https://cipherverse.cybrito.tech/symmetric/aes)
+Secure online Advanced Encryption Standard (AES) calculator supporting CBC, GCM, CTR modes with cryptographic key generation and authentication tags.
+
+**Step-by-Step Instructions:**
+1. **Input Text or Hex Payload**: Paste your plaintext message or hexadecimal ciphertext into the input panel.
+2. **Select Key Size (128, 192, 256) & Mode**: Choose AES-128, AES-192, or AES-256 and select an operational mode like GCM (authenticated) or CBC.
+3. **Generate or Input Key & IV**: Provide your secret key and Initialization Vector (IV/Nonce), or use the built-in cryptographically secure generator.
+
+**Technical FAQs:**
+- **What is AES (Advanced Encryption Standard)?**: AES is a symmetric block cipher established by the U.S. NIST in 2001. It processes 128-bit blocks of data using cryptographic keys of 128, 192, or 256 bits and is the global standard for secure encryption.
+- **What is the difference between AES-GCM and AES-CBC?**: AES-CBC provides confidentiality but requires padding and a separate HMAC for integrity. AES-GCM provides Authenticated Encryption with Associated Data (AEAD), combining high-performance encryption and message authentication in one pass.
+- **Why is an Initialization Vector (IV) required?**: An IV ensures that identical plaintexts encrypted with the same key produce completely unique ciphertexts, preventing pattern leakage and replay attacks.
+
+### DES (Data Encryption Standard) Online Tool (https://cipherverse.cybrito.tech/symmetric/des)
+Explore the Data Encryption Standard (DES) with interactive encryption, decryption, CBC/ECB mode selection, and 16-round subkey schedule visualization.
+
+**Step-by-Step Instructions:**
+1. **Enter 64-bit Block or Text**: Input plaintext or ciphertext to process with the Data Encryption Standard.
+2. **Provide 56-bit Key**: Input an 8-byte key (56 effective key bits plus 8 parity bits).
+3. **Execute 16 Feistel Rounds**: View the 16 rounds of S-box substitution, subkey generation, and permutation results.
+
+**Technical FAQs:**
+- **Why is standard DES obsolete?**: DES uses a 56-bit key size, which can be brute-forced in less than a day using modern hardware. It was superseded by Triple DES and ultimately AES.
+- **What is the Feistel structure in DES?**: The Feistel structure splits the 64-bit block into left and right 32-bit halves, iteratively applying a round function so that encryption and decryption logic are nearly identical.
+
+### Triple DES (3DES / TDEA) Encryption Tool (https://cipherverse.cybrito.tech/symmetric/3des)
+Online Triple DES (3DES/TDEA) calculator supporting 2-key and 3-key EDE modes with custom IVs and padding configurations for legacy cryptographic inspection.
+
+**Step-by-Step Instructions:**
+1. **Input Plaintext or Ciphertext Blocks**: Enter data to process through the Triple Data Encryption Standard.
+2. **Select 2-Key or 3-Key EDE Mode**: Choose 2-Key 3DES (112-bit effective key) or 3-Key 3DES (168-bit effective key) using Encrypt-Decrypt-Encrypt sequence.
+3. **Compute Triple Feistel Transformation**: View the processed 64-bit blocks with legacy backward compatibility.
+
+**Technical FAQs:**
+- **How does Triple DES (3DES) work?**: Triple DES applies DES three times: Encrypt with Key 1, Decrypt with Key 2, and Encrypt with Key 3. If Key 1 equals Key 2, it falls back to standard single DES.
+- **Why was Triple DES phased out despite its 112/168 bit key?**: Because of its small 64-bit block size. Under high-throughput TLS traffic, the birthday bound can be reached after only 32 GB of data (Sweet32 attack), allowing collision recovery.
+
+### RC2 Block Cipher Encryption & Decryption (https://cipherverse.cybrito.tech/symmetric/rc2)
+Encrypt and decrypt data using Ron Rivest's RC2 variable key-size block cipher with customizable effective key bit lengths and CBC/ECB mode options.
+
+**Step-by-Step Instructions:**
+1. **Input Message Payload**: Enter data to encrypt or decrypt with Ron Rivest's 64-bit block cipher.
+2. **Configure Effective Key Bits**: Set your secret key and configure effective key bits (from 8 to 1024 bits).
+3. **Execute Mixing & Mashing Rounds**: View output after 16 mixing and mashing rounds.
+
+**Technical FAQs:**
+- **What is RC2?**: RC2 is a 64-bit block cipher designed in 1987 by Ron Rivest for RSA Security, featuring variable key sizes for export compliance.
+
+### RC4 Stream Cipher Generator & Decrypter (https://cipherverse.cybrito.tech/symmetric/rc4)
+Generate RC4 keystream sequences and encrypt or decrypt arbitrary data online with interactive Key Scheduling (KSA) and PRGA state array inspections.
+
+**Step-by-Step Instructions:**
+1. **Enter Stream Plaintext or Hex**: Input the data to encrypt or decrypt with the RC4 stream cipher.
+2. **Set Secret Key (1-256 Bytes)**: Provide an encryption passphrase of any arbitrary length.
+3. **Generate Keystream & Bitwise XOR**: Observe the Key Scheduling Algorithm (KSA) permutation and PRGA keystream output.
+
+**Technical FAQs:**
+- **How does RC4 generate its pseudorandom keystream?**: RC4 initializes a 256-byte state array with the key (KSA), then continuously swaps array elements using two index pointers (PRGA) to output one byte per cycle.
+
+### RC4-Drop Stream Cipher & Keystream Tool (https://cipherverse.cybrito.tech/symmetric/rc4-drop)
+Enhanced RC4-Drop implementation discarding initial N keystream bytes to eliminate Fluhrer-Mantin-Shamir (FMS) weak key vulnerabilities and state biases.
+
+**Step-by-Step Instructions:**
+1. **Input Message Data & Key**: Provide the data payload and secret passphrase.
+2. **Set Initial Drop Count (N)**: Specify how many initial keystream bytes to discard (commonly 768 or 3072 bytes).
+3. **Stream Encryption Post-Drop**: Encrypt or decrypt using the stabilized PRGA state with initial bias eliminated.
+
+**Technical FAQs:**
+- **Why discard initial keystream bytes in RC4-drop?**: Standard RC4 has statistical biases in its first few hundred bytes that correlate with the key. Discarding the first N bytes removes this vulnerability.
+
+### Blowfish Encryption & Decryption Tool (https://cipherverse.cybrito.tech/symmetric/blowfish)
+Encrypt and decrypt data using Bruce Schneier's 64-bit Blowfish block cipher with variable key lengths up to 448 bits, custom IVs, and mode selections.
+
+**Step-by-Step Instructions:**
+1. **Input Data & Key (Up to 448 Bits)**: Provide message text and any secret key from 32 to 448 bits in length.
+2. **Select Mode of Operation**: Choose ECB or CBC mode with optional initialization vector.
+3. **Execute 16-Round Feistel Network**: Inspect the transformed 64-bit blocks through key-dependent S-boxes.
+
+**Technical FAQs:**
+- **Who designed the Blowfish cipher?**: Bruce Schneier designed Blowfish in 1993 as a fast, free, unpatented alternative to DES. It is notable for its large key-dependent S-boxes.
+
+### SM4 National Standard Block Cipher Tool (https://cipherverse.cybrito.tech/symmetric/sm4)
+Encrypt and decrypt data using the Chinese National Standard SM4 128-bit block cipher (GB/T 32907-2016) with CBC and ECB mode configurations.
+
+**Step-by-Step Instructions:**
+1. **Input 128-bit Data Block**: Enter plaintext or ciphertext blocks.
+2. **Provide 128-bit Key & Mode**: Input a 16-byte key and choose ECB or CBC mode.
+3. **Execute 32 Unbalanced Feistel Rounds**: View block encryption conforming to Chinese National Standard GB/T 32907-2016.
+
+**Technical FAQs:**
+- **What is the SM4 block cipher?**: SM4 is the Chinese National Standard 128-bit block cipher used for wireless LAN (WAPI) and authorized commercial cryptographic applications in China.
+
+### CipherSaber-2 Key Stream Encryption Tool (https://cipherverse.cybrito.tech/symmetric/ciphersaber2)
+Encrypt and decrypt using the CipherSaber-2 cryptographic protocol, featuring 10-byte initialization vectors and configurable RC4 state array mixing rounds.
+
+**Step-by-Step Instructions:**
+1. **Enter Secret Message & Password**: Type your message and provide a shared secret passphrase.
+2. **Set Mixing Rounds (Default 20)**: Configure the number of KSA key schedule mixing iterations.
+3. **Prepend 10-Byte Random IV**: Generates ciphertext with a randomly generated 10-byte IV prepended to the output.
+
+**Technical FAQs:**
+- **What is CipherSaber-2?**: CipherSaber-2 is an enhanced version of Arnold Reinhold's CipherSaber protocol that runs 20 rounds of key scheduling to eliminate RC4 key setup weaknesses.
+
+### XOR Cipher & Multi-Byte Key Bruteforce Tool (https://cipherverse.cybrito.tech/symmetric/xor)
+Encrypt, decrypt, and crack single-byte and multi-byte repeating XOR ciphers with automated Hamming distance key-size detection and English frequency analysis.
+
+**Step-by-Step Instructions:**
+1. **Input Raw Text or Hex Bytes**: Enter your string or hex values to process.
+2. **Choose Key or Brute Force Mode**: Enter a single-byte (0-255) or multi-byte key, or run XOR Brute Force to test all 256 single-byte keys automatically.
+3. **Inspect Frequency-Scored Results**: Review the bitwise XOR output and frequency-scored candidate plaintexts ranked by English readability.
+
+**Technical FAQs:**
+- **What is the fundamental property of bitwise XOR in cryptography?**: XOR is self-inverting: A ⊕ B ⊕ B = A. Applying XOR with the same key twice restores the original value, making encryption and decryption identical.
+- **Is XOR encryption secure?**: A One-Time Pad using a truly random, non-repeating key equal in length to the message is mathematically unbreakable. However, repeating short keys is vulnerable to frequency analysis.
+
+---
+
+## Category: Asymmetric Crypto
+
+### Frequently Asked Questions
+- **Q: How do public and private keys interact mathematically?**
+  A: Data encrypted with a public key can only be decrypted by its corresponding private key. Conversely, a digital signature created with a private key can be verified by anyone holding the matching public key.
+- **Q: Why is asymmetric encryption rarely used to encrypt large files directly?**
+  A: Asymmetric operations are computationally expensive (thousands of times slower than symmetric ciphers). In practice, hybrid encryption is used: an asymmetric cipher encrypts a fast symmetric session key (like AES-256), which encrypts the file.
+
+### RSA Key Generator, Encryption & Signatures (https://cipherverse.cybrito.tech/asymmetric/rsa)
+Online RSA tool to generate PEM keypairs (1024, 2048, 4096 bit), encrypt messages, decrypt ciphertexts, sign, and verify signatures.
+
+**Step-by-Step Instructions:**
+1. **Generate or Paste Keypair**: Generate a new 1024, 2048, or 4096-bit RSA PEM keypair or paste an existing private/public key.
+2. **Choose Operation Mode**: Select Public Key Encryption, Private Key Decryption, Digital Signature Creation, or Signature Verification.
+3. **Inspect Output or Signature Status**: View the Base64-encoded ciphertext or verify RSA-PSS / PKCS#1 v1.5 signature validity.
+
+**Technical FAQs:**
+- **What is RSA asymmetric cryptography?**: RSA is a public-key cryptosystem that relies on the computational difficulty of factoring large composite integers. It enables secure communication without sharing secret keys in advance.
+- **What RSA key size is secure for production use?**: NIST recommends a minimum key size of 2048 bits for current applications, with 4096 bits recommended for long-term security archives.
+- **Can RSA be used to encrypt large files directly?**: No. RSA can only encrypt plaintexts smaller than its key modulus. In practice, RSA is used in hybrid encryption: encrypting a fast symmetric key (like AES-256) which encrypts the file.
+
+### DSA Key Generator & Digital Signature Algorithm (https://cipherverse.cybrito.tech/asymmetric/dsa)
+Generate FIPS 186 Digital Signature Algorithm (DSA) key parameters, sign cryptographic digests, and verify digital signatures against public verification keys.
+
+**Step-by-Step Instructions:**
+1. **Generate or Load DSA Parameters**: Configure prime modulus p, subprime q, and generator g, and generate a DSA keypair.
+2. **Hash & Sign Message**: Compute SHA-256 digest and sign with the private key to produce signature pair (r, s).
+3. **Verify Signature Proof**: Confirm mathematical signature validity against the public key.
+
+**Technical FAQs:**
+- **Can DSA be used for data encryption?**: No. DSA (Digital Signature Algorithm, NIST FIPS 186) is strictly a digital signature mechanism. It does not support encryption or key exchange.
+
+---
+
+## Category: Hashing & KDFs
+
+### Frequently Asked Questions
+- **Q: What is a cryptographic hash function?**
+  A: A cryptographic hash function takes arbitrary data as input and produces a fixed-size deterministic string (digest). It is computationally infeasible to reverse or find two distinct inputs with the same hash.
+- **Q: Can a SHA-256 hash be decrypted or reversed?**
+  A: No. Hashes are mathematical one-way functions, not ciphers. The only way to find the original input is brute force or dictionary lookup of precomputed hashes (rainbow tables).
+- **Q: Why should MD5 and SHA-1 no longer be used for security?**
+  A: Both MD5 and SHA-1 have proven collision vulnerabilities, meaning attackers can generate two different files with the exact same hash. Use SHA-256, SHA-512, or SHA-3 instead.
+
+### SHA-256 & Cryptographic Hash Generator (https://cipherverse.cybrito.tech/hashing)
+Calculate cryptographic hashes (SHA-256, SHA-512, MD5, SHA-3), HMAC signatures, and run PBKDF2, Scrypt, and bcrypt key derivation functions instantly.
+
+**Step-by-Step Instructions:**
+1. **Input Message or File Payload**: Type text, paste hexadecimal bytes, or enter secret keys for message authentication.
+2. **Select Hash or KDF Function**: Choose between SHA-256, SHA-512, SHA-3, MD5, HMAC-SHA256, or PBKDF2/Scrypt/Bcrypt key derivation.
+3. **Inspect Cryptographic Digest**: View the fixed-length hexadecimal digest and copy checksums for verification.
+
+**Technical FAQs:**
+- **What is a cryptographic hash function?**: A cryptographic hash function takes arbitrary data as input and produces a fixed-size deterministic string (digest). It is computationally infeasible to reverse or find two distinct inputs with the same hash.
+- **Can a SHA-256 hash be decrypted or reversed?**: No. Hashes are mathematical one-way functions, not ciphers. The only way to find the original input is brute force or dictionary lookup of precomputed hashes (rainbow tables).
+- **Why should MD5 and SHA-1 no longer be used for security?**: Both MD5 and SHA-1 have proven collision vulnerabilities, meaning attackers can generate two different files with the exact same hash. Use SHA-256, SHA-512, or SHA-3 instead.
+
+---
+
+## Category: Encoding & Decoding
+
+### Frequently Asked Questions
+- **Q: What is the difference between encoding and encryption?**
+  A: Encoding transforms data into a standard format so different computer systems can process or transmit it; it requires no secret key and provides zero confidentiality. Encryption transforms data to keep it confidential and requires a secret key to reverse.
+- **Q: Why does Base64 increase data size by ~33%?**
+  A: Base64 represents 3 binary bytes (24 bits) using 4 ASCII characters (each carrying 6 bits of data). This 4/3 ratio creates an approximate 33% overhead.
+
+### Base64 Encoder & Decoder Online (https://cipherverse.cybrito.tech/encoding/base64)
+Instant online Base64 text and binary data encoder and decoder with UTF-8, URL-safe Base64URL, and hex output support for secure data transmission.
+
+**Step-by-Step Instructions:**
+1. **Input Text or Binary String**: Enter plain text, ASCII characters, or hexadecimal bytes to convert.
+2. **Select Encoding Variant**: Choose Standard Base64 (with + and /) or URL-Safe Base64 (with - and _).
+3. **Instant Conversion & Copy**: View the padded radix-64 representation and copy the result with one click.
+
+**Technical FAQs:**
+- **What is Base64 encoding?**: Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format by translating it into a radix-64 representation.
+- **Is Base64 an encryption algorithm?**: No. Base64 is purely an encoding format to transfer binary data over text-only protocols. It provides zero confidentiality and can be decoded by anyone instantly.
+- **What is URL-safe Base64?**: Standard Base64 uses + and / characters which have reserved meanings in URLs. URL-safe Base64 substitutes - and _ in their place to prevent routing conflicts.
+
+### Hexadecimal (Hex) Encoder & Decoder Online (https://cipherverse.cybrito.tech/encoding/hex)
+Convert plain text to Hex bytes and decode Hex strings to readable ASCII text instantly with custom byte delimiters, prefix formatting, and validation.
+
+**Step-by-Step Instructions:**
+1. **Input Plaintext or Hex Bytes**: Enter readable text to encode, or space-separated / continuous hex characters (e.g. "48 65 6c 6c 6f") to decode.
+2. **Select Delimiter & Format**: Choose formatting options including spaces, colons, 0x prefixes, or uppercase hex characters.
+3. **Convert & Inspect Byte Array**: Inspect hexadecimal byte values and corresponding ASCII/UTF-8 character representations.
+
+**Technical FAQs:**
+- **What is Hexadecimal encoding?**: Hexadecimal represents binary byte values in base-16 using digits 0-9 and letters A-F, with each byte represented by two hex characters.
+- **Why do developers use Hex encoding?**: Hexadecimal provides a human-readable representation of raw computer memory, network packets, cryptographic digests, and compiled binary bytes.
+
+### URL Percent Encoder & Decoder Online (https://cipherverse.cybrito.tech/encoding/url)
+Encode special characters into percent-encoded URI strings and decode encoded query parameters safely with full UTF-8 and component encoding support.
+
+**Step-by-Step Instructions:**
+1. **Paste URL or Query Parameter**: Enter a full website URL, query parameter, or text containing special characters.
+2. **Select Component vs Full URI Mode**: Choose encodeURIComponent (escapes symbols like ? and &) or encodeURI (preserves URL protocol and slash delimiters).
+3. **Copy Percent-Encoded Output**: View the safely escaped URI string where spaces become %20 and special characters are safely escaped.
+
+**Technical FAQs:**
+- **What is URL percent-encoding?**: Defined in RFC 3986, percent-encoding replaces unsafe ASCII characters and non-ASCII bytes with a '%' followed by their two-digit hexadecimal value.
+- **When should I use encodeURIComponent vs encodeURI?**: Use encodeURI when encoding a complete URL (preserving http:// and slashes). Use encodeURIComponent when encoding individual parameter values so query delimiters like '=' and '&' do not corrupt query parsing.
+
+### Text to Binary & Binary to Text Converter (https://cipherverse.cybrito.tech/encoding/binary)
+Convert ASCII and UTF-8 text into 8-bit binary numbers (0s and 1s) and decode binary byte streams instantly with customizable spacing and bit formats.
+
+**Step-by-Step Instructions:**
+1. **Select Conversion Direction**: Choose Text-to-Binary to convert ASCII/UTF-8 into bits, or Binary-to-Text to decode 0s and 1s.
+2. **Set Byte Delimiters**: Choose space-separated 8-bit byte groups (e.g. 01001000 01101001) or continuous raw bitstreams.
+3. **Inspect Bit Pattern Output**: View the exact machine-level binary byte representations.
+
+**Technical FAQs:**
+- **How does ASCII translate into binary bytes?**: Each ASCII character corresponds to a numerical value between 0 and 127, which is represented as an 8-bit byte (e.g., 'A' = 65 = 01000001).
+
+### Morse Code Translator (https://cipherverse.cybrito.tech/encoding/morse)
+Translate text into International Morse Code dots and dashes with real-time audio playback, custom WPM speeds, visual flashing, and audio download options.
+
+**Step-by-Step Instructions:**
+1. **Input Text or Morse Dots/Dashes**: Enter plain English text or input Morse code using dots (.), dashes (-), and slashes (/) for word boundaries.
+2. **Configure Playback Speed (WPM)**: Adjust audio frequency (Hz) and Words Per Minute (WPM) playback speed.
+3. **Play Audio Tone or Optical Light**: Listen to the synthesized audio beeps or watch the synchronized optical light simulation.
+
+**Technical FAQs:**
+- **What are the timing standards in International Morse Code?**: A dash is three times the duration of a dot. The space between parts of the same letter is 1 dot duration, between letters is 3 dot durations, and between words is 7 dot durations.
+- **Who invented Morse code?**: Samuel Morse and Alfred Vail developed the electric telegraph and Morse code in the 1830s and 1840s to transmit text across long distances via electrical pulses.
+
+---
+
+## Category: Certificates & TLS
+
+### Frequently Asked Questions
+- **Q: What is a Certificate Authority (CA) chain of trust?**
+  A: A chain of trust links an end-entity SSL certificate to intermediate CAs, which ultimately lead to a trusted Root CA pre-installed in your operating system or browser trust store.
+- **Q: What happens if a certificate's Subject Alternative Name (SAN) is missing?**
+  A: Modern web browsers strictly require valid SAN entries matching the accessed hostname. Without SANs, browsers reject the connection as invalid, even if the Common Name (CN) matches.
+
+### X.509 SSL/TLS Certificate Parser Online (https://cipherverse.cybrito.tech/certificates/x509)
+Parse X.509 PEM and DER certificates to inspect subject, issuer, serial numbers, validity windows, SAN extensions, and extract public key parameters instantly.
+
+**Step-by-Step Instructions:**
+1. **Paste PEM Certificate Block**: Paste your -----BEGIN CERTIFICATE----- block or upload a .crt/.cer file.
+2. **Parse ASN.1 Structure**: Extracts Subject Common Name, Organization, Issuer CA, Serial Number, and Validity Period.
+3. **Inspect Subject Alternative Names (SANs)**: Verify domain names, public key algorithm (RSA/ECC), and signature algorithm.
+
+**Technical FAQs:**
+- **What is an X.509 certificate?**: An X.509 certificate is a digital document that binds a public key to an entity's identity, verified by a trusted Certificate Authority (CA) for HTTPS and TLS.
+
+### TLS Protocol & Cipher Suite Inspection Tool (https://cipherverse.cybrito.tech/certificates/tls)
+Analyze SSL/TLS handshake sequences, cipher suite negotiations, protocol versions (TLS 1.2/1.3), and forward secrecy parameters for secure web connections.
+
+**Step-by-Step Instructions:**
+1. **Input Hostname & Port**: Enter a domain (e.g. google.com) and TLS port (default 443).
+2. **Inspect Handshake Sequence**: Observe ClientHello, ServerHello, TLS protocol negotiation (TLS 1.2 vs 1.3), and ALPN.
+3. **Review Cipher Suite Security**: Confirm perfect forward secrecy (ECDHE) and AEAD cipher support.
+
+**Technical FAQs:**
+- **What is Perfect Forward Secrecy (PFS)?**: PFS ensures that session keys are negotiated ephemerally (via ECDHE). Even if a server's long-term private key is compromised in the future, past recorded sessions cannot be decrypted.
+
+### SSL Certificate Fingerprint Calculator (https://cipherverse.cybrito.tech/certificates/fingerprint)
+Compute SHA-1, SHA-256, and MD5 thumbprints for X.509 SSL/TLS certificates instantly to verify host identity and validate pin headers in your application.
+
+**Step-by-Step Instructions:**
+1. **Paste Certificate Text**: Provide your X.509 PEM certificate string.
+2. **Calculate SHA-256 & SHA-1 Hashes**: Computes cryptographic digests of the DER-encoded binary certificate payload.
+3. **Copy Fingerprint Thumbprints**: Use formatted fingerprint strings for certificate pinning in mobile apps and APIs.
+
+**Technical FAQs:**
+- **What is certificate pinning?**: Certificate pinning is a security mechanism where client applications hardcode the expected certificate fingerprint, rejecting rogue certificates issued by compromised CAs.
+
+---
+
+## Category: Blockchain
+
+### Frequently Asked Questions
+- **Q: Why do cryptocurrencies use checksummed addresses?**
+  A: Checksums mathematically detect typos, miscopied characters, or transcription errors before a transaction is broadcast to the blockchain network, preventing irreversible loss of funds.
+- **Q: What is a Merkle tree root hash?**
+  A: The Merkle root is a single 32-byte cryptographic digest at the top of a binary hash tree that immutably summarizes every transaction included within a block.
+
+### Bitcoin Address Validator & Script Inspector (https://cipherverse.cybrito.tech/blockchain/bitcoin)
+Validate Bitcoin legacy (P2PKH), SegWit (P2SH), and native Bech32/Taproot addresses with Base58Check and BCH error-detecting checksum verifications online.
+
+**Step-by-Step Instructions:**
+1. **Paste Bitcoin Address**: Enter a Legacy (1...), SegWit (3...), or Bech32/Taproot (bc1...) address.
+2. **Automatic Script & Checksum Detection**: The tool decodes Base58Check or BIP173 BCH checksums to verify mathematical validity.
+3. **Inspect Address Metadata**: View the network type (Mainnet/Testnet), witness version, and public key hash (Hash160).
+
+**Technical FAQs:**
+- **What does a Bitcoin address checksum protect against?**: The 4-byte Base58Check or Bech32 checksum ensures that any typo, omitted character, or transcription error is caught immediately before sending funds.
+
+### Ethereum Address Validator & EIP-55 Tool (https://cipherverse.cybrito.tech/blockchain/ethereum)
+Verify Ethereum 0x hex wallet addresses and test EIP-55 mixed-case Keccak-256 checksum validity online to prevent costly mistyped transaction errors.
+
+**Step-by-Step Instructions:**
+1. **Input 0x Ethereum Address**: Paste a 42-character hexadecimal Ethereum public address.
+2. **Verify Length & Characters**: The validator verifies 20-byte length, hexadecimal characters, and prefix format.
+3. **Validate EIP-55 Mixed-Case Checksum**: Computes Keccak-256 hash to confirm valid capitalization and prevent accidental typographical errors.
+
+**Technical FAQs:**
+- **What is an EIP-55 checksummed Ethereum address?**: EIP-55 uses mixed-case letters based on the Keccak-256 hash of the lowercase address. If a single character is miskeyed, the capitalization check fails.
+
+### Merkle Tree Construction & Visual Proof Generator (https://cipherverse.cybrito.tech/blockchain/merkle)
+Build interactive Merkle Trees from transaction hashes, calculate the cryptographic root hash, and verify audit path inclusion proofs with visual graphs.
+
+**Step-by-Step Instructions:**
+1. **Enter Transaction Hashes**: Provide a list of leaf data blocks or transaction IDs.
+2. **Generate Binary Tree**: The engine recursively pairs hashes and computes SHA-256 parent digests up to the Merkle Root.
+3. **Verify Inclusion Proofs**: Audit individual transaction paths to prove membership without downloading the entire dataset.
+
+**Technical FAQs:**
+- **Why are Merkle trees crucial for blockchain scalability?**: They allow light clients to verify that a transaction is included in a block using only O(log N) hashes instead of downloading the entire block history.
+
+### Wallet Import Format (WIF) Private Key Encoder (https://cipherverse.cybrito.tech/blockchain/wif)
+Encode and decode Bitcoin 256-bit ECDSA private keys into compressed and uncompressed Wallet Import Format (WIF) with Base58Check checksum validation.
+
+**Step-by-Step Instructions:**
+1. **Input 256-bit Private Key Hex**: Paste a 64-character hexadecimal raw ECDSA private key.
+2. **Choose Network & Compression**: Select Mainnet (0x80) or Testnet (0xEF), and specify compressed or uncompressed public key.
+3. **Generate Base58 WIF Key**: Computes network prefix, optional 0x01 compression byte, and double-SHA256 checksum to export WIF.
+
+**Technical FAQs:**
+- **What is Bitcoin WIF (Wallet Import Format)?**: WIF is a Base58Check-encoded private key format that makes private keys easier to copy and import into wallets with built-in checksum error prevention.
+
+---
+
+## Category: Steganography
+
+### Frequently Asked Questions
+- **Q: How does steganography differ from cryptography?**
+  A: Cryptography scrambles the contents of a message so an eavesdropper cannot read it, but the existence of the secret message is obvious. Steganography conceals the very fact that a secret communication is taking place.
+- **Q: What is steganalysis?**
+  A: Steganalysis is the forensic science of detecting whether a digital file contains hidden information by analyzing pixel noise, color histograms, or high-frequency audio components.
+
+### Zero-Width Text Steganography Encoder & Decoder (https://cipherverse.cybrito.tech/steganography/text)
+Conceal hidden secret messages inside ordinary plain text using zero-width invisible unicode characters (ZWSP, ZWNJ) undetectable to standard text viewers.
+
+**Step-by-Step Instructions:**
+1. **Enter Innocent Cover Text**: Provide an ordinary paragraph of public text to carry the hidden information.
+2. **Enter Secret Message**: Type the secret string you want to conceal invisibly.
+3. **Copy Invisible Steganographic Text**: The tool encodes your secret into binary and injects zero-width non-joiner unicode characters into the cover text.
+
+**Technical FAQs:**
+- **What are zero-width characters in text steganography?**: Zero-width characters (like U+200B and U+200C) are valid Unicode characters that occupy zero visual space, allowing secret binary data to hide inside ordinary visible text.
+
+### Image Steganography Tool (https://cipherverse.cybrito.tech/steganography/image)
+Embed and extract hidden encrypted messages inside PNG and JPEG image pixels using Least Significant Bit (LSB) encoding with AES encryption and passphrases.
+
+**Step-by-Step Instructions:**
+1. **Upload Carrier Image (PNG/BMP)**: Select a lossless cover image to act as the carrier for your secret payload.
+2. **Enter Secret Message & Passphrase**: Type the confidential text to hide and optionally set an encryption password to secure the payload.
+3. **Download Stego Image or Decode**: The tool modifies the Least Significant Bits (LSB) of pixel channels without visible alteration, exporting a pristine stego image.
+
+**Technical FAQs:**
+- **Why are PNG images preferred over JPEG for steganography?**: PNG uses lossless compression, preserving exact pixel color values. JPEG uses lossy compression that alters low-order pixel bits, corrupting LSB steganographic payloads.
+- **How much data can be hidden in an image?**: With 1-bit LSB encoding across 3 color channels (RGB), an image can store approximately 3 bits per pixel (e.g. a 1920x1080 image can hide up to ~777 KB of data).
+
+### Audio Steganography Tool (https://cipherverse.cybrito.tech/steganography/audio)
+Embed hidden secret messages into uncompressed WAV audio sample data using Least Significant Bit (LSB) encoding while preserving acoustic fidelity.
+
+**Step-by-Step Instructions:**
+1. **Upload Uncompressed WAV Audio**: Select an uncompressed 16-bit PCM WAV audio file to act as the acoustic carrier.
+2. **Enter Payload & Secret Passphrase**: Type your message and set an optional encryption key.
+3. **Encode or Decode Waveform Samples**: Modifies the least significant bits of audio PCM samples without causing audible acoustic distortion.
+
+**Technical FAQs:**
+- **Why does audio steganography require WAV instead of MP3?**: MP3 compression discards inaudible sound data and recalculates waveform coefficients, destroying embedded LSB bits. Lossless WAV audio preserves raw sample values.
+
+---
+
+## Category: File Forensics
+
+### Frequently Asked Questions
+- **Q: Why are cryptographic hashes vital in legal digital forensics?**
+  A: Hashes serve as digital fingerprints. By calculating and logging a file's SHA-256 hash at the time of seizure, investigators can prove in court that evidence was not modified or tampered with during analysis.
+- **Q: How does Shannon entropy identify hidden encryption?**
+  A: Normal files (executables, plaintext, images) have characteristic entropy values (between 3.0 and 6.5). Truly encrypted or compressed payloads produce near-maximum entropy (~7.9 to 8.0) because every byte value appears with equal probability.
+
+### Single File Hash Generator & Verifier (https://cipherverse.cybrito.tech/file-forensics/hash)
+Calculate cryptographic digests (MD5, SHA-1, SHA-256) for local files directly in your browser using Web Crypto API without uploading any bytes to a server.
+
+**Step-by-Step Instructions:**
+1. **Select File for Hashing**: Drag and drop any file directly into the client-side forensic hasher.
+2. **Generate Multiple Cryptographic Checksums**: Streaming workers calculate SHA-256, SHA-512, MD5, and SHA-1 simultaneously without uploading files to any external server.
+3. **Verify File Integrity & Signatures**: Compare calculated digests against vendor software releases, download checksums, or threat intelligence feeds.
+
+**Technical FAQs:**
+- **Does CipherVerse upload my file to a server to calculate hashes?**: No. All file hashing is performed locally inside your browser memory using Web Cryptography API streaming workers for maximum privacy and security.
+
+### Multi-Algorithm Concurrent File Hasher (https://cipherverse.cybrito.tech/file-forensics/multi-hash)
+Compute MD5, SHA-1, SHA-256, SHA-512, and RIPEMD-160 checksums simultaneously in a single stream pass directly in your browser for rapid digital forensics.
+
+**Step-by-Step Instructions:**
+1. **Drag & Drop File**: Provide any local file to compute multi-algorithm cryptographic verification.
+2. **Compute 6+ Hashes in Streaming Pass**: Calculates MD5, SHA-1, SHA-256, SHA-384, SHA-512, and CRC32 concurrently.
+3. **Export Forensic Checksum Manifest**: Copy or export verified hash tables for audit logs and legal custody reports.
+
+**Technical FAQs:**
+- **Why generate multiple hash algorithms simultaneously?**: Different security systems and forensic databases use different hash standards. Calculating multiple digests in one streaming pass avoids reading the file multiple times.
+
+### Shannon File Entropy Analyzer & Visualization (https://cipherverse.cybrito.tech/file-forensics/entropy)
+Calculate Shannon entropy distributions across binary files to detect packed executables, compressed sections, or hidden encrypted payloads with visual graphs.
+
+**Step-by-Step Instructions:**
+1. **Upload File or Paste Raw Bytes**: Select any binary file or hex string for forensic randomness measurement.
+2. **Compute Shannon Entropy Metric**: Calculates the degree of randomness on a scale from 0.0 (completely uniform) to 8.0 (pure cryptographic randomness).
+3. **Review Byte Density Distribution**: Inspect the histogram of byte frequencies to distinguish between plaintext, compressed data, and encrypted ciphers.
+
+**Technical FAQs:**
+- **What is Shannon Entropy in digital forensics?**: Shannon entropy measures the average information density per byte. It is defined as H(X) = -Σ P(x) log₂(P(x)) and ranges from 0 to 8 bits per byte.
+
+### Cryptographic Randomness Test Suite (https://cipherverse.cybrito.tech/file-forensics/randomness)
+Evaluate random number generator outputs with NIST-inspired Chi-square tests, byte distribution histograms, and serial correlation tests for high entropy.
+
+**Step-by-Step Instructions:**
+1. **Input Binary Data or PRNG Output**: Upload a binary sample or supply byte streams to evaluate.
+2. **Run NIST Statistical Tests**: Executes Chi-Square distribution test, Monte Carlo Pi calculation, and serial correlation.
+3. **Inspect P-Values & Bias Diagnostics**: Verify whether the byte distribution exhibits statistical randomness suitable for cryptographic key generation.
+
+**Technical FAQs:**
+- **What does the Chi-Square test measure in randomness?**: The Chi-Square test compares observed byte frequencies against the expected uniform distribution. A p-value between 0.01 and 0.99 indicates acceptable cryptographic randomness.
+
+---
+
+## Category: Malware Analysis
+
+### Frequently Asked Questions
+- **Q: Is it safe to analyze malware files in CipherVerse?**
+  A: Yes. CipherVerse performs pure static analysis-parsing binary byte offsets and header structures without executing any instructions, ensuring your host operating system is never compromised.
+- **Q: What is a packed executable in malware analysis?**
+  A: A packed executable has its original code compressed or encrypted by a packer (like UPX or custom crypters). It unpacks itself into memory at runtime to evade static antivirus signature detection.
+
+### Malware File Hash Lookup & Threat Triage (https://cipherverse.cybrito.tech/malware-analysis/hash)
+Generate and query MD5, SHA-1, and SHA-256 file hashes against threat intelligence databases to quickly triage malware samples and detect malicious binaries.
+
+**Step-by-Step Instructions:**
+1. **Input Known File Hash**: Paste an MD5, SHA-1, or SHA-256 hash signature from a security alert or log.
+2. **Detect Hash Format & Family**: Identifies hash bit-length and algorithm standard.
+3. **Cross-Reference Threat Intelligence**: Evaluate against known ransomware strains, malware families, or benign software registries.
+
+**Technical FAQs:**
+- **What is a file hash in threat intelligence?**: A cryptographic hash acts as an immutable digital signature for a file, allowing security analysts to detect malware strains across network telemetry without transferring the full binary.
+
+### TLSH Fuzzy Hash & Malware Comparator (https://cipherverse.cybrito.tech/malware-analysis/tlsh)
+Calculate Trend Micro Locality Sensitive Hashes (TLSH) and compute distance scores to detect polymorphic malware family variants and binary similarities.
+
+**Step-by-Step Instructions:**
+1. **Input Two TLSH Fuzzy Hashes**: Provide Trend Micro Locality Sensitive Hash strings for comparison.
+2. **Compute Statistical Distance Score**: Calculates the distance difference between byte distributions and quartiles.
+3. **Interpret Similarity Confidence**: Scores < 30 indicate high confidence of variant similarity; scores > 100 indicate distinct software.
+
+**Technical FAQs:**
+- **How does TLSH differ from traditional cryptographic hashes?**: In SHA-256, changing a single bit changes the entire hash randomly (avalanche effect). In TLSH, minor code changes produce very similar hashes, making it ideal for tracking mutated malware variants.
+
+### PE Header Parser & EXE Section Inspector (https://cipherverse.cybrito.tech/malware-analysis/pe)
+Parse Windows PE32/PE32+ executable headers, section tables (.text, .data, .rsrc), import/export directory tables, and compile timestamps in your browser.
+
+**Step-by-Step Instructions:**
+1. **Upload Windows Executable**: Select a PE binary (.exe, .dll, .sys) for static forensic inspection.
+2. **Parse Headers & Data Directories**: Inspect the DOS header (MZ magic), COFF file header, optional header, and section headers.
+3. **Evaluate Section Entropy & Imports**: Analyze suspicious imported API calls (e.g. VirtualAlloc, WriteProcessMemory) and section entropy indicating packers.
+
+**Technical FAQs:**
+- **What is a PE (Portable Executable) file?**: PE is the standard binary format used by Windows for executables, DLLs, and kernel drivers, defining headers, sections, and dynamic import tables.
+- **How does high section entropy indicate packed malware?**: Standard compiled code has an entropy of ~6.0. An entropy score above 7.0 strongly indicates encrypted, compressed, or packed malware designed to evade antivirus signatures.
+
+---
+
+## Category: Utilities
+
+### Frequently Asked Questions
+- **Q: What makes a password resistant to modern GPU cracking attacks?**
+  A: Length and entropy. While complex 8-character passwords can be cracked in hours with dedicated GPU clusters running hashcat, multi-word passphrases with >70 bits of entropy take centuries to crack.
+
+### Password Strength & Entropy Calculator (https://cipherverse.cybrito.tech/utilities/password)
+Evaluate password entropy (bits), estimate brute-force cracking time, and detect common dictionary vulnerability patterns.
+
+**Step-by-Step Instructions:**
+1. **Enter Password to Evaluate**: Type a candidate password or passphrase into the secure evaluation input.
+2. **Calculate Information Entropy**: The engine evaluates character pool size, length, dictionary patterns, and zxcvbn strength metrics.
+3. **View Estimated Crack Time**: Review estimated cracking times against supercomputers, offline GPU clusters, and online rate-limited attackers.
+
+**Technical FAQs:**
+- **How many bits of password entropy are considered secure?**: Passphrases with at least 60-80 bits of entropy are considered resistant to offline GPU dictionary attacks, while 128 bits matches symmetric encryption strength.
+
+### JWT (JSON Web Token) HMAC Signer & Verifier (https://cipherverse.cybrito.tech/utilities/jwt)
+Sign and verify JSON Web Tokens (JWT) online using HS256, HS384, or HS512 HMAC secret keys with real-time decoded header and payload JSON inspections.
+
+**Step-by-Step Instructions:**
+1. **Paste JWT or Create Claims**: Enter an existing three-part JWT or define JSON payload claims (iss, sub, exp).
+2. **Configure Signing Secret & Algorithm**: Select HMAC-SHA256 (HS256) or RSA (RS256) and provide your secret key or private PEM.
+3. **Inspect Decoded Token & Signature Validity**: View the color-coded Header, Payload, and verified cryptographic signature status.
+
+**Technical FAQs:**
+- **What are the three parts of a JSON Web Token (JWT)?**: A JWT consists of Header (algorithm & token type), Payload (claims and data), and Signature (cryptographic verification), separated by dots.
+
+### Cryptographic Salt & Token Generator (https://cipherverse.cybrito.tech/utilities/salt)
+Generate high-entropy cryptographically secure random salts, IVs, and session tokens in Hex, Base64, and C-array formats using browser Web Crypto CSPRNG.
+
+**Step-by-Step Instructions:**
+1. **Specify Desired Byte Length**: Choose 16, 32, or 64 bytes depending on cryptographic algorithm requirements.
+2. **Select Output Encoding Format**: Choose Hexadecimal, Base64, or URL-safe Base64 representation.
+3. **Generate Cryptographically Secure Salt**: Generates nonces using OS kernel entropy via Web Cryptography CSPRNG.
+
+**Technical FAQs:**
+- **What is a cryptographic salt and why is it essential?**: A salt is random data appended to a password before hashing. It ensures that identical passwords have completely different hashes, neutralizing precomputed rainbow tables.
+
+### Fletcher-16 Checksum & Integrity Tool (https://cipherverse.cybrito.tech/utilities/fletcher16)
+Calculate 16-bit Fletcher checksums online with modular block arithmetic to verify data integrity and detect transmission errors in digital data.
+
+**Step-by-Step Instructions:**
+1. **Input Data String or Bytes**: Enter the message string or hexadecimal bytes to checksum.
+2. **Compute Running Modulo 255 Sums**: Accumulates two running 8-bit sums over the data stream.
+3. **Inspect 16-Bit Checksum Result**: View the combined 16-bit integer and hexadecimal verification checksum.
+
+**Technical FAQs:**
+- **How is Fletcher-16 superior to a simple additive checksum?**: Fletcher-16 is position-dependent. Swapping two adjacent bytes changes the second sum, allowing Fletcher-16 to detect transposition errors that standard byte addition misses.
+
+---
+
+## Category: Historical Machines
+
+### Frequently Asked Questions
+- **Q: How did the Enigma machine work electrically?**
+  A: Pressing a key sent an electrical current through a plugboard, through three or four rotating wired rotors, into a fixed reflector, and back through the rotors via a different path to illuminate an output lamp.
+- **Q: What was the Turing Bombe?**
+  A: The Bombe was an electromechanical machine designed by Alan Turing and Gordon Welchman at Bletchley Park to rapidly deduce Enigma rotor setups by testing logical deductions based on suspected plaintext cribs.
+
+### Enigma Machine Simulator (I, M3, M4) Online (https://cipherverse.cybrito.tech/historical/enigma)
+Authentic 3-rotor and 4-rotor Enigma machine simulator. Configure rotors, ring settings, reflector, and plugboard (Steckerbrett).
+
+**Step-by-Step Instructions:**
+1. **Configure Rotors and Ring Settings**: Select three rotor models (I to V), initial rotor ground settings, and Ringstellung ring offsets.
+2. **Wire the Steckerbrett (Plugboard)**: Connect letter pairs on the plugboard to swap characters prior to rotor entry.
+3. **Simulate Keystroke Encryption**: Type letters to witness mechanical rotor stepping and observe corresponding output lamps illuminating.
+
+**Technical FAQs:**
+- **Why could an Enigma machine never encrypt a letter as itself?**: The Enigma used a reflector (Umkehrwalze) that sent the electrical signal back through the rotors via a different path, making it impossible for an output letter to equal the input letter-a vital flaw codebreakers exploited.
+
+### Alan Turing Bombe Crib Analysis Simulator (https://cipherverse.cybrito.tech/historical/bombe)
+Interactive simulation of Alan Turing's Bombe electromechanical machine used at Bletchley Park to break Enigma rotor keys.
+
+**Step-by-Step Instructions:**
+1. **Enter Ciphertext & Plaintext Crib**: Input intercepted German ciphertext and a suspected German plaintext phrase (the crib).
+2. **Configure Menu Graph Connections**: The machine maps closed loops of deductions linking ciphertext letters to crib letters.
+3. **Run Turing-Welchman Contradiction Engine**: Electromechanical drums test rotor positions simultaneously, halting on candidate daily keys with zero contradictions.
+
+**Technical FAQs:**
+- **How did the Turing Bombe break Enigma without testing all keys?**: Instead of searching for correct keys, the Bombe searched for logical contradictions. If a hypothesized letter deduction led to a contradiction, that entire branch of rotor positions was rejected simultaneously.
+
+### British Typex Cipher Machine Simulator (https://cipherverse.cybrito.tech/historical/typex)
+Simulate the British WWII Typex cipher machine with authentic multi-rotor stepping mechanisms, plugboard options, and statutory transposition decoding.
+
+**Step-by-Step Instructions:**
+1. **Select 5-Rotor Configuration**: Configure the British Typex rotor assembly using two stationary stators and three revolving rotors.
+2. **Set Multiple Turnover Notches**: Configure multiple notches per rotor to produce irregular, non-odometer mechanical stepping.
+3. **Simulate Printed Teleprinter Output**: Type messages to generate printed tape output with significantly greater cryptographic complexity than Wehrmacht Enigma.
+
+**Technical FAQs:**
+- **Why was the British Typex machine superior to Enigma?**: Typex used 5 rotors instead of 3, had multiple turnover notches on each rotor for irregular stepping, and printed directly onto paper tape, eliminating human transcription errors.

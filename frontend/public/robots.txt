@@ -1,5 +1,32 @@
-User-agent: *
+# Search Engine & AI Crawler Directives
+User-agent: Googlebot
 Allow: /
 
-# Directives
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# General Directives
+User-agent: *
+Allow: /
+Disallow: /settings
+Disallow: /404
+
+# Sitemaps & LLM Discovery (Generative Engine Optimization)
 Sitemap: https://cipherverse.cybrito.tech/sitemap.xml
+# LLMs Content File: https://cipherverse.cybrito.tech/llms.txt
+

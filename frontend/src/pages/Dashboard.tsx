@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Shield, Lock, FileKey, Zap, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { navigationGroups } from '@/constants/navigation';
 
 const popularTools = [
   { name: 'AES Encryption', path: '/symmetric/aes', icon: Lock, desc: 'Advanced standard for file and API encryption' },
   { name: 'RSA Encryption', path: '/asymmetric/rsa', icon: FileKey, desc: 'Public key system for secure data transmission' },
   { name: 'SHA-256 Hash', path: '/hashing', icon: Zap, desc: 'Generate cryptographic fingerprints for integrity' }
 ];
+
+// Extract all category hub suites (excluding root dashboard)
+const categorySuites = navigationGroups.flatMap((group) =>
+  group.items.filter((item) => item.path !== '/')
+);
 
 export default function DashboardPage() {
   return (
@@ -54,6 +60,49 @@ export default function DashboardPage() {
         </div>
       </motion.div>
 
+      {/* Grid: All Security Suites & Categories (Search Engine Discovery Hub) */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.15 }}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Security Suites & Categories</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">Explore our comprehensive directories covering all cryptographic domains</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+          {categorySuites.map((suite) => (
+            <Link
+              key={suite.path}
+              to={suite.path}
+              className="group p-4 rounded-xl bg-card border border-border hover:border-muted-foreground transition-all duration-200 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-secondary border border-border flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                    <suite.icon className="w-4 h-4 text-foreground" />
+                  </div>
+                  {suite.toolCount && (
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-secondary border border-border text-muted-foreground">
+                      {suite.toolCount} tools
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-sm font-semibold text-foreground group-hover:text-white transition-colors flex items-center justify-between">
+                  {suite.label}
+                  <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-muted-foreground" />
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
+                  {suite.description}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </motion.div>
+
       {/* Grid: Comparisons & Resources */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -65,8 +114,8 @@ export default function DashboardPage() {
         <div className="bg-card border border-border rounded-[14px] p-6 shadow-sm">
           <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
             <h2 className="text-lg font-semibold text-foreground">Algorithm Standards</h2>
-            <Link to="/classical" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
-              View all <ArrowRight className="w-3 h-3" />
+            <Link to="/symmetric" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
+              Explore Suite <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           <div className="space-y-4">

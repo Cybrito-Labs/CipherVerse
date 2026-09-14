@@ -1,0 +1,112 @@
+# CipherVerse
+
+> Professional, Zero-Knowledge Cybersecurity & Cryptography Web Suite
+
+CipherVerse is a high-performance, client-side web application offering 40+ interactive cryptographic tools, malware triage utilities, binary forensics analyzers, and historical cipher machine simulators.
+All computations run 100% locally in the browser via the Web Crypto API, WebAssembly, and native JavaScript implementations - no private keys, passwords, or encrypted payloads are ever uploaded to a server.
+
+## Canonical Resources
+- [Interactive Workspace](https://cipherverse.cybrito.tech/): Full browser-based cryptographic suite.
+- [XML Sitemap](https://cipherverse.cybrito.tech/sitemap.xml): Complete machine-readable route directory.
+- [API Explorer](https://cipherverse.cybrito.tech/api-explorer): REST API documentation and endpoints.
+
+## Security Suites & Domain Directories
+
+### [Classical Ciphers](https://cipherverse.cybrito.tech/classical)
+Caesar, Vigenere, Atbash, and more
+
+- [Caesar Cipher Decoder, Encoder & ROT13 Solver](https://cipherverse.cybrito.tech/classical/caesar): Free online Caesar Cipher encoder, decoder, and brute-force solver. Shift text by any key instantly with detailed letter frequency analysis.
+- [Vigenere Cipher Encoder, Decoder & Key Solver](https://cipherverse.cybrito.tech/classical/vigenere): Encrypt and decrypt messages using the polyalphabetic Vigenere Cipher. Includes automatic keyword analysis and tabular visualization.
+- [Atbash Cipher Tool](https://cipherverse.cybrito.tech/classical/atbash): Fast online Atbash Cipher tool to substitute alphabet letters in reverse order (A to Z, B to Y) with instant reciprocal encryption and decryption.
+- [Baconian Cipher Encoder & Steganographic Decoder](https://cipherverse.cybrito.tech/classical/bacon): Encode and decode hidden messages using Francis Bacon's 5-letter binary steganographic cipher system with 24-letter and 26-letter alphabet options.
+- [Bifid Cipher Tool](https://cipherverse.cybrito.tech/classical/bifid): Encrypt and decrypt using the Bifid Cipher, combining Polybius square substitution with vertical transposition fractionation.
+- [Affine Cipher Solver & Mathematical Decoder](https://cipherverse.cybrito.tech/classical/affine): Online Affine Cipher tool to perform mathematical substitution encryption and cryptanalysis using linear modular arithmetic formulas E(x) = (ax + b) mod 26.
+- [A1Z26 Cipher & Number Substitution Tool](https://cipherverse.cybrito.tech/classical/a1z26): Convert text to numbers and numbers back to text instantly with the A1Z26 letter-number substitution converter, custom separators, and error handling.
+- [Rail Fence Cipher](https://cipherverse.cybrito.tech/classical/rail-fence): Online Rail Fence Cipher calculator. Encrypt and decrypt messages using multi-rail zigzag transposition paths with interactive rail offset controls.
+- [Monoalphabetic Substitution Cipher Solver](https://cipherverse.cybrito.tech/classical/substitution): Solve monoalphabetic substitution ciphers with custom alphabet key mappings, real-time letter frequency analysis, and automated pattern substitution.
+
+### [Symmetric Crypto](https://cipherverse.cybrito.tech/symmetric)
+AES, DES, Blowfish, RC4, XOR
+
+- [AES Encryption & Decryption Online (128/256-bit)](https://cipherverse.cybrito.tech/symmetric/aes): Secure online Advanced Encryption Standard (AES) calculator supporting CBC, GCM, CTR modes with cryptographic key generation and authentication tags.
+- [DES (Data Encryption Standard) Online Tool](https://cipherverse.cybrito.tech/symmetric/des): Explore the Data Encryption Standard (DES) with interactive encryption, decryption, CBC/ECB mode selection, and 16-round subkey schedule visualization.
+- [Triple DES (3DES / TDEA) Encryption Tool](https://cipherverse.cybrito.tech/symmetric/3des): Online Triple DES (3DES/TDEA) calculator supporting 2-key and 3-key EDE modes with custom IVs and padding configurations for legacy cryptographic inspection.
+- [RC2 Block Cipher Encryption & Decryption](https://cipherverse.cybrito.tech/symmetric/rc2): Encrypt and decrypt data using Ron Rivest's RC2 variable key-size block cipher with customizable effective key bit lengths and CBC/ECB mode options.
+- [RC4 Stream Cipher Generator & Decrypter](https://cipherverse.cybrito.tech/symmetric/rc4): Generate RC4 keystream sequences and encrypt or decrypt arbitrary data online with interactive Key Scheduling (KSA) and PRGA state array inspections.
+- [RC4-Drop Stream Cipher & Keystream Tool](https://cipherverse.cybrito.tech/symmetric/rc4-drop): Enhanced RC4-Drop implementation discarding initial N keystream bytes to eliminate Fluhrer-Mantin-Shamir (FMS) weak key vulnerabilities and state biases.
+- [Blowfish Encryption & Decryption Tool](https://cipherverse.cybrito.tech/symmetric/blowfish): Encrypt and decrypt data using Bruce Schneier's 64-bit Blowfish block cipher with variable key lengths up to 448 bits, custom IVs, and mode selections.
+- [SM4 National Standard Block Cipher Tool](https://cipherverse.cybrito.tech/symmetric/sm4): Encrypt and decrypt data using the Chinese National Standard SM4 128-bit block cipher (GB/T 32907-2016) with CBC and ECB mode configurations.
+- [CipherSaber-2 Key Stream Encryption Tool](https://cipherverse.cybrito.tech/symmetric/ciphersaber2): Encrypt and decrypt using the CipherSaber-2 cryptographic protocol, featuring 10-byte initialization vectors and configurable RC4 state array mixing rounds.
+- [XOR Cipher & Multi-Byte Key Bruteforce Tool](https://cipherverse.cybrito.tech/symmetric/xor): Encrypt, decrypt, and crack single-byte and multi-byte repeating XOR ciphers with automated Hamming distance key-size detection and English frequency analysis.
+
+### [Asymmetric Crypto](https://cipherverse.cybrito.tech/asymmetric)
+RSA, DSA key generation and operations
+
+- [RSA Key Generator, Encryption & Signatures](https://cipherverse.cybrito.tech/asymmetric/rsa): Online RSA tool to generate PEM keypairs (1024, 2048, 4096 bit), encrypt messages, decrypt ciphertexts, sign, and verify signatures.
+- [DSA Key Generator & Digital Signature Algorithm](https://cipherverse.cybrito.tech/asymmetric/dsa): Generate FIPS 186 Digital Signature Algorithm (DSA) key parameters, sign cryptographic digests, and verify digital signatures against public verification keys.
+
+### [Hashing & KDFs](https://cipherverse.cybrito.tech/hashing)
+SHA, MD5, HMAC, PBKDF2, Scrypt, bcrypt
+
+- [SHA-256 & Cryptographic Hash Generator](https://cipherverse.cybrito.tech/hashing): Calculate cryptographic hashes (SHA-256, SHA-512, MD5, SHA-3), HMAC signatures, and run PBKDF2, Scrypt, and bcrypt key derivation functions instantly.
+
+### [Encoding & Decoding](https://cipherverse.cybrito.tech/encoding)
+Base64, Hex, URL, Binary, Morse
+
+- [Base64 Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/base64): Instant online Base64 text and binary data encoder and decoder with UTF-8, URL-safe Base64URL, and hex output support for secure data transmission.
+- [Hexadecimal (Hex) Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/hex): Convert plain text to Hex bytes and decode Hex strings to readable ASCII text instantly with custom byte delimiters, prefix formatting, and validation.
+- [URL Percent Encoder & Decoder Online](https://cipherverse.cybrito.tech/encoding/url): Encode special characters into percent-encoded URI strings and decode encoded query parameters safely with full UTF-8 and component encoding support.
+- [Text to Binary & Binary to Text Converter](https://cipherverse.cybrito.tech/encoding/binary): Convert ASCII and UTF-8 text into 8-bit binary numbers (0s and 1s) and decode binary byte streams instantly with customizable spacing and bit formats.
+- [Morse Code Translator](https://cipherverse.cybrito.tech/encoding/morse): Translate text into International Morse Code dots and dashes with real-time audio playback, custom WPM speeds, visual flashing, and audio download options.
+
+### [Certificates & TLS](https://cipherverse.cybrito.tech/certificates)
+X.509 parsing, TLS analysis
+
+- [X.509 SSL/TLS Certificate Parser Online](https://cipherverse.cybrito.tech/certificates/x509): Parse X.509 PEM and DER certificates to inspect subject, issuer, serial numbers, validity windows, SAN extensions, and extract public key parameters instantly.
+- [TLS Protocol & Cipher Suite Inspection Tool](https://cipherverse.cybrito.tech/certificates/tls): Analyze SSL/TLS handshake sequences, cipher suite negotiations, protocol versions (TLS 1.2/1.3), and forward secrecy parameters for secure web connections.
+- [SSL Certificate Fingerprint Calculator](https://cipherverse.cybrito.tech/certificates/fingerprint): Compute SHA-1, SHA-256, and MD5 thumbprints for X.509 SSL/TLS certificates instantly to verify host identity and validate pin headers in your application.
+
+### [Blockchain](https://cipherverse.cybrito.tech/blockchain)
+Bitcoin, Ethereum, Merkle trees
+
+- [Bitcoin Address Validator & Script Inspector](https://cipherverse.cybrito.tech/blockchain/bitcoin): Validate Bitcoin legacy (P2PKH), SegWit (P2SH), and native Bech32/Taproot addresses with Base58Check and BCH error-detecting checksum verifications online.
+- [Ethereum Address Validator & EIP-55 Tool](https://cipherverse.cybrito.tech/blockchain/ethereum): Verify Ethereum 0x hex wallet addresses and test EIP-55 mixed-case Keccak-256 checksum validity online to prevent costly mistyped transaction errors.
+- [Merkle Tree Construction & Visual Proof Generator](https://cipherverse.cybrito.tech/blockchain/merkle): Build interactive Merkle Trees from transaction hashes, calculate the cryptographic root hash, and verify audit path inclusion proofs with visual graphs.
+- [Wallet Import Format (WIF) Private Key Encoder](https://cipherverse.cybrito.tech/blockchain/wif): Encode and decode Bitcoin 256-bit ECDSA private keys into compressed and uncompressed Wallet Import Format (WIF) with Base58Check checksum validation.
+
+### [Steganography](https://cipherverse.cybrito.tech/steganography)
+Text, image, and audio steganography
+
+- [Zero-Width Text Steganography Encoder & Decoder](https://cipherverse.cybrito.tech/steganography/text): Conceal hidden secret messages inside ordinary plain text using zero-width invisible unicode characters (ZWSP, ZWNJ) undetectable to standard text viewers.
+- [Image Steganography Tool](https://cipherverse.cybrito.tech/steganography/image): Embed and extract hidden encrypted messages inside PNG and JPEG image pixels using Least Significant Bit (LSB) encoding with AES encryption and passphrases.
+- [Audio Steganography Tool](https://cipherverse.cybrito.tech/steganography/audio): Embed hidden secret messages into uncompressed WAV audio sample data using Least Significant Bit (LSB) encoding while preserving acoustic fidelity.
+
+### [File Forensics](https://cipherverse.cybrito.tech/file-forensics)
+File hashing, entropy, randomness tests
+
+- [Single File Hash Generator & Verifier](https://cipherverse.cybrito.tech/file-forensics/hash): Calculate cryptographic digests (MD5, SHA-1, SHA-256) for local files directly in your browser using Web Crypto API without uploading any bytes to a server.
+- [Multi-Algorithm Concurrent File Hasher](https://cipherverse.cybrito.tech/file-forensics/multi-hash): Compute MD5, SHA-1, SHA-256, SHA-512, and RIPEMD-160 checksums simultaneously in a single stream pass directly in your browser for rapid digital forensics.
+- [Shannon File Entropy Analyzer & Visualization](https://cipherverse.cybrito.tech/file-forensics/entropy): Calculate Shannon entropy distributions across binary files to detect packed executables, compressed sections, or hidden encrypted payloads with visual graphs.
+- [Cryptographic Randomness Test Suite](https://cipherverse.cybrito.tech/file-forensics/randomness): Evaluate random number generator outputs with NIST-inspired Chi-square tests, byte distribution histograms, and serial correlation tests for high entropy.
+
+### [Malware Analysis](https://cipherverse.cybrito.tech/malware-analysis)
+Hash analysis, TLSH, PE analysis
+
+- [Malware File Hash Lookup & Threat Triage](https://cipherverse.cybrito.tech/malware-analysis/hash): Generate and query MD5, SHA-1, and SHA-256 file hashes against threat intelligence databases to quickly triage malware samples and detect malicious binaries.
+- [TLSH Fuzzy Hash & Malware Comparator](https://cipherverse.cybrito.tech/malware-analysis/tlsh): Calculate Trend Micro Locality Sensitive Hashes (TLSH) and compute distance scores to detect polymorphic malware family variants and binary similarities.
+- [PE Header Parser & EXE Section Inspector](https://cipherverse.cybrito.tech/malware-analysis/pe): Parse Windows PE32/PE32+ executable headers, section tables (.text, .data, .rsrc), import/export directory tables, and compile timestamps in your browser.
+
+### [Utilities](https://cipherverse.cybrito.tech/utilities)
+Password strength, salt, JWT, checksums
+
+- [Password Strength & Entropy Calculator](https://cipherverse.cybrito.tech/utilities/password): Evaluate password entropy (bits), estimate brute-force cracking time, and detect common dictionary vulnerability patterns.
+- [JWT (JSON Web Token) HMAC Signer & Verifier](https://cipherverse.cybrito.tech/utilities/jwt): Sign and verify JSON Web Tokens (JWT) online using HS256, HS384, or HS512 HMAC secret keys with real-time decoded header and payload JSON inspections.
+- [Cryptographic Salt & Token Generator](https://cipherverse.cybrito.tech/utilities/salt): Generate high-entropy cryptographically secure random salts, IVs, and session tokens in Hex, Base64, and C-array formats using browser Web Crypto CSPRNG.
+- [Fletcher-16 Checksum & Integrity Tool](https://cipherverse.cybrito.tech/utilities/fletcher16): Calculate 16-bit Fletcher checksums online with modular block arithmetic to verify data integrity and detect transmission errors in digital data.
+
+### [Historical Machines](https://cipherverse.cybrito.tech/historical)
+Enigma, Bombe, Typex simulators
+
+- [Enigma Machine Simulator (I, M3, M4) Online](https://cipherverse.cybrito.tech/historical/enigma): Authentic 3-rotor and 4-rotor Enigma machine simulator. Configure rotors, ring settings, reflector, and plugboard (Steckerbrett).
+- [Alan Turing Bombe Crib Analysis Simulator](https://cipherverse.cybrito.tech/historical/bombe): Interactive simulation of Alan Turing's Bombe electromechanical machine used at Bletchley Park to break Enigma rotor keys.
+- [British Typex Cipher Machine Simulator](https://cipherverse.cybrito.tech/historical/typex): Simulate the British WWII Typex cipher machine with authentic multi-rotor stepping mechanisms, plugboard options, and statutory transposition decoding.

@@ -35,24 +35,47 @@ export function TopNav({ sidebarCollapsed, onSearchOpen, onMobileMenuToggle }: T
           <Menu className="w-5 h-5" />
         </button>
 
-        <nav className="flex items-center gap-1.5 text-xs sm:text-sm font-medium tracking-tight overflow-hidden text-ellipsis whitespace-nowrap">
-          {breadcrumbs.map((crumb, idx) => (
-            <div key={crumb.path} className="flex items-center gap-1.5 min-w-0">
-              {idx > 0 && (
-                <span className="text-muted-foreground flex-shrink-0">/</span>
-              )}
-              {idx === breadcrumbs.length - 1 ? (
-                <span className="text-foreground truncate">{crumb.label}</span>
-              ) : (
-                <Link
-                  to={crumb.path}
-                  className="text-muted-foreground hover:text-foreground transition-colors truncate hidden sm:inline"
-                >
-                  {crumb.label}
-                </Link>
-              )}
-            </div>
-          ))}
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-1.5 text-xs sm:text-sm font-medium tracking-tight overflow-hidden text-ellipsis whitespace-nowrap"
+        >
+          <ol
+            itemScope
+            itemType="https://schema.org/BreadcrumbList"
+            className="flex items-center gap-1.5 min-w-0"
+          >
+            {breadcrumbs.map((crumb, idx) => (
+              <li
+                key={crumb.path}
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+                className="flex items-center gap-1.5 min-w-0"
+              >
+                {idx > 0 && (
+                  <span className="text-muted-foreground flex-shrink-0" aria-hidden="true">/</span>
+                )}
+                {idx === breadcrumbs.length - 1 ? (
+                  <span
+                    itemProp="name"
+                    aria-current="page"
+                    className="text-foreground truncate"
+                  >
+                    {crumb.label}
+                  </span>
+                ) : (
+                  <Link
+                    itemProp="item"
+                    to={crumb.path}
+                    className="text-muted-foreground hover:text-foreground transition-colors truncate hidden sm:inline"
+                  >
+                    <span itemProp="name">{crumb.label}</span>
+                  </Link>
+                )}
+                <meta itemProp="position" content={String(idx + 1)} />
+              </li>
+            ))}
+          </ol>
         </nav>
       </div>
 
