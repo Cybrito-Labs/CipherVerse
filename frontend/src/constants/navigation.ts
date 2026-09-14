@@ -12,6 +12,7 @@ import {
   Bug,
   Wrench,
   Clock,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -142,6 +143,18 @@ export const navigationGroups: NavGroup[] = [
         icon: Clock,
         description: 'Enigma, Bombe, Typex simulators',
         toolCount: 3,
+      },
+    ],
+  },
+  {
+    label: 'Learn',
+    items: [
+      {
+        label: 'Blog & Guides',
+        path: '/blog',
+        icon: BookOpen,
+        description: 'In-depth cryptography tutorials, math & teardowns',
+        badge: 'New',
       },
     ],
   },

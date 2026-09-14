@@ -101,13 +101,14 @@ for (const f of htmlFiles) {
   }
   if (
     content.includes('aria-label="Security Suites Directory"') ||
-    content.includes('aria-label="Category Tools Directory"')
+    content.includes('aria-label="Category Tools Directory"') ||
+    content.includes('aria-label="Blog Articles Directory"')
   ) {
     pagesWithDirectories++;
   }
 }
 
-// 8. Robots.txt, Sitemap.xml, llms.txt Audit
+// 8. Robots.txt, Sitemap.xml, llms.txt, RSS Audit
 const publicRobots = fs.existsSync('public/robots.txt');
 const distRobots = fs.existsSync('dist/robots.txt');
 const publicSitemap = fs.existsSync('public/sitemap.xml');
@@ -116,6 +117,8 @@ const publicLlms = fs.existsSync('public/llms.txt');
 const distLlms = fs.existsSync('dist/llms.txt');
 const publicLlmsFull = fs.existsSync('public/llms-full.txt');
 const distLlmsFull = fs.existsSync('dist/llms-full.txt');
+const publicRss = fs.existsSync('public/rss.xml');
+const distRss = fs.existsSync('dist/rss.xml');
 const ogImageExists = fs.existsSync('public/og-image.png');
 
 console.log('--- METADATA & HEAD STATUS ---');
@@ -142,6 +145,7 @@ console.log(`robots.txt:  [Public: ${publicRobots ? 'OK' : 'MISSING'}] [Dist: ${
 console.log(`sitemap.xml: [Public: ${publicSitemap ? 'OK' : 'MISSING'}] [Dist: ${distSitemap ? 'OK' : 'MISSING'}]`);
 console.log(`llms.txt:    [Public: ${publicLlms ? 'OK' : 'MISSING'}] [Dist: ${distLlms ? 'OK' : 'MISSING'}]`);
 console.log(`llms-full:   [Public: ${publicLlmsFull ? 'OK' : 'MISSING'}] [Dist: ${distLlmsFull ? 'OK' : 'MISSING'}]`);
+console.log(`rss.xml:     [Public: ${publicRss ? 'OK' : 'MISSING'}] [Dist: ${distRss ? 'OK' : 'MISSING'}]`);
 console.log(`og-image.png:[Public: ${ogImageExists ? 'OK' : 'MISSING'}]`);
 
 if (publicSitemap) {

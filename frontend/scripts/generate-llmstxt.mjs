@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { seoConfigMap, SITE_NAME, SITE_URL } from '../src/constants/seoConfig.ts';
 import { navigationGroups } from '../src/constants/navigation.ts';
 import { getToolKnowledge } from '../src/constants/toolKnowledge.ts';
+import { blogArticles } from '../src/content/blog/articles.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.resolve(__dirname, '../public');
@@ -18,8 +19,13 @@ All computations run 100% locally in the browser via the Web Crypto API, WebAsse
 
 ## Canonical Resources
 - [Interactive Workspace](${SITE_URL}/): Full browser-based cryptographic suite.
+- [Cryptography Blog](${SITE_URL}/blog): In-depth tutorials, mathematical breakdowns, and security teardowns.
 - [XML Sitemap](${SITE_URL}/sitemap.xml): Complete machine-readable route directory.
 - [API Explorer](${SITE_URL}/api-explorer): REST API documentation and endpoints.
+
+## Cryptography & Cybersecurity Blog Articles
+Explore our comprehensive educational research articles:
+${blogArticles.map((a) => `- [${a.title}](${SITE_URL}/blog/${a.slug}): ${a.description} (${a.readTime})`).join('\n')}
 
 ## Security Suites & Domain Directories
 `;
@@ -29,7 +35,7 @@ const categoryMap = new Map();
 
 for (const group of navigationGroups) {
   for (const item of group.items) {
-    if (item.path === '/') continue;
+    if (item.path === '/' || item.path === '/blog') continue;
     categoryMap.set(item.path, {
       name: item.label,
       description: item.description,
@@ -39,7 +45,7 @@ for (const group of navigationGroups) {
 }
 
 for (const [route, config] of Object.entries(seoConfigMap)) {
-  if (route === '/' || route === '/settings' || route === '/404' || route === '/api-explorer') {
+  if (route === '/' || route === '/settings' || route === '/404' || route === '/api-explorer' || route === '/blog') {
     continue;
   }
 
@@ -79,8 +85,24 @@ for (const [hubPath, cat] of categoryMap.entries()) {
   }
 }
 
-// Generate llms-full.txt with in-depth technical knowledge, FAQs, and step-by-step instructions
+// Generate llms-full.txt with in-depth technical knowledge, FAQs, blog content, and step-by-step instructions
 let llmsFullContent = `${llmsContent}
+
+## Comprehensive Cryptography Blog & Research Articles
+${blogArticles
+  .map(
+    (a) => `
+### ${a.title}
+URL: ${SITE_URL}/blog/${a.slug}
+Author: ${a.author.name} (${a.author.role})
+Category: ${a.category} | Reading Time: ${a.readTime}
+Description: ${a.description}
+
+Key Sections:
+${a.sections.map((s) => `#### ${s.heading}\n${(s.paragraphs || []).join('\n\n')}`).join('\n\n')}
+`
+  )
+  .join('\n---\n')}
 
 ## Comprehensive Technical Guide & Algorithmic Details
 `;

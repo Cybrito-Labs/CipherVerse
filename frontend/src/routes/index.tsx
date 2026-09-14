@@ -73,6 +73,8 @@ const TypexPage = lazy(() => import('@/pages/historic/TypexPage'));
 
 const ApiExplorerPage = lazy(() => import('@/pages/ApiExplorerPage'));
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
+const BlogPage = lazy(() => import('@/pages/BlogPage'));
+const BlogPostPage = lazy(() => import('@/pages/BlogPostPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function SuspenseWrapper({ children }: { children: React.ReactNode }) {
@@ -204,6 +206,13 @@ export const router = createBrowserRouter([
           { path: 'enigma', element: <SuspenseWrapper><EnigmaPage /></SuspenseWrapper> },
           { path: 'bombe', element: <SuspenseWrapper><BombePage /></SuspenseWrapper> },
           { path: 'typex', element: <SuspenseWrapper><TypexPage /></SuspenseWrapper> },
+        ],
+      },
+      {
+        path: 'blog',
+        children: [
+          { index: true, element: <SuspenseWrapper><BlogPage /></SuspenseWrapper> },
+          { path: ':slug', element: <SuspenseWrapper><BlogPostPage /></SuspenseWrapper> },
         ],
       },
       { path: 'api-explorer', element: <SuspenseWrapper><ApiExplorerPage /></SuspenseWrapper> },

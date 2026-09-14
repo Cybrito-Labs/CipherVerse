@@ -1,3 +1,5 @@
+import { blogArticles } from '../content/blog/articles.ts';
+
 export interface PageSEO {
   title: string;
   description: string;
@@ -745,6 +747,20 @@ export const seoConfigMap: Record<string, PageSEO> = {
     ],
     category: "System",
   },
+  "/blog": {
+    title: "Cryptography & Cybersecurity Blog | Tutorials & Analysis | CipherVerse",
+    description: "Explore educational cryptography tutorials, mathematical walkthroughs, steganography techniques, and cryptanalysis guides from the CipherVerse team.",
+    keywords: [
+      "cryptography blog",
+      "cybersecurity tutorials",
+      "learn cryptography",
+      "caesar cipher history",
+      "rsa mathematics",
+      "steganography guide",
+      "encryption algorithms"
+    ],
+    category: "Learn & Resources",
+  },
   "/404": {
     title: "404 - Page Not Found | CipherVerse",
     description: "The requested cryptographic or cybersecurity tool page could not be found on CipherVerse. Search our directory of 40+ free security tools.",
@@ -777,6 +793,26 @@ export function getSEOConfig(pathname: string): PageSEO {
       description: `Free online ${capitalized} encoding and decoding tool. Convert data quickly with real-time output and formatting options.`,
       keywords: [`${toolName} encoder`, `${toolName} decoder`, `${toolName} converter`, 'online encoding'],
       category: 'Encoding & Decoding',
+    };
+  }
+
+  // Handle dynamic /blog/:slug route
+  if (cleanPath.startsWith('/blog/')) {
+    const slug = cleanPath.replace('/blog/', '');
+    const article = blogArticles.find((a) => a.slug === slug);
+    if (article) {
+      return {
+        title: `${article.title} | CipherVerse Blog`,
+        description: article.description,
+        keywords: article.tags,
+        category: article.category,
+      };
+    }
+    return {
+      title: 'Cryptography & Cybersecurity Tutorial | CipherVerse Blog',
+      description: 'Explore in-depth technical analysis, mathematical breakdowns, and step-by-step guides on modern and classical cryptography.',
+      keywords: ['cryptography tutorial', 'cybersecurity article', 'cipherverse blog'],
+      category: 'Learn & Resources',
     };
   }
 

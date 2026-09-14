@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Shield, Lock, FileKey, Zap, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Shield, Lock, FileKey, Zap, ArrowRight, ArrowUpRight, BookOpen, Sparkles } from 'lucide-react';
 import { navigationGroups } from '@/constants/navigation';
 
 const popularTools = [
@@ -100,6 +100,46 @@ export default function DashboardPage() {
               </div>
             </Link>
           ))}
+        </div>
+      </motion.div>
+
+      {/* Featured Cryptography Academy Spotlight Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.15 }}
+        className="p-6 sm:p-7 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-card to-background shadow-md relative overflow-hidden group"
+      >
+        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>CipherVerse Academy • Start with Lesson 1</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-amber-200 transition-colors">
+              New to Cryptography? Start Here: The Caesar Cipher &amp; ROT13 Guide
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Master the foundational substitution cipher that started modern cryptanalysis. Explore historical Roman military origins under Julius Caesar, modular arithmetic formulas in ℤ₂₆, and automated frequency cracking.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 flex-shrink-0">
+            <Link
+              to="/blog/caesar-cipher"
+              className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-xs sm:text-sm shadow-md hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Read Full Educational Guide</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/classical/caesar"
+              className="px-4 py-2.5 rounded-xl border border-border bg-card/80 hover:bg-secondary text-foreground font-medium text-xs sm:text-sm transition-colors"
+            >
+              <span>Launch Interactive Solver</span>
+            </Link>
+          </div>
         </div>
       </motion.div>
 

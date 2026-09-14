@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { seoConfigMap, SITE_URL } from '../src/constants/seoConfig.ts';
+import { blogArticles } from '../src/content/blog/articles.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicPath = path.resolve(__dirname, '../public/sitemap.xml');
@@ -22,6 +23,7 @@ const hubRoutes = new Set([
   '/file-forensics',
   '/utilities',
   '/historical',
+  '/blog',
 ]);
 
 const excludedRoutes = new Set(['/settings', '/404', '/api-explorer']);
@@ -53,6 +55,18 @@ for (const [route, config] of Object.entries(seoConfigMap)) {
   xml += `    <priority>${priority}</priority>\n`;
   xml += '  </url>\n';
 
+  count++;
+}
+
+// Add individual blog articles
+for (const article of blogArticles) {
+  const loc = `${SITE_URL}/blog/${article.slug}`;
+  xml += '  <url>\n';
+  xml += `    <loc>${loc}</loc>\n`;
+  xml += `    <lastmod>${article.publishedAt}</lastmod>\n`;
+  xml += `    <changefreq>weekly</changefreq>\n`;
+  xml += `    <priority>0.8</priority>\n`;
+  xml += '  </url>\n';
   count++;
 }
 

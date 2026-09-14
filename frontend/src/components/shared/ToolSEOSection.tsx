@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { getSEOConfig, seoConfigMap } from '@/constants/seoConfig';
 import { getToolKnowledge } from '@/constants/toolKnowledge';
+import { blogArticles, type BlogArticle, type RelatedTool } from '@/content/blog/articles';
 import { cn } from '@/lib/utils';
 
 interface ToolSEOSectionProps {
@@ -91,6 +92,19 @@ export function ToolSEOSection({ currentTitle, className }: ToolSEOSectionProps)
     return candidates.slice(0, 3);
   }, [currentPath, seo, isExcluded]);
 
+  // Find dedicated companion educational article if one exists for this tool
+  const companionArticle = useMemo(() => {
+    if (isExcluded) return null;
+    return (
+      blogArticles.find(
+        (article) =>
+          article.relatedTools.some((t) => t.path === currentPath) &&
+          (article.slug.includes(currentPath.split('/').pop() || '') ||
+            article.relatedTools[0]?.path === currentPath)
+      ) || null
+    );
+  }, [currentPath, isExcluded]);
+
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const toggleFaq = (idx: number) => {
@@ -108,6 +122,34 @@ export function ToolSEOSection({ currentTitle, className }: ToolSEOSectionProps)
       aria-label="Educational Guide and Frequently Asked Questions"
       className={cn('space-y-8 pt-8 border-t border-border mt-10', className)}
     >
+      {/* Dedicated Companion Educational Guide Banner */}
+      {companionArticle && (
+        <div className="p-5 sm:p-6 rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/10 via-secondary/60 to-background shadow-lg relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+            <div className="space-y-1.5 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30">
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Deep-Dive Educational Guide</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                {companionArticle.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                {companionArticle.description}
+              </p>
+            </div>
+            <NavLink
+              to={`/blog/${companionArticle.slug}`}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-xs sm:text-sm shadow-md hover:opacity-90 transition-all flex-shrink-0"
+            >
+              <span>Read Full Guide &amp; Proofs</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </NavLink>
+          </div>
+        </div>
+      )}
+
       {/* 2-Column Guide & FAQs */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Left: How-To & Technical Context */}

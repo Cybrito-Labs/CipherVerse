@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import { Search, Command, Menu, Sun, Moon } from 'lucide-react';
+import { Search, Command, Menu, Sun, Moon, BookOpen } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -100,7 +100,15 @@ export function TopNav({ sidebarCollapsed, onSearchOpen, onMobileMenuToggle }: T
       </div>
 
       {/* Right: Actions */}
-      <div className="flex items-center justify-end flex-shrink-0">
+      <div className="flex items-center justify-end gap-1.5 sm:gap-2 flex-shrink-0">
+        <Link
+          to="/blog"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          title="Cryptography & Cybersecurity Blog"
+        >
+          <BookOpen className="w-4 h-4 text-primary" />
+          <span className="hidden sm:inline">Blog</span>
+        </Link>
         <ThemeToggle />
       </div>
     </header>

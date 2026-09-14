@@ -11,6 +11,7 @@ import {
 } from '../src/constants/seoConfig.ts';
 import { getToolKnowledge } from '../src/constants/toolKnowledge.ts';
 import { navigationGroups } from '../src/constants/navigation.ts';
+import { blogArticles } from '../src/content/blog/articles.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, '../dist');
@@ -171,6 +172,27 @@ for (const [route, seo] of Object.entries(seoConfigMap)) {
     </nav>`;
   }
 
+  // For Blog Index Page: Render all articles for instant crawler indexing
+  if (route === '/blog') {
+    semanticShell += `
+    <nav aria-label="Blog Articles Directory" style="max-width:1200px;margin:2rem auto;padding:0 1.5rem;font-family:system-ui,sans-serif;">
+      <h2 style="font-size:1.5rem;font-weight:600;color:#f8fafc;margin-bottom:1rem;">All Cryptography &amp; Cybersecurity Articles</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem;">
+        ${blogArticles
+          .map(
+            (article) => `
+          <a href="/blog/${article.slug}" style="display:block;padding:1.25rem;border-radius:0.75rem;background:#0f172a;border:1px solid #1e293b;text-decoration:none;color:inherit;">
+            <span style="font-size:0.75rem;color:#38bdf8;font-weight:600;">${escapeHtml(article.category)}</span>
+            <h3 style="font-size:1.15rem;font-weight:600;color:#f8fafc;margin:0.35rem 0;">${escapeHtml(article.title)}</h3>
+            <p style="font-size:0.875rem;color:#94a3b8;line-height:1.5;margin:0;">${escapeHtml(article.description)}</p>
+            <div style="font-size:0.75rem;color:#64748b;margin-top:0.75rem;">${article.publishedAt} &bull; ${article.readTime}</div>
+          </a>`
+          )
+          .join('')}
+      </div>
+    </nav>`;
+  }
+
   // For Category Hub Pages: Render direct links to all child tools
   const categoryTools = Object.entries(seoConfigMap).filter(
     ([r]) => r.startsWith(`${route}/`) && r !== route && r !== '/settings' && r !== '/404'
@@ -309,4 +331,158 @@ for (const [route, seo] of Object.entries(seoConfigMap)) {
   generatedCount++;
 }
 
-console.log(`Successfully pre-rendered unique SEO pages for ${generatedCount} routes!`);
+// 5. Pre-render individual Blog Article pages with Schema.org BlogPosting
+for (const article of blogArticles) {
+  const route = `/blog/${article.slug}`;
+  const canonicalUrl = `${SITE_URL}${route}`;
+  const pageTitle = escapeHtml(`${article.title} | CipherVerse Blog`);
+  const pageDescription = escapeHtml(article.description);
+  const pageKeywords = escapeHtml(article.tags.join(', '));
+  const pageImage = DEFAULT_OG_IMAGE;
+
+  // JSON-LD Schemas: Breadcrumbs and BlogPosting
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: `${SITE_URL}/`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Blog',
+          item: `${SITE_URL}/blog`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: article.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: article.title,
+      description: article.description,
+      url: canonicalUrl,
+      datePublished: article.publishedAt,
+      dateModified: article.publishedAt,
+      author: {
+        '@type': 'Person',
+        name: article.author.name,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        url: SITE_URL,
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': canonicalUrl,
+      },
+      keywords: article.tags.join(', '),
+    },
+  ];
+
+  const jsonLdHtml = schemas
+    .map((s) => `<script type="application/ld+json" class="dynamic-seo">${JSON.stringify(s)}</script>`)
+    .join('\n    ');
+
+  let semanticShell = `
+    <article style="max-width:900px;margin:2rem auto;padding:0 1.5rem;font-family:system-ui,sans-serif;">
+      <header style="margin-bottom:2rem;">
+        <span style="font-size:0.85rem;color:#38bdf8;font-weight:600;">${escapeHtml(article.category)}</span>
+        <h1 style="font-size:2.25rem;font-weight:800;color:#f8fafc;margin:0.5rem 0;">${escapeHtml(article.title)}</h1>
+        <p style="font-size:1.1rem;color:#94a3b8;line-height:1.6;">${escapeHtml(article.description)}</p>
+        <div style="font-size:0.85rem;color:#64748b;margin-top:0.75rem;">
+          By ${escapeHtml(article.author.name)} &bull; ${article.publishedAt} &bull; ${article.readTime}
+        </div>
+      </header>
+      ${article.sections
+        .map(
+          (s) => `
+        <section style="margin-bottom:2rem;">
+          <h2 style="font-size:1.5rem;font-weight:700;color:#f8fafc;margin-bottom:0.75rem;">${escapeHtml(s.heading)}</h2>
+          ${(s.paragraphs || []).map((p) => `<p style="font-size:1rem;color:#cbd5e1;line-height:1.7;margin-bottom:1rem;">${escapeHtml(p)}</p>`).join('')}
+          ${(s.postCodeParagraphs || []).map((p) => `<p style="font-size:1rem;color:#cbd5e1;line-height:1.7;margin-bottom:1rem;">${escapeHtml(p)}</p>`).join('')}
+          ${
+            s.toolCta
+              ? `
+          <div style="margin:1.5rem 0;padding:1.25rem;background:#0f172a;border:1px solid #1e293b;border-radius:0.75rem;">
+            <a href="${s.toolCta.path}" style="color:#38bdf8;font-weight:600;text-decoration:none;font-size:1.05rem;">Try ${escapeHtml(s.toolCta.name)} &rarr;</a>
+            <p style="color:#94a3b8;font-size:0.875rem;margin:0.35rem 0 0;">${escapeHtml(s.toolCta.description)}</p>
+          </div>`
+              : ''
+          }
+        </section>`
+        )
+        .join('')}
+    </article>`;
+
+  let pageHtml = template;
+  pageHtml = pageHtml.replace(/<title>.*?<\/title>/, `<title>${pageTitle}</title>`);
+  pageHtml = pageHtml.replace(
+    /<meta name="description" content=".*?" \/>/,
+    `<meta name="description" content="${pageDescription}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta name="keywords" content=".*?" \/>/,
+    `<meta name="keywords" content="${pageKeywords}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<link rel="canonical" href=".*?" \/>/,
+    `<link rel="canonical" href="${canonicalUrl}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta property="og:title" content=".*?" \/>/,
+    `<meta property="og:title" content="${pageTitle}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta property="og:description" content=".*?" \/>/,
+    `<meta property="og:description" content="${pageDescription}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta property="og:url" content=".*?" \/>/,
+    `<meta property="og:url" content="${canonicalUrl}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta property="og:type" content=".*?" \/>/,
+    `<meta property="og:type" content="article" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta property="og:image" content=".*?" \/>/,
+    `<meta property="og:image" content="${pageImage}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta name="twitter:title" content=".*?" \/>/,
+    `<meta name="twitter:title" content="${pageTitle}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta name="twitter:description" content=".*?" \/>/,
+    `<meta name="twitter:description" content="${pageDescription}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta name="twitter:url" content=".*?" \/>/,
+    `<meta name="twitter:url" content="${canonicalUrl}" />`
+  );
+  pageHtml = pageHtml.replace(
+    /<meta name="twitter:image" content=".*?" \/>/,
+    `<meta name="twitter:image" content="${pageImage}" />`
+  );
+  pageHtml = pageHtml.replace('</head>', `    ${jsonLdHtml}\n  </head>`);
+  pageHtml = pageHtml.replace('<div id="root"></div>', `<div id="root">${semanticShell}</div>`);
+
+  const targetDir = path.join(distDir, 'blog', article.slug);
+  fs.mkdirSync(targetDir, { recursive: true });
+  fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml, 'utf8');
+  generatedCount++;
+}
+
+console.log(`Successfully pre-rendered unique SEO pages for ${generatedCount} routes (including blog articles)!`);
