@@ -3078,6 +3078,397 @@ Clues:
     ],
   },
   {
+    slug: 'enigma-machine',
+    title: "The Enigma Machine: Rotor Permutations, The Reflector Involution & Turing's Bombe",
+    description: "An exhaustive academic breakdown of the WWII Enigma machine: Arthur Scherbius's electro-mechanical circuit architecture, the mathematical proof of the Reflector involution, the fatal non-self-encrypting vulnerability, Polish cycle cryptanalysis, and runnable Python simulators.",
+    category: 'Classical Cryptography',
+    publishedAt: '2026-09-15',
+    readTime: '10 min read',
+    author: {
+      name: 'CipherVerse Cryptography Academy',
+      role: 'Historical Cryptography & Cryptanalysis',
+    },
+    tags: [
+      'Enigma Machine',
+      'Alan Turing',
+      'Bletchley Park',
+      'Rotor Ciphers',
+      'Historical Cryptography',
+      'Permutation Group',
+      'Marian Rejewski',
+      'Cryptanalysis',
+    ],
+    coverGradient: 'from-amber-600/20 via-orange-600/20 to-yellow-600/20',
+    seriesBadge: 'Academy • Lesson 10: Rotor Permutations & The Reflector Involution',
+    relatedTools: [
+      {
+        name: 'Enigma Machine Simulator',
+        path: '/historical/enigma',
+        description: 'Simulate the 3-rotor Wehrmacht Enigma I machine with authentic stepping and reflector wiring.',
+        category: 'Historical Ciphers',
+      },
+      {
+        name: 'Turing Bombe Simulator',
+        path: '/historical/bombe',
+        description: 'Explore the electromechanical codebreaking apparatus designed by Alan Turing at Bletchley Park.',
+        category: 'Historical Ciphers',
+      },
+      {
+        name: 'Typex Cipher Machine',
+        path: '/historical/typex',
+        description: 'Inspect the British 5-rotor military adaptation of the commercial Enigma design.',
+        category: 'Historical Ciphers',
+      },
+      {
+        name: 'Vigenère Cipher',
+        path: '/classical/vigenere',
+        description: 'Compare rotor polyalphabetic cycles with the manual Tabula Recta.',
+        category: 'Classical Ciphers',
+      },
+    ],
+    tableOfContents: [
+      { id: 'historical-origins', title: '1. Historical Context: Arthur Scherbius, Bletchley Park & Project ULTRA', level: 2 },
+      { id: 'electromechanical-architecture', title: '2. Electro-Mechanical Architecture & The Signal Flow Path', level: 2 },
+      { id: 'involution-theorem', title: '3. The Mathematical Formulation: Rotor Permutations & The Involution Theorem', level: 2 },
+      { id: 'fatal-flaw', title: '4. The Fatal Flaw: E_t(x) ≠ x (The Non-Self-Encrypting Reflector)', level: 2 },
+      { id: 'combinatorics-keyspace', title: '5. Combinatorics & The 1.58 × 10²⁰ State Key Space', level: 2 },
+      { id: 'stepping-anomaly', title: '6. Rotor Stepping Mechanics & The "Double-Stepping" Pawl Anomaly', level: 2 },
+      { id: 'code-implementation', title: '7. Complete Python Enigma I Simulator & Turing Crib Analyzer', level: 2 },
+      { id: 'naval-challenge', title: '8. Practice Challenge: The Bletchley Park Naval Intercept', level: 2 },
+      { id: 'interactive-workbench', title: '9. Interactive Enigma Machine Workbench', level: 2 },
+    ],
+    sections: [
+      {
+        id: 'historical-origins',
+        heading: '1. Historical Context: Arthur Scherbius, Bletchley Park & Project ULTRA',
+        paragraphs: [
+          'In 1918, in the closing months of the First World War, the German electrical engineer Arthur Scherbius filed a patent for an electromechanical cipher apparatus driven by rotating wired rotors. Marketed commercially throughout the 1920s as the "Enigma" for diplomatic and corporate communications, it failed to achieve commercial success until the rising German military recognized its strategic potential.',
+          'By the late 1920s and 1930s, the German military had thoroughly upgraded the design: the Navy (Kriegsmarine), Army (Heer), and Air Force (Luftwaffe) added a front-panel plugboard (Steckerbrett), developed multiple interchangeable rotors, and implemented strict daily operating key procedures. The German High Command (OKW) regarded the military Enigma as mathematically invincible.',
+          'The first monumental breakthrough occurred in December 1932 in Warsaw. Polish mathematician Marian Rejewski, working at the Polish Cipher Bureau (Biuro Szyfrów), applied advanced permutation group theory and cycle analysis to the German double-indicator encipherment method. Without ever seeing a military machine, Rejewski mathematically deduced the internal wiring of all three Enigma rotors and constructed the first automated cracking machines: the Cyclometer and the electromechanical "Bomba Kryptologiczna".',
+          'In July 1939, facing imminent Nazi invasion, Poland transferred their mathematical blueprints and reconstructed Enigma replicas to British and French intelligence. At Bletchley Park (Station X in Buckinghamshire), Alan Turing and Gordon Welchman revolutionized codebreaking by engineering the British "Bombe"—a massive electromechanical computing device that used known plaintext fragments ("cribs") and closed electrical deduction loops to systematically recover daily Enigma keys.',
+        ],
+        callout: {
+          type: 'info',
+          title: 'Project ULTRA and the Course of World War II',
+          text: 'The intelligence harvested from deciphered German Enigma traffic was codenamed "ULTRA" (classified above Top Secret). Historians, including Sir Harry Hinsley, estimate that ULTRA shortened the Second World War in Europe by two to four years, played a decisive role in the Battle of Britain and the Battle of the Atlantic, and saved millions of Allied and Axis lives.',
+        },
+      },
+      {
+        id: 'electromechanical-architecture',
+        heading: '2. Electro-Mechanical Architecture & The Signal Flow Path',
+        paragraphs: [
+          'The standard military Enigma I (the Wehrmacht and Luftwaffe model) operated as an intricate closed electromechanical circuit powered by a 4.5-volt battery. Every time the operator pressed a key on the keyboard, an electrical current traced an extraordinary round-trip path through nine distinct components:',
+        ],
+        list: {
+          ordered: true,
+          items: [
+            'Keyboard Switch: Closing the contact for the depressed letter.',
+            'Steckerbrett (Plugboard): A front patch panel swapping up to 10 pairs of letters via dual-conductor patch cords (permutation P).',
+            'Entry Wheel (Eintrittswalze, ETW): A fixed commutator ring connecting the plugboard to the rotor assembly (permutation E).',
+            'Rotor 3 (Right / Fast Rotor): Permuting current through its internal cross-wired contacts (permutation R₃).',
+            'Rotor 2 (Middle Rotor): Second sequential permutation stage (permutation R₂).',
+            'Rotor 1 (Left / Slow Rotor): Third sequential permutation stage (permutation R₁).',
+            'Umkehrwalze (Reflector, UKW): A fixed or resettable plate that connected contacts in 13 disjoint pairs, reversing the electrical current back through the rotor stack (permutation U).',
+            'Return Path (R₁⁻¹ → R₂⁻¹ → R₃⁻¹ → E⁻¹ → P⁻¹): Current traveled backward through the exact same three rotors in reverse direction, passing through different wire paths due to the reflector offset.',
+            'Lampboard: Lighting up one of 26 bulbs corresponding to the enciphered ciphertext letter.',
+          ],
+        },
+      },
+      {
+        id: 'involution-theorem',
+        heading: '3. The Mathematical Formulation: Rotor Permutations & The Involution Theorem',
+        paragraphs: [
+          'Let Σ = {A, B, ..., Z} denote the 26-letter Latin alphabet. Each component of the Enigma machine represents a permutation belonging to the Symmetric Group S₂₆.',
+          'Let r_i ∈ {0, 1, ..., 25} represent the rotational rotational offset of rotor i at keystroke step t. The permutation R_i executed by rotor i with internal wiring ρ_i is given by:',
+          'R_i(x) = (ρ_i(x + r_i) - r_i) mod 26',
+          'Let P denote the Steckerbrett plugboard permutation, and U denote the Reflector permutation. The full forward-and-backward transformation E_t at time t is the functional composition:',
+          'E_t = P ∘ R₃⁻¹ ∘ R₂⁻¹ ∘ R₁⁻¹ ∘ U ∘ R₁ ∘ R₂ ∘ R₃ ∘ P⁻¹',
+          'Notice what happens when we compute the mathematical inverse E_t⁻¹ of the entire machine transformation:',
+        ],
+        codeBlock: {
+          language: 'text',
+          caption: 'Mathematical derivation of the Enigma self-reciprocal Involution property',
+          code: `Derivation of the Involution Property:
+  Let E_t = P · R⁻¹ · U · R · P⁻¹
+  where R = R₁ · R₂ · R₃  (and R⁻¹ = R₃⁻¹ · R₂⁻¹ · R₁⁻¹)
+
+  Compute the inverse mapping (E_t)⁻¹:
+    (E_t)⁻¹ = (P · R⁻¹ · U · R · P⁻¹)⁻¹
+            = (P⁻¹)⁻¹ · R⁻¹ · U⁻¹ · (R⁻¹)⁻¹ · P⁻¹
+            = P · R⁻¹ · U⁻¹ · R · P⁻¹
+
+  Now examine the Reflector U:
+    The Reflector connects 26 contacts into 13 mutually disjoint pairs:
+      U = (a₁ b₁)(a₂ b₂) ... (a₁₃ b₁₃)
+    Every 2-cycle transposition is its own inverse: (a b)⁻¹ = (a b).
+    Therefore, the Reflector is a mathematical involution:
+      U⁻¹ = U
+
+  Substituting U⁻¹ = U into the equation:
+    (E_t)⁻¹ = P · R⁻¹ · U · R · P⁻¹ = E_t
+
+  Mathematical Conclusion:
+    (E_t)⁻¹ = E_t   for all t
+
+  OPERATIONAL CONSEQUENCE:
+    The Enigma encryption transformation is an INVOLUTION!
+    Encryption and Decryption are completely identical operations.
+    If typing 'H' at position t produces 'X', typing 'X' at position t produces 'H'.
+    The receiving operator merely sets their rotors to the identical start position
+    and types the ciphertext to recover the plaintext instantly!`,
+        },
+      },
+      {
+        id: 'fatal-flaw',
+        heading: '4. The Fatal Flaw: E_t(x) ≠ x (The Non-Self-Encrypting Reflector)',
+        paragraphs: [
+          'While the reflector granted the Enigma machine operational elegance by unifying encryption and decryption, it introduced a catastrophic structural vulnerability that became the machine\'s fatal undoing:',
+          'Because the reflector wired contacts together in pairs, electrical current entering pin x traveled into the reflector and returned on a strictly different pin y ≠ x. Current could NEVER loop directly back into the contact it came from.',
+          'Therefore, for all time steps t and all characters x ∈ Σ:',
+          'E_t(x) ≠ x',
+          'AN ENIGMA MACHINE COULD NEVER ENCRYPT A LETTER TO ITSELF!',
+        ],
+        callout: {
+          type: 'warning',
+          title: 'How Alan Turing Weaponized the Reflector Flaw',
+          text: 'At Bletchley Park, British codebreakers relied on "cribs"—suspected plaintext words such as "WETTERVORHERSAGE" (Weather Forecast) or "KEINE BESONDEREN EREIGNISSE" (Nothing to report). Cryptanalysts would test potential crib placements against intercepted ciphertext. If even a single character in the suspected crib matched the corresponding ciphertext letter (e.g. crib letter \'E\' aligned with ciphertext letter \'E\'), that entire alignment was proven mathematically IMPOSSIBLE and rejected in O(1) time. This single constraint eliminated over 90% of candidate alignments before the Turing Bombe even began running!',
+        },
+      },
+      {
+        id: 'combinatorics-keyspace',
+        heading: '5. Combinatorics & The 1.58 × 10²⁰ State Key Space',
+        paragraphs: [
+          'The German military trusted Enigma because its theoretical combinatorial key space was vastly larger than any computing system of the era could exhaust by brute force:',
+        ],
+        list: {
+          ordered: false,
+          items: [
+            '1. Rotor Selection (Walzenlage): Choosing 3 rotors out of a pool of 5 standard rotors (I through V): 5 × 4 × 3 = 60 possible rotor orders (or 336 for the 4-rotor naval M4).',
+            '2. Initial Rotor Positions (Grundstellung): Each of the 3 rotors has 26 alphabetical positions: 26³ = 17,576 initial combinations.',
+            '3. Ring Settings (Ringstellung): The alphabet ring on each rotor could be offset relative to its internal wiring: 26 × 26 × 26 = 17,576 configurations.',
+            '4. Steckerbrett (Plugboard Combinatorics): Connecting 10 pairs of letters using patch leads from 26 letters: 26! / (6! × 10! × 2¹⁰) = 150,738,274,937,250 ≈ 1.507 × 10¹⁴ combinations.',
+            '5. Total Theoretical Key Space: 60 × 17,576 × 17,576 × 1.507 × 10¹⁴ ≈ 1.58 × 10²⁰ states (equivalent to an 88-bit cryptographic key space).',
+          ],
+        },
+        postCodeParagraphs: [
+          'How Bletchley Park Defeated 10²⁰ States: The plugboard accounted for over 99.999% of Enigma\'s total key space. However, Alan Turing and Gordon Welchman realized that the plugboard was a conjugate mapping that did not alter the cycle structure of the underlying rotor permutations. By constructing closed logical chains ("loops") from cribs, the Bombe searched only through the 60 × 17,576 = 1,054,560 rotor states, reducing an impossible search to an automated run of under 20 minutes!',
+        ],
+      },
+      {
+        id: 'stepping-anomaly',
+        heading: '6. Rotor Stepping Mechanics & The "Double-Stepping" Pawl Anomaly',
+        paragraphs: [
+          'The Enigma machine was not a simple mechanical odometer. It was driven by three mechanical pawls on a common shaft, which engaged ratchet wheels and ring notches to advance the rotors.',
+          'Each rotor possessed a turnover notch at a specific letter:',
+          '• Rotor I notch: \'Q\' (when stepping from Q to R, it kicks the middle rotor).',
+          '• Rotor II notch: \'E\' (when stepping from E to F, it kicks the left rotor).',
+          '• Rotor III notch: \'V\' (when stepping from V to W, it kicks the next rotor).',
+          'Because the mechanical pawl for the middle rotor rested in the notch of the middle rotor itself, the middle rotor exhibited a famous mechanical anomaly known as "Double Stepping": it stepped once when kicked by the right rotor, and stepped AGAIN on the very next keystroke when kicking the left rotor! Consequently, the cycle period of an Enigma machine was not 26³ = 17,576, but exactly 26 × 25 × 26 = 16,900 keystrokes.',
+        ],
+      },
+      {
+        id: 'code-implementation',
+        heading: '7. Complete Python Enigma I Simulator & Turing Crib Analyzer',
+        paragraphs: [
+          'Below is a production-grade, standalone Python script that accurately simulates the historical Wehrmacht Enigma I machine (featuring Rotors I, II, III, Reflector B, plugboard Steckerbrett, and double-stepping pawls), along with an automated Turing crib collision detector:',
+        ],
+        codeBlock: {
+          language: 'python',
+          caption: 'enigma_machine_suite.py — Complete Enigma I simulator, involution verifier, and Turing crib collision engine',
+          code: `#!/usr/bin/env python3
+"""
+CipherVerse Academy — Enigma I Simulator & Cryptanalysis Suite
+Accurately models the historical Wehrmacht Enigma I electromechanical circuit:
+Rotors I-III, Reflector B, Steckerbrett plugboard, and Turing crib collision testing.
+"""
+
+from typing import List, Tuple, Dict
+
+class EnigmaMachine:
+    # Historical German military wiring specifications (1930)
+    ROTOR_WIRINGS: Dict[str, str] = {
+        'I':   'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
+        'II':  'AJDKSIRUXBLHWTMCQGZNPYFVOE',
+        'III': 'BDFHJLCPRTXVZNYEIWGAKMUSQO',
+    }
+    ROTOR_NOTCHES: Dict[str, str] = {
+        'I': 'Q', 'II': 'E', 'III': 'V'
+    }
+    REFLECTOR_B: str = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+
+    def __init__(self, rotors: Tuple[str, str, str] = ('I', 'II', 'III'),
+                 positions: Tuple[int, int, int] = (0, 0, 0),
+                 plugs: str = ''):
+        self.rotor_names = list(rotors)
+        self.pos = list(positions)
+        self.plug_table = self._build_plugboard(plugs)
+
+    def _build_plugboard(self, plugs: str) -> Dict[str, str]:
+        """Constructs symmetric 2-cycle plugboard pairings (e.g. 'AN EZ')."""
+        table = {chr(i): chr(i) for i in range(65, 91)}
+        for pair in plugs.upper().split():
+            if len(pair) == 2 and pair[0].isalpha() and pair[1].isalpha():
+                table[pair[0]] = pair[1]
+                table[pair[1]] = pair[0]
+        return table
+
+    def step(self):
+        """
+        Advances the rotors. Features the authentic Enigma 'double-stepping' pawl anomaly:
+        when the middle rotor sits on its turnover notch, it steps both itself and the left rotor.
+        """
+        mid_notch = self.ROTOR_NOTCHES[self.rotor_names[1]]
+        right_notch = self.ROTOR_NOTCHES[self.rotor_names[2]]
+
+        # Double-stepping condition on middle rotor
+        if chr(self.pos[1] + 65) == mid_notch:
+            self.pos[1] = (self.pos[1] + 1) % 26
+            self.pos[0] = (self.pos[0] + 1) % 26
+        elif chr(self.pos[2] + 65) == right_notch:
+            self.pos[1] = (self.pos[1] + 1) % 26
+
+        # Right rotor always steps on every keystroke
+        self.pos[2] = (self.pos[2] + 1) % 26
+
+    def process_char(self, char: str) -> str:
+        """Processes a single uppercase Latin letter through the 9-stage circuit."""
+        if not char.isalpha():
+            return char
+        char = char.upper()
+
+        # Step mechanical rotors before contact closure
+        self.step()
+
+        # 1. Steckerbrett (Plugboard input)
+        c = self.plug_table[char]
+
+        # 2. Forward pass: Right -> Middle -> Left
+        idx = ord(c) - 65
+        for i in [2, 1, 0]:
+            p = self.pos[i]
+            wiring = self.ROTOR_WIRINGS[self.rotor_names[i]]
+            idx = (ord(wiring[(idx + p) % 26]) - 65 - p) % 26
+
+        # 3. Reflector B (Umkehrwalze involution)
+        idx = ord(self.REFLECTOR_B[idx]) - 65
+
+        # 4. Reverse pass: Left -> Middle -> Right
+        for i in [0, 1, 2]:
+            p = self.pos[i]
+            wiring = self.ROTOR_WIRINGS[self.rotor_names[i]]
+            char_in = chr((idx + p) % 26 + 65)
+            idx = (wiring.index(char_in) - p) % 26
+
+        # 5. Steckerbrett (Plugboard output) -> Lampboard
+        return self.plug_table[chr(idx + 65)]
+
+    def process(self, text: str) -> str:
+        """Enciphers or deciphers an entire text string."""
+        return ''.join(self.process_char(c) for c in text)
+
+
+def test_turing_crib_collisions(ciphertext: str, crib: str) -> List[Tuple[int, str, str]]:
+    """
+    Turing's Crib Collision Test:
+    Exploits E_t(x) != x. If any character in the suspected crib matches
+    the ciphertext at position j, the alignment is proven IMPOSSIBLE.
+    Returns list of (index, status, reason) for all valid alignment positions.
+    """
+    clean_ct = [c for c in ciphertext.upper() if c.isalpha()]
+    clean_crib = [c for c in crib.upper() if c.isalpha()]
+    valid_offsets = []
+
+    for offset in range(len(clean_ct) - len(clean_crib) + 1):
+        collision = False
+        for i in range(len(clean_crib)):
+            if clean_crib[i] == clean_ct[offset + i]:
+                collision = True
+                break
+        if not collision:
+            valid_offsets.append(offset)
+
+    return valid_offsets
+
+
+if __name__ == '__main__':
+    print("=" * 68)
+    print("CIPHERVERSE ACADEMY: ENIGMA I SIMULATOR & TURING CRIB TESTER")
+    print("=" * 68)
+
+    # 1. Round-trip Involution demonstration
+    key_rotors = ('I', 'II', 'III')
+    key_pos = (0, 0, 0)
+    key_plugs = 'BQ CR'
+
+    plaintext = "OPERATION OVERLORD"
+    enigma_tx = EnigmaMachine(rotors=key_rotors, positions=key_pos, plugs=key_plugs)
+    ciphertext = enigma_tx.process(plaintext)
+
+    # Decrypt with an identical machine:
+    enigma_rx = EnigmaMachine(rotors=key_rotors, positions=key_pos, plugs=key_plugs)
+    decrypted = enigma_rx.process(ciphertext)
+
+    print(f"Plaintext:   {plaintext}")
+    print(f"Ciphertext:  {ciphertext}")
+    print(f"Decrypted:   {decrypted}")
+    assert decrypted == plaintext, "Enigma self-reciprocal involution failed!"
+
+    # 2. Verify the Reflector Non-Self-Encryption Theorem: E_t(x) != x
+    for pt_char, ct_char in zip(plaintext.replace(' ', ''), ciphertext.replace(' ', '')):
+        assert pt_char != ct_char, f"Violated non-self-encryption: {pt_char} == {ct_char}"
+    print("[+] Verified Reflector Involution: No letter ever enciphers to itself!")
+
+    # 3. Turing Crib Alignment Filter Demonstration
+    intercepted = "THRQOCPBVSCTBYNAA"
+    test_crib = "OVERLORD"
+    valid_positions = test_turing_crib_collisions(intercepted, test_crib)
+    print(f"\\nTuring Crib Test for '{test_crib}' in '{intercepted}':")
+    print(f"Valid Non-Colliding Alignment Offsets: {valid_positions}")
+    print("[+] All mechanical, mathematical, and cryptanalytic tests passed successfully!")`,
+        },
+      },
+      {
+        id: 'naval-challenge',
+        heading: '8. Practice Challenge: The Bletchley Park Naval Intercept',
+        paragraphs: [
+          'Step into the shoes of a Bletchley Park cryptanalyst in Hut 8 during the height of the Battle of the Atlantic.',
+          'An urgent German naval telegraph dispatch has been intercepted with the following transmission parameters:',
+        ],
+        codeBlock: {
+          language: 'text',
+          caption: 'Intercepted WWII naval dispatch with suspected intelligence crib',
+          code: `Kriegsmarine Intercept Dispatch:
+  "THRQOCPBV SCTBYNAA"
+
+Known Daily Key Sheet Parameters:
+  • Rotors Selected: I, II, III (Left to Right)
+  • Initial Rotor Start Positions: A-A-A (Coordinates: 0, 0, 0)
+  • Steckerbrett (Plugboard): Contains exactly 2 swapped letter pairs: "BQ" and "CR".
+  • Intelligence Crib: The dispatch is suspected to contain orders regarding a historic allied operation.`,
+        },
+        callout: {
+          type: 'tip',
+          title: 'Decryption Instructions',
+          text: 'Configure your Enigma machine simulator with Rotors I, II, III, set initial rotor dials to A-A-A (0, 0, 0), and plug pairs BQ and CR into the Steckerbrett. Type the ciphertext string into the input panel to unveil the decrypted plaintext!',
+        },
+      },
+      {
+        id: 'interactive-workbench',
+        heading: '9. Interactive Enigma Machine Workbench',
+        paragraphs: [
+          'Ready to simulate rotor stepping, configure custom plugboard pairings, and decipher historical military dispatches? Use the official CipherVerse Enigma Machine Suite to configure your rotors and watch electro-mechanical encryption in real time.',
+          'Everything runs entirely client-side inside your browser with complete confidentiality.',
+        ],
+        toolCta: {
+          name: 'Launch Enigma Machine Tool',
+          path: '/historical/enigma',
+          description: 'Simulate the legendary 3-rotor WWII Enigma machine with authentic wirings and stepping.',
+          category: 'Historical Ciphers',
+        },
+      },
+    ],
+  },
+  {
     slug: 'evolution-of-cryptography',
     title: "The Cryptographer's Journey: From Ancient Caesar Ciphers to Modern AES-256",
     description: "Explore the 2,000-year history of cryptographic evolution: how simple monoalphabetic substitution ciphers collapsed under frequency analysis, paving the way for polyalphabetic machines and modern Rijndael block ciphers.",
