@@ -5,7 +5,7 @@
     <link>https://cipherverse.cybrito.tech/blog</link>
     <description>In-depth cryptography tutorials, mathematical breakdowns, steganography techniques, and cryptanalysis guides.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Sep 2026 05:07:50 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 05:21:51 GMT</lastBuildDate>
     <atom:link href="https://cipherverse.cybrito.tech/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caesar Cipher &amp; ROT13: The Complete Mathematical &amp; Cryptanalysis Guide</title>
@@ -75,6 +75,15 @@
       <link>https://cipherverse.cybrito.tech/blog/substitution-cipher</link>
       <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/substitution-cipher</guid>
       <description>An exhaustive academic breakdown of the monoalphabetic substitution cipher: the 26! (4.03 × 10²⁶) permutation key space, Al-Kindi&apos;s 9th-century discovery of frequency analysis, n-gram statistical cryptanalysis, hill-climbing optimization, and runnable Python auto-solvers.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>A1Z26 Cipher &amp; Numerical Encoding: The Mathematics of Coordinate Indexing &amp; Prefix-Free Codes</title>
+      <link>https://cipherverse.cybrito.tech/blog/a1z26-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/a1z26-cipher</guid>
+      <description>An exhaustive academy guide to A1Z26: the vital distinction between encoding and encryption, the mathematical proof of delimiter necessity, prefix-free Kraft inequality analysis, algebraic layering in Affine/Hill ciphers, and dynamic programming ambiguity solvers in Python.</description>
       <category>Classical Cryptography</category>
       <author>CipherVerse Cryptography Academy</author>
       <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
