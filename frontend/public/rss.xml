@@ -5,7 +5,7 @@
     <link>https://cipherverse.cybrito.tech/blog</link>
     <description>In-depth cryptography tutorials, mathematical breakdowns, steganography techniques, and cryptanalysis guides.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Sep 2026 06:02:03 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 06:07:15 GMT</lastBuildDate>
     <atom:link href="https://cipherverse.cybrito.tech/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caesar Cipher &amp; ROT13: The Complete Mathematical &amp; Cryptanalysis Guide</title>
@@ -112,6 +112,15 @@
       <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/typex-machine</guid>
       <description>An exhaustive academic breakdown of Britain&apos;s WWII Typex cipher machine: Wing Commander O.G.W. Lywood&apos;s 5-rotor architecture, stator permutation discs, multi-notch irregular stepping kinematics, why it remained unbroken by Axis codebreakers, and runnable Python simulators.</description>
       <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>AES-256 Block Cipher: Galois Fields GF(2⁸), Substitution-Permutation Networks &amp; Modern Modes</title>
+      <link>https://cipherverse.cybrito.tech/blog/aes-block-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/aes-block-cipher</guid>
+      <description>An exhaustive academic breakdown of the Advanced Encryption Standard (Rijndael): Substitution-Permutation Networks, finite field arithmetic in GF(2⁸), SubBytes S-Box inversion, ShiftRows and MixColumns diffusion, Key Expansion, block cipher modes (ECB, CBC, CTR, GCM), and runnable Python implementations.</description>
+      <category>Modern Cryptography</category>
       <author>CipherVerse Cryptography Academy</author>
       <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
     </item>

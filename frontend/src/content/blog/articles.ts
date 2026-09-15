@@ -4102,6 +4102,330 @@ Known Key Parameters:
     ],
   },
   {
+    slug: 'aes-block-cipher',
+    title: "AES-256 Block Cipher: Galois Fields GF(2⁸), Substitution-Permutation Networks & Modern Modes",
+    description: "An exhaustive academic breakdown of the Advanced Encryption Standard (Rijndael): Substitution-Permutation Networks, finite field arithmetic in GF(2⁸), SubBytes S-Box inversion, ShiftRows and MixColumns diffusion, Key Expansion, block cipher modes (ECB, CBC, CTR, GCM), and runnable Python implementations.",
+    category: 'Modern Cryptography',
+    publishedAt: '2026-09-15',
+    readTime: '12 min read',
+    author: {
+      name: 'CipherVerse Cryptography Academy',
+      role: 'Modern Block Ciphers & Finite Fields',
+    },
+    tags: [
+      'AES',
+      'AES-256',
+      'Rijndael',
+      'Galois Field',
+      'Block Ciphers',
+      'S-Box',
+      'Modern Cryptography',
+      'NIST',
+    ],
+    coverGradient: 'from-blue-600/20 via-indigo-600/20 to-purple-600/20',
+    seriesBadge: 'Academy • Lesson 13: SPN Networks & Finite Field GF(2⁸)',
+    relatedTools: [
+      {
+        name: 'AES Encryption & Decryption',
+        path: '/symmetric/aes',
+        description: 'Encrypt and decrypt payloads with authentic AES-128/192/256 across CBC, ECB, CTR, and OFB modes.',
+        category: 'Symmetric Crypto',
+      },
+      {
+        name: 'DES Block Cipher',
+        path: '/symmetric/des',
+        description: 'Compare AES against the historical 16-round Feistel network of the Data Encryption Standard.',
+        category: 'Symmetric Crypto',
+      },
+      {
+        name: 'Blowfish Cipher',
+        path: '/symmetric/blowfish',
+        description: 'Inspect Bruce Schneier’s 64-bit Feistel block cipher with key-dependent S-boxes.',
+        category: 'Symmetric Crypto',
+      },
+      {
+        name: 'RSA Asymmetric Cipher',
+        path: '/asymmetric/rsa',
+        description: 'Explore hybrid cryptosystems where AES session keys are encapsulated via RSA.',
+        category: 'Asymmetric Crypto',
+      },
+    ],
+    tableOfContents: [
+      { id: 'historical-origins', title: '1. Historical Context: The NIST Competition & The Fall of DES', level: 2 },
+      { id: 'spn-vs-feistel', title: '2. Mathematical Architecture: Substitution-Permutation Network (SPN)', level: 2 },
+      { id: 'galois-field-arithmetic', title: '3. Finite Field Arithmetic in GF(2⁸): Polynomials & xtime', level: 2 },
+      { id: 'the-four-round-transformations', title: '4. The Four Round Transformations: SubBytes, ShiftRows, MixColumns & AddRoundKey', level: 2 },
+      { id: 'key-expansion-schedule', title: '5. Rijndael Key Schedule & Round Key Derivation', level: 2 },
+      { id: 'block-cipher-modes', title: '6. Operational Modes: ECB Penguin Flaw, CBC, CTR & Authenticated GCM', level: 2 },
+      { id: 'python-aes-implementation', title: '7. Pure Python AES-128 Implementation & NIST Self-Test', level: 2 },
+      { id: 'practice-challenge', title: '8. Practice Cryptanalysis: The Rogue ECB Penguin Challenge', level: 2 },
+      { id: 'interactive-workbench', title: '9. Interactive AES Workbench', level: 2 },
+    ],
+    sections: [
+      {
+        id: 'historical-origins',
+        heading: '1. Historical Context: The NIST Competition & The Fall of DES',
+        paragraphs: [
+          'In 1977, the U.S. National Bureau of Standards (now NIST) established the Data Encryption Standard (DES) as the federal cryptographic benchmark. DES utilized a 16-round Feistel network with a 56-bit key. By the late 1990s, advances in silicon computing rendered 56-bit keys critically obsolete: in July 1998, the Electronic Frontier Foundation (EFF) built the "Deep Crack" custom supercomputer for $250,000, recovering a DES key via brute force in just 56 hours.',
+          'While Triple DES (3DES) temporarily mitigated key-exhaustion attacks by applying DES three times with independent keys (effective 112 or 168 bits), its 64-bit block size remained vulnerable to Sweet32 collision attacks under high throughput, and its Feistel structure was sluggish in software.',
+          'In January 1997, NIST announced an open international competition to select the Advanced Encryption Standard (AES). Fifteen candidate algorithms were submitted worldwide. Following three years of intensive public cryptanalysis, five finalists were selected in August 1999: MARS (IBM), RC6 (RSA Laboratories), Serpent (Anderson, Biham, Knudsen), Twofish (Counterpane), and Rijndael (Vincent Rijmen and Joan Daemen of Katholieke Universiteit Leuven in Belgium).',
+          'On October 2, 2000, NIST crowned Rijndael as the official winner. The evaluation committee praised Rijndael for its impeccable mathematical elegance, high execution speed across both 8-bit smart cards and 64-bit servers, complete immunity to timing attacks, and robust resistance to both linear and differential cryptanalysis. Officially codified as FIPS PUB 197 in November 2001, AES protects the financial, military, and digital communications infrastructure of the modern world.',
+        ],
+        callout: {
+          type: 'info',
+          title: 'Rijndael vs. AES: The Scope Distinction',
+          text: 'The original Rijndael cipher was designed with variable block sizes and variable key sizes in any multiple of 32 bits from 128 to 256 bits. When NIST standardized AES, they fixed the block size strictly to 128 bits (16 bytes) and standardized three key lengths: AES-128 (10 rounds), AES-192 (12 rounds), and AES-256 (14 rounds).',
+        },
+      },
+      {
+        id: 'spn-vs-feistel',
+        heading: '2. Mathematical Architecture: Substitution-Permutation Network (SPN)',
+        paragraphs: [
+          'Classical block ciphers like DES and Blowfish employ Feistel networks, which partition a 64-bit block into two 32-bit halves (L, R) and modify only one half per round via a non-invertible round function F: L_{i} = R_{i-1}, R_{i} = L_{i-1} ⊕ F(R_{i-1}, K_i). While Feistel networks simplify hardware implementation because F does not need to be invertible, they suffer from slow avalanche propagation—typically requiring 8 to 16 rounds for full bit dispersion.',
+          'In contrast, AES utilizes a Substitution-Permutation Network (SPN). An SPN operates on all 128 bits of the state simultaneously in every round. The internal state is organized as a 4 × 4 matrix of 8-bit bytes:',
+          'State Matrix S = [[s_{0,0}, s_{0,1}, s_{0,2}, s_{0,3}], [s_{1,0}, s_{1,1}, s_{1,2}, s_{1,3}], [s_{2,0}, s_{2,1}, s_{2,2}, s_{2,3}], [s_{3,0}, s_{3,1}, s_{3,2}, s_{3,3}]]',
+          'Bytes are mapped into the matrix column-wise: byte 0 at s_{0,0}, byte 1 at s_{1,0}, byte 4 at s_{0,1}, and byte 15 at s_{3,3}.',
+          'Because SPN applies non-linear byte substitutions and linear algebraic diffusion across the entire matrix at once, AES achieves complete avalanche effect within just two rounds: changing a single bit in the plaintext alters approximately 50% of the ciphertext bits after round 2.',
+        ],
+      },
+      {
+        id: 'galois-field-arithmetic',
+        heading: '3. Finite Field Arithmetic in GF(2⁸): Polynomials & xtime',
+        paragraphs: [
+          'Unlike ciphers that rely on integer arithmetic with carry bits (which create timing side-channel vulnerabilities), every mathematical operation in AES is executed over the Galois Field GF(2⁸)—a finite algebraic field of 256 elements.',
+          'Elements in GF(2⁸) are represented as polynomials of degree at most 7 with binary coefficients in {0, 1}:',
+          'b₇x⁷ + b₆x⁶ + b₅x⁵ + b₄x⁴ + b₃x³ + b₂x² + b₁x + b₀  ⟺  (b₇ b₆ b₅ b₄ b₃ b₂ b₁ b₀)₂',
+          'Field Addition: Addition of two polynomials in GF(2⁸) is defined modulo 2. Because 1 + 1 = 0 in GF(2), field addition is equivalent to bitwise XOR (⊕) with zero carry:',
+          'A(x) + B(x) ⟺ A ⊕ B',
+          'Field Multiplication & Irreducible Polynomial: Multiplication of two field elements is polynomial multiplication modulo the Rijndael irreducible polynomial:',
+          'm(x) = x⁸ + x⁴ + x³ + x + 1  ⟺  0x11B (283 in decimal)',
+          'Multiplication by x (denoted in code as xtime or • 02): Multiplying a polynomial by x shifts all bits left by 1 position (a << 1). If the original byte had its high bit set (b₇ = 1), the product exceeds degree 7 and must be reduced by XORing with the low 8 bits of m(x), which is 0x1B (00011011₂):',
+          'xtime(a) = (a << 1) ⊕ (0x1B if a & 0x80 else 0x00)',
+          'Any multiplication in GF(2⁸) can be decomposed into iterative applications of xtime and XOR. For example: a • 03 = (a • 02) ⊕ a = xtime(a) ⊕ a.',
+        ],
+        callout: {
+          type: 'tip',
+          title: 'Constant-Time Security',
+          text: 'Because GF(2⁸) operations operate purely on bitwise XOR and shifts without carry chains, branch conditions, or arithmetic divisions, modern CPUs implement AES via dedicated hardware instructions (AES-NI) that execute in guaranteed constant time, neutralizing timing cache attacks.',
+        },
+      },
+      {
+        id: 'the-four-round-transformations',
+        heading: '4. The Four Round Transformations: SubBytes, ShiftRows, MixColumns & AddRoundKey',
+        paragraphs: [
+          'Every standard round of AES (Rounds 1 to Nr-1) applies four algebraic transformations in strict sequence:',
+          '1. SubBytes (Non-Linear Confusion): Each byte s_{r,c} in the state is independently replaced by SBox(s_{r,c}). The Rijndael S-Box is constructed algebraically: each byte is replaced with its multiplicative inverse in GF(2⁸) (with 0x00 mapped to itself), followed by an affine transformation over GF(2). This mathematical inversion guarantees maximum non-linearity and optimal resistance against linear and differential cryptanalysis.',
+          '2. ShiftRows (Permutation & Transposition): The rows of the state matrix are cyclically rotated to the left by row index offsets: Row 0 shifts by 0, Row 1 shifts left by 1, Row 2 shifts left by 2, and Row 3 shifts left by 3. This ensures that bytes within the same column are dispersed across distinct columns in subsequent rounds.',
+          '3. MixColumns (Algebraic Column Diffusion): Each 4-byte column of the state is treated as a polynomial over GF(2⁸) and multiplied modulo (x⁴ + 1) by a fixed Maximum Distance Separable (MDS) matrix c(x) = 03x³ + 01x² + 01x + 02. In matrix notation:',
+          '[[s\'_{0,c}], [s\'_{1,c}], [s\'_{2,c}], [s\'_{3,c}]] = [[02, 03, 01, 01], [01, 02, 03, 01], [01, 01, 02, 03], [03, 01, 01, 02]] · [[s_{0,c}], [s_{1,c}], [s_{2,c}], [s_{3,c}]]',
+          'Because the MDS matrix has branch number 5, modifying a single input byte in a column changes all 4 output bytes, maximizing inter-byte diffusion.',
+          '4. AddRoundKey (Key Injection): The 128-bit round subkey derived from the Key Schedule is XORed directly into the state matrix: S = S ⊕ K_round.',
+          'The Final Round (Round Nr) omits the MixColumns step to make encryption and decryption structurally symmetric.',
+        ],
+      },
+      {
+        id: 'key-expansion-schedule',
+        heading: '5. Rijndael Key Schedule & Round Key Derivation',
+        paragraphs: [
+          'The AES Key Expansion algorithm takes the initial user key and generates an expanded key array W containing 4(Nr + 1) 32-bit words (e.g. 44 words for AES-128, 60 words for AES-256).',
+          'Let the key length in 32-bit words be Nk (Nk = 4 for 128-bit, Nk = 8 for 256-bit). The initial Nk words of W are populated directly with the master key.',
+          'For all subsequent words W[i] (from Nk to 4(Nr + 1) - 1):',
+          '• If i ≡ 0 (mod Nk): W[i] = W[i - Nk] ⊕ SubWord(RotWord(W[i - 1])) ⊕ Rcon[i / Nk]',
+          'Where RotWord cyclically rotates a 4-byte word left by 1 byte [b₀, b₁, b₂, b₃] → [b₁, b₂, b₃, b₀], SubWord applies the S-Box to each byte, and Rcon represents round constants [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36] in GF(2⁸).',
+          '• For AES-256 (Nk = 8), an additional non-linear step is inserted when i ≡ 4 (mod 8): W[i] = W[i - 8] ⊕ SubWord(W[i - 1]).',
+          '• In all other cases: W[i] = W[i - Nk] ⊕ W[i - 1].',
+          'This non-linear expansion guarantees that knowledge of a subset of round keys does not allow easy reconstruction of earlier round keys without inverting the non-linear S-Box.',
+        ],
+      },
+      {
+        id: 'block-cipher-modes',
+        heading: '6. Operational Modes: ECB Penguin Flaw, CBC, CTR & Authenticated GCM',
+        paragraphs: [
+          'A raw block cipher only encrypts a single 128-bit (16-byte) block. To encrypt arbitrarily long data streams, a Block Cipher Mode of Operation must be selected:',
+          '1. ECB (Electronic Codebook): Encrypts each 16-byte block independently: C_i = E_K(P_i). Fatal Security Flaw: Identical plaintext blocks produce identical ciphertext blocks, preserving visual structural patterns. Famous demonstration: encrypting the Linux Tux bitmap with ECB reveals the complete outline of the penguin in ciphertext.',
+          '2. CBC (Cipher Block Chaining): Each plaintext block is XORed with the preceding ciphertext block before encryption: C_i = E_K(P_i ⊕ C_{i-1}), initialized with an unpredictable Initialization Vector (IV = C_0). While CBC eliminates pattern leakage, it requires sequential encryption and is vulnerable to Padding Oracle attacks if PKCS#7 error messages are leaked.',
+          '3. CTR (Counter Mode): Turns AES into a stream cipher. A counter block (Nonce || Counter) is encrypted, and the output is XORed with plaintext: C_i = P_i ⊕ E_K(Nonce || i). Advantages: 100% parallelizable, supports random-access decryption, and requires no padding.',
+          '4. GCM (Galois/Counter Mode): The modern industry standard. Combines CTR mode encryption with Galois field polynomial hashing (GHASH over GF(2¹²⁸)) to provide Authenticated Encryption with Associated Data (AEAD). GCM cryptographically guarantees both confidentiality and integrity: any unauthorized tampering with ciphertext or metadata invalidates the 128-bit authentication tag.',
+        ],
+        callout: {
+          type: 'warning',
+          title: 'The Golden Rule of Counter Modes',
+          text: 'In both CTR and GCM modes, NEVER reuse a Nonce with the same key! Reusing a (Key, Nonce) pair causes (C₁ ⊕ C₂) = (P₁ ⊕ P₂), completely stripping the encryption and exposing the XOR of the plaintexts.',
+        },
+      },
+      {
+        id: 'python-aes-implementation',
+        heading: '7. Pure Python AES-128 Implementation & NIST Self-Test',
+        paragraphs: [
+          'Below is a production-grade educational implementation of pure AES-128 in Python. It implements GF(2⁸) polynomial reduction, S-Box byte substitution, ShiftRows, MixColumns MDS matrix multiplication, Key Expansion, and executes an automated assertion test against the official NIST SP 800-38A test vector.',
+        ],
+        codeBlock: {
+          language: 'python',
+          code: `# =====================================================================
+# CipherVerse Academy - Lesson 13: AES-128 Core Cipher Engine
+# Pure Python Implementation of FIPS PUB 197 & Galois Field GF(2^8)
+# =====================================================================
+
+SBOX = [
+    0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+    0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
+    0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
+    0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75,
+    0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84,
+    0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf,
+    0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8,
+    0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2,
+    0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73,
+    0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb,
+    0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79,
+    0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08,
+    0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
+    0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
+    0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
+    0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
+]
+RCON = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36]
+
+def xtime(a: int) -> int:
+    """Multiplication by 0x02 in GF(2^8) modulo irreducible polynomial x^8+x^4+x^3+x+1."""
+    return (((a << 1) ^ 0x1b) & 0xff) if (a & 0x80) else (a << 1)
+
+def sub_bytes(state: list):
+    for r in range(4):
+        for c in range(4):
+            state[r][c] = SBOX[state[r][c]]
+
+def shift_rows(state: list):
+    state[1] = state[1][1:] + state[1][:1]
+    state[2] = state[2][2:] + state[2][:2]
+    state[3] = state[3][3:] + state[3][:3]
+
+def mix_single_column(a: list):
+    t = a[0] ^ a[1] ^ a[2] ^ a[3]
+    u = a[0]
+    a[0] ^= t ^ xtime(a[0] ^ a[1])
+    a[1] ^= t ^ xtime(a[1] ^ a[2])
+    a[2] ^= t ^ xtime(a[2] ^ a[3])
+    a[3] ^= t ^ xtime(a[3] ^ u)
+
+def mix_columns(state: list):
+    for c in range(4):
+        col = [state[r][c] for r in range(4)]
+        mix_single_column(col)
+        for r in range(4):
+            state[r][c] = col[r]
+
+def add_round_key(state: list, round_key: list):
+    for r in range(4):
+        for c in range(4):
+            state[r][c] ^= round_key[r][c]
+
+def key_expansion_128(key: bytes) -> list:
+    w = []
+    for i in range(4):
+        w.append([key[4*i], key[4*i+1], key[4*i+2], key[4*i+3]])
+    for i in range(4, 44):
+        temp = list(w[i-1])
+        if i % 4 == 0:
+            temp = temp[1:] + temp[:1]
+            temp = [SBOX[b] for b in temp]
+            temp[0] ^= RCON[i // 4]
+        w.append([w[i-4][j] ^ temp[j] for j in range(4)])
+    round_keys = []
+    for round_num in range(11):
+        round_key = [[0]*4 for _ in range(4)]
+        for c in range(4):
+            word = w[round_num*4 + c]
+            for r in range(4):
+                round_key[r][c] = word[r]
+        round_keys.append(round_key)
+    return round_keys
+
+def aes_128_encrypt_block(plaintext_bytes: bytes, key_bytes: bytes) -> bytes:
+    state = [[0]*4 for _ in range(4)]
+    for r in range(4):
+        for c in range(4):
+            state[r][c] = plaintext_bytes[r + 4*c]
+    round_keys = key_expansion_128(key_bytes)
+    add_round_key(state, round_keys[0])
+    for round_num in range(1, 10):
+        sub_bytes(state)
+        shift_rows(state)
+        mix_columns(state)
+        add_round_key(state, round_keys[round_num])
+    sub_bytes(state)
+    shift_rows(state)
+    add_round_key(state, round_keys[10])
+    out = [0]*16
+    for r in range(4):
+        for c in range(4):
+            out[r + 4*c] = state[r][c]
+    return bytes(out)
+
+# =====================================================================
+# NIST SP 800-38A Standard Reference Vector Test
+# =====================================================================
+if __name__ == '__main__':
+    pt = bytes.fromhex('6bc1bee22e409f96e93d7e117393172a')
+    key = bytes.fromhex('2b7e151628aed2a6abf7158809cf4f3c')
+    expected_ct = bytes.fromhex('3ad77bb40d7a3660a89ecaf32466ef97')
+    
+    ct = aes_128_encrypt_block(pt, key)
+    print("--- AES-128 NIST SP 800-38A Verification ---")
+    print(f"Plaintext:   {pt.hex()}")
+    print(f"Key:         {key.hex()}")
+    print(f"Calculated:  {ct.hex()}")
+    print(f"Expected:    {expected_ct.hex()}")
+    assert ct == expected_ct, "NIST test vector mismatch!"
+    print("[✓] NIST FIPS 197 Reference Vector 100% Verified!")`,
+        },
+      },
+      {
+        id: 'practice-challenge',
+        heading: '8. Practice Cryptanalysis: The Rogue ECB Penguin Challenge',
+        paragraphs: [
+          'Demonstrate your mastery of modern symmetric block cipher security with this cryptographic analysis challenge:',
+        ],
+        codeBlock: {
+          language: 'text',
+          code: `Security Incident Report #804:
+  A legacy financial microservice encrypts 32-byte JSON records containing:
+  Record A: "USER:ADMIN;BALANCE:000000001000;"
+  Record B: "USER:GUEST;BALANCE:000000001000;"
+  
+Observed Ciphertexts (Hex in 16-byte blocks):
+  Ciphertext A: Block 1: [8f3a91...], Block 2: [d4c721...]
+  Ciphertext B: Block 1: [a1b2c3...], Block 2: [d4c721...]
+
+Security Vulnerability Analysis:
+  1. Why is Block 2 identical across both records ([d4c721...])?
+  2. Which block cipher mode was used?
+  3. How can an adversary forge an unauthorized balance modification without knowing the key?
+  4. How does migrating to AES-256-GCM neutralize this vulnerability?`,
+        },
+        callout: {
+          type: 'tip',
+          title: 'Cryptanalytic Solution',
+          text: 'Block 2 is identical because the service used ECB mode! In ECB, identical plaintext blocks ("BALANCE:000000001000;") encrypt to identical ciphertext blocks. An attacker can perform a block replay attack, copying Block 2 from an admin record into their own account! Migrating to AES-GCM provides an initialization vector (preventing block duplication) and an authentication tag (causing forged messages to be rejected instantly).',
+        },
+      },
+      {
+        id: 'interactive-workbench',
+        heading: '9. Interactive AES Workbench',
+        paragraphs: [
+          'Ready to test real AES encryption, evaluate the security differences between CBC, ECB, and CTR modes, or configure 128/192/256-bit keys? Use the official CipherVerse AES Workbench.',
+          'Everything operates entirely client-side inside your browser with complete confidentiality.',
+        ],
+        toolCta: {
+          name: 'Launch AES Cipher Tool',
+          path: '/symmetric/aes',
+          description: 'Encrypt and decrypt payloads with AES-128/192/256 across CBC, ECB, CTR, and OFB modes.',
+          category: 'Symmetric Crypto',
+        },
+      },
+    ],
+  },
+  {
     slug: 'evolution-of-cryptography',
     title: "The Cryptographer's Journey: From Ancient Caesar Ciphers to Modern AES-256",
     description: "Explore the 2,000-year history of cryptographic evolution: how simple monoalphabetic substitution ciphers collapsed under frequency analysis, paving the way for polyalphabetic machines and modern Rijndael block ciphers.",
