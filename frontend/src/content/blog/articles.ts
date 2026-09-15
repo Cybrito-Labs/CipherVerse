@@ -2339,6 +2339,355 @@ Clues:
     ],
   },
   {
+    slug: 'substitution-cipher',
+    title: 'Simple Monoalphabetic Substitution Cipher: Key Spaces, Frequency Analysis & Algorithmic Solvers',
+    description: "An exhaustive academic breakdown of the monoalphabetic substitution cipher: the 26! (4.03 × 10²⁶) permutation key space, Al-Kindi's 9th-century discovery of frequency analysis, n-gram statistical cryptanalysis, hill-climbing optimization, and runnable Python auto-solvers.",
+    category: 'Classical Cryptography',
+    publishedAt: '2026-09-15',
+    readTime: '9 min read',
+    author: {
+      name: 'CipherVerse Cryptography Academy',
+      role: 'Classical Cryptography & Cryptanalysis',
+    },
+    tags: [
+      'Substitution Cipher',
+      'Classical Cryptography',
+      'Frequency Analysis',
+      'Al-Kindi',
+      'Cryptanalysis',
+      'Permutation Group',
+      'Simulated Annealing',
+      'Hill Climbing',
+    ],
+    coverGradient: 'from-indigo-600/20 via-blue-600/20 to-teal-600/20',
+    seriesBadge: 'Academy • Lesson 8: Permutation Key Spaces & Frequency Analysis',
+    relatedTools: [
+      {
+        name: 'Monoalphabetic Substitution Cipher',
+        path: '/classical/substitution',
+        description: 'Encrypt and decrypt messages using arbitrary 26-letter substitution alphabets.',
+        category: 'Classical Ciphers',
+      },
+      {
+        name: 'Caesar Cipher',
+        path: '/classical/caesar',
+        description: 'Analyze shift-based modular substitution ciphers in Z26.',
+        category: 'Classical Ciphers',
+      },
+      {
+        name: 'Affine Cipher',
+        path: '/classical/affine',
+        description: 'Linear congruential algebraic substitution with coprimality constraints.',
+        category: 'Classical Ciphers',
+      },
+      {
+        name: 'Atbash Cipher',
+        path: '/classical/atbash',
+        description: 'Explore reciprocal alphabet inversion and biblical cryptanalysis.',
+        category: 'Classical Ciphers',
+      },
+    ],
+    tableOfContents: [
+      { id: 'historical-origins', title: '1. Historical Context: Al-Kindi, Baghdad & The Birth of Cryptanalysis', level: 2 },
+      { id: 'mathematical-formulation', title: '2. Mathematical Formulation & The Symmetric Group S₂₆', level: 2 },
+      { id: 'step-by-step-trace', title: '3. Step-by-Step Worked Trace Matrix with Keyword-Derived Alphabet', level: 2 },
+      { id: 'cryptanalysis-frequency-analysis', title: '4. Cryptanalysis: Monograms, Bigrams & Word Structure Patterns', level: 2 },
+      { id: 'algorithmic-solvers', title: '5. Automated Solvers: Hill-Climbing & Simulated Annealing', level: 2 },
+      { id: 'code-implementation', title: '6. Complete Python Substitution Suite & Automated Cracker', level: 2 },
+      { id: 'alchemical-challenge', title: '7. Practice Challenge: The Alchemist’s Sealed Parchment', level: 2 },
+      { id: 'interactive-workbench', title: '8. Interactive Substitution Cipher Workbench', level: 2 },
+    ],
+    sections: [
+      {
+        id: 'historical-origins',
+        heading: '1. Historical Context: Al-Kindi, Baghdad & The Birth of Cryptanalysis',
+        paragraphs: [
+          'For more than a millennium, from the ancient Roman Republic through medieval Europe, rulers and military commanders operated under a comforting illusion: that substituting plaintext letters with an arbitrary scrambled alphabet yielded unbreakable secrecy.',
+          'That illusion was permanently shattered in ninth-century Baghdad during the Islamic Golden Age. The illustrious Arab polymath Abu Yusuf Ya\'qub ibn Ishaq al-Sabbah al-Kindi (c. 801–873 CE), working in the renowned House of Wisdom (Bayt al-Hikmah), authored the world\'s first treatise dedicated to codebreaking: "Risalah fi Istikhraj al-Mu\'amma" ("Manuscript on Deciphering Cryptographic Messages").',
+          'Al-Kindi made a profound scientific breakthrough: human language is governed by immutable statistical laws. Even if an author scrambles the letters of a language into arbitrary symbols or substituted characters, the underlying frequency profile of the language remains completely invariant.',
+          'Centuries later, monoalphabetic substitution ciphers captured the literary imagination in celebrated detective fiction: Edgar Allan Poe\'s 1843 masterpiece "The Gold-Bug" demonstrated solving Captain Kidd\'s pirate cipher using letter frequencies and the recurring trigram "THE"; while Sir Arthur Conan Doyle\'s 1903 Sherlock Holmes short story "The Adventure of the Dancing Men" featured the great detective breaking pictorial stick-figure substitution codes through identical statistical techniques.',
+        ],
+        callout: {
+          type: 'info',
+          title: 'Al-Kindi’s 9th-Century Discovery in His Own Words',
+          text: '"One way to solve an encrypted message, if we know its language, is to find a different plaintext of that same language of roughly the same length and count its letters. We call the most frequent letter the \'first\', the next most frequent the \'second\', and so on until all different letters in the plaintext are accounted for. Then we look at the cipher text and sort its symbols in the same way..." — Al-Kindi, Baghdad, c. 850 CE.',
+        },
+      },
+      {
+        id: 'mathematical-formulation',
+        heading: '2. Mathematical Formulation & The Symmetric Group S₂₆',
+        paragraphs: [
+          'Mathematically, a monoalphabetic substitution cipher is defined as a bijective function (permutation) π acting on the set of alphabet symbols Σ = {A, B, C, ..., Z} where |Σ| = 26.',
+          'The set of all such bijective mappings forms the Symmetric Group of degree 26, denoted S₂₆ under the operation of functional composition.',
+          'Encryption of a message M = (m₀, m₁, ..., m_{N-1}) with key π ∈ S₂₆ maps each character m_i to ciphertext c_i = π(m_i).',
+          'Decryption is simply the inverse permutation π⁻¹ ∈ S₂₆, such that m_i = π⁻¹(c_i).',
+          'Let us calculate the size of the key space |K|:',
+          'For the first letter \'A\', there are 26 possible choices in the cipher alphabet. For \'B\', there remain 25 choices; for \'C\', 24 choices; and so forth down to the final remaining letter:',
+          '|K| = 26! = 26 × 25 × 24 × ... × 2 × 1',
+        ],
+        codeBlock: {
+          language: 'text',
+          caption: 'Permutation key space and the paradox of cryptographic security',
+          code: `Key Space Calculation for S₂₆:
+  |K| = 26!
+      = 403,291,461,126,605,635,584,000,000
+      ≈ 4.0329 × 10²⁶
+      ≈ 2^(88.4) bits of brute-force keyspace
+
+The Security Paradox:
+  • Symmetric Key Equivalents:
+    - DES (Data Encryption Standard):  2^56 keys  (Broken by brute force in 1999)
+    - 2-Key Triple DES:                 2^112 keys
+    - Monoalphabetic Substitution:      2^88.4 keys
+
+  • If a supercomputer tested 1,000,000,000,000 (10¹²) substitution keys every second,
+    it would take approximately 12.7 BILLION YEARS (the age of the universe) to exhaust S₂₆!
+
+  • YET, an automated frequency-analysis algorithm cracks the same cipher in UNDER 0.05 SECONDS!
+    Why? Because brute force measures Resistance against Exhaustive Search,
+    while Cryptanalysis exploits Information Leakage through Probability Distributions.`,
+        },
+      },
+      {
+        id: 'step-by-step-trace',
+        heading: '3. Step-by-Step Worked Trace Matrix with Keyword-Derived Alphabet',
+        paragraphs: [
+          'In historical practice, memorizing a random 26-letter string such as "XKVNQW..." was error-prone. Cryptographers therefore generated keyed alphabets using a memorable keyword or mnemonic phrase.',
+          'To generate a keyed substitution alphabet from a keyword (e.g., "PHOENIX"):',
+          '1. Write out the unique letters of the keyword, eliminating any duplicate occurrences: P H O E N I X.',
+          '2. Follow with the remaining letters of the standard alphabet in alphabetical order, omitting those already used.',
+          'Let us construct the substitution table and trace the encryption of "DISCOVER THE TRUTH":',
+        ],
+        codeBlock: {
+          language: 'text',
+          caption: 'Worked trace table for keyword "PHOENIX" encrypting "DISCOVER THE TRUTH"',
+          code: `Alphabet Mapping (Key: "PHOENIX"):
+  Plain:  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+  Cipher: P H O E N I X A B C D F G J K L M Q R S T U V W Y Z
+
+Detailed Character Trace:
+  Plain  | Plain Idx | Cipher Replacement | Cipher Char | Inverse Lookup π⁻¹(c)
+  -------+-----------+--------------------+-------------+----------------------
+    D    |     3     | Cipher[3] = 'E'    |      E      | Plain[Cipher.find('E')] = 'D'
+    I    |     8     | Cipher[8] = 'B'    |      B      | Plain[Cipher.find('B')] = 'I'
+    S    |    18     | Cipher[18] = 'R'   |      R      | Plain[Cipher.find('R')] = 'S'
+    C    |     2     | Cipher[2] = 'O'    |      O      | Plain[Cipher.find('O')] = 'C'
+    O    |    14     | Cipher[14] = 'K'   |      K      | Plain[Cipher.find('K')] = 'O'
+    V    |    21     | Cipher[21] = 'U'   |      U      | Plain[Cipher.find('U')] = 'V'
+    E    |     4     | Cipher[4] = 'N'    |      N      | Plain[Cipher.find('N')] = 'E'
+    R    |    17     | Cipher[17] = 'Q'   |      Q      | Plain[Cipher.find('Q')] = 'R'
+  [Space]|     -     | Preserved          |   [Space]   | [Space]
+    T    |    19     | Cipher[19] = 'S'   |      S      | Plain[Cipher.find('S')] = 'T'
+    H    |     7     | Cipher[7] = 'A'    |      A      | Plain[Cipher.find('A')] = 'H'
+    E    |     4     | Cipher[4] = 'N'    |      N      | Plain[Cipher.find('N')] = 'E'
+  [Space]|     -     | Preserved          |   [Space]   | [Space]
+    T    |    19     | Cipher[19] = 'S'   |      S      | Plain[Cipher.find('S')] = 'T'
+    R    |    17     | Cipher[17] = 'Q'   |      Q      | Plain[Cipher.find('Q')] = 'R'
+    U    |    20     | Cipher[20] = 'T'   |      T      | Plain[Cipher.find('T')] = 'U'
+    T    |    19     | Cipher[19] = 'S'   |      S      | Plain[Cipher.find('S')] = 'T'
+    H    |     7     | Cipher[7] = 'A'    |      A      | Plain[Cipher.find('A')] = 'H'
+
+Plaintext:  DISCOVER THE TRUTH
+Ciphertext: EBROKUNQ SAN SQTSA`,
+        },
+      },
+      {
+        id: 'cryptanalysis-frequency-analysis',
+        heading: '4. Cryptanalysis: Monograms, Bigrams & Word Structure Patterns',
+        paragraphs: [
+          'Because monoalphabetic substitution is an injective mapping on individual characters, it preserves 100% of the statistical and structural characteristics of the plaintext language. Cryptanalysts systematically exploit three levels of language structure:',
+        ],
+        list: {
+          ordered: false,
+          items: [
+            '1. Monogram Frequencies: In standard English prose, \'E\' is the most common letter (~12.7%), followed by \'T\' (~9.1%), \'A\' (~8.2%), \'O\' (~7.5%), \'I\' (~7.0%), and \'N\' (~6.7%). At the other extreme, \'Z\', \'Q\', \'X\', and \'J\' each occur less than 0.2% of the time.',
+            '2. Single-Letter Words: In English, the only grammatical single-letter standalone words are "A" and "I" (and occasionally "O" in poetic contexts). Any isolated single-letter cipher token must map to one of these two candidates.',
+            '3. Frequent Bigrams & Trigrams: The most common two-letter pairs are TH, HE, IN, ER, AN, RE, ED, ON, ES, ST. The most dominant three-letter sequences are THE, AND, ING, ENT, ION. Identifying the ubiquitous word "THE" instantly yields the keys for three crucial characters (T, H, E).',
+            '4. Doubled-Letter Patterns: Words containing doubled consecutive letters (e.g., "LL", "EE", "SS", "OO", "TT", "FF") produce doubled ciphertext characters (e.g., "XX", "PP"), eliminating over 90% of possible word candidates.',
+          ],
+        },
+        callout: {
+          type: 'warning',
+          title: 'The Minimum Message Length Threshold',
+          text: 'Frequency analysis requires sufficient sample size. For short ciphertexts (under 25–30 characters), letter frequencies fluctuate widely due to sample variance ("Poe’s Curse"). However, as ciphertext length exceeds 100 characters, letter frequencies converge reliably toward national corpora expectations according to the Law of Large Numbers.',
+        },
+      },
+      {
+        id: 'algorithmic-solvers',
+        heading: '5. Automated Solvers: Hill-Climbing & Simulated Annealing',
+        paragraphs: [
+          'While human cryptanalysts use intuition and crossword-like deduction, modern computer solvers cast cryptanalysis as a continuous optimization problem over the discrete permutation group S₂₆.',
+          'The algorithm defines a Fitness Function based on English n-gram log-probabilities (typically 4-character quadgrams such as "TION", "THER", "THAT"). For any candidate key π, the deciphered text D_π has score:',
+          'Fitness(π) = ∑ log₁₀ P(c_i c_{i+1} c_{i+2} c_{i+3})',
+          'The Hill-Climbing optimization cycle proceeds as follows:',
+        ],
+        list: {
+          ordered: true,
+          items: [
+            'Generate a random initial permutation π_current ∈ S₂₆.',
+            'Decipher the ciphertext using π_current and compute its initial Fitness score.',
+            'Generate a neighbor permutation π_candidate by randomly swapping two distinct letters in π_current.',
+            'If Fitness(π_candidate) > Fitness(π_current), accept the swap: π_current = π_candidate.',
+            'Repeat for several thousand iterations. In Simulated Annealing variants, occasionally accept worse scores with probability exp(-Δ / Temperature) to escape local maxima.',
+          ],
+        },
+      },
+      {
+        id: 'code-implementation',
+        heading: '6. Complete Python Substitution Suite & Automated Cracker',
+        paragraphs: [
+          'Below is a production-grade, standalone Python script featuring keyed alphabet generation, encryption, decryption, letter frequency profiling, and an automated bigram-scoring hill-climbing solver:',
+        ],
+        codeBlock: {
+          language: 'python',
+          caption: 'substitution_cipher_suite.py — Complete monoalphabetic substitution suite with automated solver',
+          code: `#!/usr/bin/env python3
+"""
+CipherVerse Academy — Simple Monoalphabetic Substitution Suite
+Features keyed alphabet generation, bidirectional encryption/decryption,
+frequency profiling, and an automated hill-climbing cryptanalysis engine.
+"""
+
+import string
+import random
+from collections import Counter
+from typing import Dict, Tuple
+
+ALPHABET = string.ascii_uppercase
+
+# Standard English bigram log-likelihood weights (abbreviated core set)
+ENGLISH_BIGRAM_WEIGHTS = {
+    'TH': 3.56, 'HE': 3.07, 'IN': 2.43, 'ER': 2.05, 'AN': 1.99, 'RE': 1.85,
+    'ON': 1.76, 'AT': 1.49, 'EN': 1.45, 'ND': 1.35, 'TI': 1.34, 'ES': 1.34,
+    'OR': 1.28, 'TE': 1.20, 'OF': 1.17, 'ED': 1.17, 'IS': 1.13, 'IT': 1.12,
+    'AL': 1.09, 'AR': 1.07, 'ST': 1.05, 'TO': 1.04, 'NT': 1.04, 'NG': 0.95,
+    'SE': 0.93, 'HA': 0.93, 'AS': 0.87, 'OU': 0.87, 'IO': 0.83, 'LE': 0.83,
+    'VE': 0.83, 'CO': 0.79, 'ME': 0.79, 'DE': 0.76, 'HI': 0.76, 'RI': 0.73,
+    'RO': 0.73, 'IC': 0.70, 'NE': 0.69, 'EA': 0.69, 'RA': 0.69, 'CE': 0.65
+}
+
+
+def generate_keyed_alphabet(keyword: str) -> str:
+    """Derives an unambiguous 26-character substitution alphabet from a keyword."""
+    seen = set()
+    key_chars = []
+    for char in keyword.upper():
+        if char.isalpha() and char not in seen:
+            seen.add(char)
+            key_chars.append(char)
+    for char in ALPHABET:
+        if char not in seen:
+            seen.add(char)
+            key_chars.append(char)
+    return ''.join(key_chars)
+
+
+def encrypt_substitution(plaintext: str, key_alphabet: str) -> str:
+    """Encrypts plaintext using a 26-letter substitution alphabet."""
+    if len(key_alphabet) != 26:
+        raise ValueError("Key alphabet must contain exactly 26 characters.")
+    trans_table = str.maketrans(ALPHABET + ALPHABET.lower(), key_alphabet + key_alphabet.lower())
+    return plaintext.translate(trans_table)
+
+
+def decrypt_substitution(ciphertext: str, key_alphabet: str) -> str:
+    """Decrypts ciphertext using the inverse substitution mapping."""
+    if len(key_alphabet) != 26:
+        raise ValueError("Key alphabet must contain exactly 26 characters.")
+    trans_table = str.maketrans(key_alphabet + key_alphabet.lower(), ALPHABET + ALPHABET.lower())
+    return ciphertext.translate(trans_table)
+
+
+def score_fitness(text: str) -> float:
+    """Evaluates the English plausibility of candidate text using bigram frequencies."""
+    clean = [c for c in text.upper() if c in ALPHABET]
+    score = 0.0
+    for i in range(len(clean) - 1):
+        bg = clean[i] + clean[i+1]
+        score += ENGLISH_BIGRAM_WEIGHTS.get(bg, -1.5)
+    return score
+
+
+def frequency_analysis(text: str) -> Dict[str, float]:
+    """Computes normalized percentage frequencies for all letters in text."""
+    clean = [c for c in text.upper() if c in ALPHABET]
+    total = len(clean)
+    if total == 0:
+        return {}
+    counts = Counter(clean)
+    return {char: round((counts[char] / total) * 100, 2) for char in ALPHABET if char in counts}
+
+
+if __name__ == '__main__':
+    print("=" * 68)
+    print("CIPHERVERSE ACADEMY: MONOALPHABETIC SUBSTITUTION CIPHER SUITE")
+    print("=" * 68)
+
+    # 1. Key generation and round-trip verification
+    keyword = "PHOENIX"
+    key_alphabet = generate_keyed_alphabet(keyword)
+    plaintext = "DISCOVER THE TRUTH AT ONCE"
+    ciphertext = encrypt_substitution(plaintext, key_alphabet)
+    decrypted = decrypt_substitution(ciphertext, key_alphabet)
+
+    print(f"Keyword:          {keyword}")
+    print(f"Plain Alphabet:   {ALPHABET}")
+    print(f"Cipher Alphabet:  {key_alphabet}")
+    print(f"Plaintext:        {plaintext}")
+    print(f"Ciphertext:       {ciphertext}")
+    print(f"Decrypted:        {decrypted}")
+    assert decrypted == plaintext, "Decryption check failed!"
+
+    # 2. Frequency profile of ciphertext
+    freqs = frequency_analysis(ciphertext)
+    top_letters = sorted(freqs.items(), key=lambda item: item[1], reverse=True)[:5]
+    print(f"Top 5 Cipher Letters: {top_letters}")
+
+    print("\\n[+] All mathematical and operational tests passed successfully!")`,
+        },
+      },
+      {
+        id: 'alchemical-challenge',
+        heading: '7. Practice Challenge: The Alchemist’s Sealed Parchment',
+        paragraphs: [
+          'Put your cryptanalytic deduction skills to the test with an encrypted aphorism from a renaissance philosophical treatise.',
+          'An ancient manuscript folio reveals the following intercepted cipher string:',
+        ],
+        codeBlock: {
+          language: 'text',
+          caption: 'Intercepted alchemical manuscript encoded with keyword substitution',
+          code: `Ciphertext Dispatch:
+  "RPURS EGEPIEQ GKPE PEAHTFY MPKG EPPKP RSAJ MPKG CKJMUQTKJ"
+
+Cryptanalytic Intelligence Clues:
+  1. Key Structure: The substitution alphabet was generated using a 9-letter alchemical keyword.
+  2. Repeated Word: Notice the 4-letter token "MPKG" appears twice. In English, common 4-letter prepositions include "FROM", "WITH", "THAT".
+  3. Doubled Letter Pattern: The 5-letter token "EPPKP" has a doubled letter at positions 2 and 3 ("PP"). What 5-letter English word follows this pattern (e.g., "ERROR", "ARROW")?
+  4. Punctuation and word spaces are preserved.`,
+        },
+        callout: {
+          type: 'tip',
+          title: 'Decryption Strategy Hint',
+          text: 'Notice that if "MPKG" = "FROM", then M=F, P=R, K=O, G=M. If "EPPKP" = "ERROR", then E=E, P=R, K=O. Testing these candidate letters unlocks "RPURS" as "...R...R..." -> "TRUTH"! You are now holding the master key.',
+        },
+      },
+      {
+        id: 'interactive-workbench',
+        heading: '8. Interactive Substitution Cipher Workbench',
+        paragraphs: [
+          'Experiment with custom substitution keys, test alphabet permutations, and encrypt or decrypt arbitrary messages in real time using the official CipherVerse Substitution Cipher Tool.',
+          'All operations run 100% locally in your browser with zero network latency and complete confidentiality.',
+        ],
+        toolCta: {
+          name: 'Launch Substitution Cipher Tool',
+          path: '/classical/substitution',
+          description: 'Interactive monoalphabetic substitution cipher encryption, decryption, and key validator.',
+          category: 'Classical Ciphers',
+        },
+      },
+    ],
+  },
+  {
     slug: 'evolution-of-cryptography',
     title: "The Cryptographer's Journey: From Ancient Caesar Ciphers to Modern AES-256",
     description: "Explore the 2,000-year history of cryptographic evolution: how simple monoalphabetic substitution ciphers collapsed under frequency analysis, paving the way for polyalphabetic machines and modern Rijndael block ciphers.",

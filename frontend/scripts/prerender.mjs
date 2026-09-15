@@ -216,6 +216,26 @@ for (const [route, seo] of Object.entries(seoConfigMap)) {
     </nav>`;
   }
 
+  // Dedicated Companion Educational Guide Banner for static crawling
+  const companionArticle = !isHome && route !== '/blog'
+    ? blogArticles.find(
+        (article) =>
+          article.relatedTools.some((t) => t.path === route) &&
+          (article.slug.includes(route.split('/').pop() || '') ||
+            article.relatedTools[0]?.path === route)
+      )
+    : null;
+
+  if (companionArticle) {
+    semanticShell += `
+    <section aria-label="Companion Educational Guide" style="max-width:1200px;margin:1.5rem auto;padding:1.5rem;border-radius:1rem;background:linear-gradient(to right, rgba(56,189,248,0.1), rgba(15,23,42,0.6));border:1px solid rgba(56,189,248,0.3);font-family:system-ui,sans-serif;">
+      <span style="font-size:0.75rem;font-weight:600;color:#38bdf8;text-transform:uppercase;letter-spacing:0.05em;">Deep-Dive Educational Guide</span>
+      <h2 style="font-size:1.4rem;font-weight:700;color:#f8fafc;margin:0.35rem 0;">${escapeHtml(companionArticle.title)}</h2>
+      <p style="font-size:0.95rem;color:#94a3b8;line-height:1.6;margin-bottom:1rem;">${escapeHtml(companionArticle.description)}</p>
+      <a href="/blog/${companionArticle.slug}" style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.9rem;font-weight:600;color:#38bdf8;text-decoration:none;">Read Companion Guide &rarr;</a>
+    </section>`;
+  }
+
   if (!isHome && howTo && howTo.length > 0) {
     semanticShell += `
     <section style="max-width:1200px;margin:2rem auto 1rem;padding:0 1.5rem;font-family:system-ui,sans-serif;">
