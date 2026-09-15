@@ -5,7 +5,7 @@
     <link>https://cipherverse.cybrito.tech/blog</link>
     <description>In-depth cryptography tutorials, mathematical breakdowns, steganography techniques, and cryptanalysis guides.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Sep 2026 05:21:51 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 05:55:13 GMT</lastBuildDate>
     <atom:link href="https://cipherverse.cybrito.tech/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caesar Cipher &amp; ROT13: The Complete Mathematical &amp; Cryptanalysis Guide</title>
@@ -84,6 +84,24 @@
       <link>https://cipherverse.cybrito.tech/blog/a1z26-cipher</link>
       <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/a1z26-cipher</guid>
       <description>An exhaustive academy guide to A1Z26: the vital distinction between encoding and encryption, the mathematical proof of delimiter necessity, prefix-free Kraft inequality analysis, algebraic layering in Affine/Hill ciphers, and dynamic programming ambiguity solvers in Python.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>The Enigma Machine: Rotor Permutations, The Reflector Involution &amp; Turing&apos;s Bombe</title>
+      <link>https://cipherverse.cybrito.tech/blog/enigma-machine</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/enigma-machine</guid>
+      <description>An exhaustive academic breakdown of the WWII Enigma machine: Arthur Scherbius&apos;s electro-mechanical circuit architecture, the mathematical proof of the Reflector involution, the fatal non-self-encrypting vulnerability, Polish cycle cryptanalysis, and runnable Python simulators.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>The Turing Bombe: Crib Graphs, Welchman&apos;s Diagonal Board &amp; Deductive Contradiction</title>
+      <link>https://cipherverse.cybrito.tech/blog/turing-bombe</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/turing-bombe</guid>
+      <description>An exhaustive academic breakdown of the electromechanical Turing Bombe: Alan Turing and Gordon Welchman&apos;s Bletchley Park cryptanalysis of Enigma, menu graph theory, the Diagonal Board involution theorem, and runnable Python crib solvers.</description>
       <category>Classical Cryptography</category>
       <author>CipherVerse Cryptography Academy</author>
       <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
