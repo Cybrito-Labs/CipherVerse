@@ -103,42 +103,107 @@ export default function DashboardPage() {
         </div>
       </motion.div>
 
-      {/* Featured Cryptography Academy Spotlight Banner */}
+      {/* Featured Educational Guide / Academy Spotlight Banner */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.15 }}
-        className="p-6 sm:p-7 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-card to-background shadow-md relative overflow-hidden group"
+        className="p-6 sm:p-7 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 via-card to-background shadow-md relative overflow-hidden group"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>CipherVerse Academy • Start with Lesson 1</span>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+        <div className="space-y-4 relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span>CipherVerse Academy • Classical Cryptography Curriculum</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-amber-200 transition-colors">
-              New to Cryptography? Start Here: The Caesar Cipher &amp; ROT13 Guide
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Master the foundational substitution cipher that started modern cryptanalysis. Explore historical Roman military origins under Julius Caesar, modular arithmetic formulas in ℤ₂₆, and automated frequency cracking.
-            </p>
+            <Link
+              to="/blog"
+              className="text-xs font-medium text-muted-foreground hover:text-foreground inline-flex items-center gap-1 transition-colors"
+            >
+              <span>View All Academy Guides</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
-          <div className="flex flex-wrap items-center gap-3 flex-shrink-0">
-            <Link
-              to="/blog/caesar-cipher"
-              className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-xs sm:text-sm shadow-md hover:opacity-90 transition-opacity inline-flex items-center gap-2"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Read Full Educational Guide</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/classical/caesar"
-              className="px-4 py-2.5 rounded-xl border border-border bg-card/80 hover:bg-secondary text-foreground font-medium text-xs sm:text-sm transition-colors"
-            >
-              <span>Launch Interactive Solver</span>
-            </Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+            {/* Lesson 1 Card */}
+            <div className="p-4 rounded-xl border border-border bg-card/80 hover:border-amber-500/40 transition-colors flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider">Lesson 1: Foundational Shifts</span>
+                <h3 className="text-base font-bold text-foreground">Caesar Cipher &amp; ROT13</h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  Roman military origins under Julius Caesar, modular arithmetic in ℤ₂₆, and automated frequency cracking.
+                </p>
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                <Link
+                  to="/blog/caesar-cipher"
+                  className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  <BookOpen className="w-3.5 h-3.5" /> Read Guide &rarr;
+                </Link>
+                <span className="text-muted-foreground text-xs">•</span>
+                <Link
+                  to="/classical/caesar"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Launch Tool
+                </Link>
+              </div>
+            </div>
+
+            {/* Lesson 2 Card */}
+            <div className="p-4 rounded-xl border border-border bg-card/80 hover:border-cyan-500/40 transition-colors flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-semibold text-cyan-400 uppercase tracking-wider">Lesson 2: Polyalphabetic Ciphers</span>
+                <h3 className="text-base font-bold text-foreground">Vigenère &amp; Kasiski Test</h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  The Tabula Recta, breaking polyalphabetic substitution, and Friedman’s Index of Coincidence (IC).
+                </p>
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                <Link
+                  to="/blog/vigenere-cipher"
+                  className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  <BookOpen className="w-3.5 h-3.5" /> Read Guide &rarr;
+                </Link>
+                <span className="text-muted-foreground text-xs">•</span>
+                <Link
+                  to="/classical/vigenere"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Launch Tool
+                </Link>
+              </div>
+            </div>
+
+            {/* Lesson 3 Card */}
+            <div className="p-4 rounded-xl border border-border bg-card/80 hover:border-emerald-500/40 transition-colors flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Lesson 3: Reciprocal Alphabets</span>
+                <h3 className="text-base font-bold text-foreground">Atbash Biblical Cipher</h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  Ancient Hebrew scribes, Jeremiah's Babel code, involution proof f(f(x))=x, and mirror frequency analysis.
+                </p>
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                <Link
+                  to="/blog/atbash-cipher"
+                  className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  <BookOpen className="w-3.5 h-3.5" /> Read Guide &rarr;
+                </Link>
+                <span className="text-muted-foreground text-xs">•</span>
+                <Link
+                  to="/classical/atbash"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Launch Tool
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
