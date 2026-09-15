@@ -5,13 +5,67 @@
     <link>https://cipherverse.cybrito.tech/blog</link>
     <description>In-depth cryptography tutorials, mathematical breakdowns, steganography techniques, and cryptanalysis guides.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 15:33:57 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 04:21:54 GMT</lastBuildDate>
     <atom:link href="https://cipherverse.cybrito.tech/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caesar Cipher &amp; ROT13: The Complete Mathematical &amp; Cryptanalysis Guide</title>
       <link>https://cipherverse.cybrito.tech/blog/caesar-cipher</link>
       <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/caesar-cipher</guid>
       <description>An exhaustive educational breakdown of the Caesar cipher: historical Roman origins, modular arithmetic formulas in Z26, ROT13 involution, automated Chi-Square frequency cryptanalysis, and runnable Python cracking scripts.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Vigenère Cipher: Polyalphabetic Cryptanalysis, Kasiski Examination &amp; Index of Coincidence</title>
+      <link>https://cipherverse.cybrito.tech/blog/vigenere-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/vigenere-cipher</guid>
+      <description>An exhaustive academic breakdown of the Vigenère Cipher: Bellaso origins, Tabula Recta matrix arithmetic in ℤ₂₆, the collapse of single-letter frequency analysis, the Kasiski test, Friedman’s Index of Coincidence, and runnable Python auto-crackers.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Atbash Cipher: Ancient Biblical Cryptography, Involution Symmetry &amp; Modern Decoders</title>
+      <link>https://cipherverse.cybrito.tech/blog/atbash-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/atbash-cipher</guid>
+      <description>An exhaustive academic breakdown of the Atbash Cipher: ancient Hebrew scribal origins in the Book of Jeremiah, involution symmetry f(f(x)) = x, affine cipher equivalence in ℤ₂₆, mirror frequency analysis, and runnable Python implementations.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Affine Cipher: Modular Multiplicative Inverses, Coprimality &amp; Algebraic Cryptanalysis</title>
+      <link>https://cipherverse.cybrito.tech/blog/affine-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/affine-cipher</guid>
+      <description>An exhaustive mathematical breakdown of the Affine Cipher: linear congruences in ℤ₂₆, the coprimality condition gcd(a, 26) = 1, calculating modular inverses with the Extended Euclidean Algorithm, and two-point algebraic cryptanalysis.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Rail Fence Cipher: The Complete Guide to Zig-Zag Transposition &amp; Cryptanalysis</title>
+      <link>https://cipherverse.cybrito.tech/blog/rail-fence-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/rail-fence-cipher</guid>
+      <description>An exhaustive educational breakdown of the Rail Fence Cipher: transposition vs. substitution, triangular wave periodicity P = 2(d - 1), worked zig-zag matrix traces, preserved frequency distributions, anagramming, and runnable Python auto-crackers.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Bifid Cipher: Polybius Fractionation, Delastelle’s Breakthrough &amp; Modern Diffusion</title>
+      <link>https://cipherverse.cybrito.tech/blog/bifid-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/bifid-cipher</guid>
+      <description>An exhaustive educational breakdown of the Bifid Cipher: Félix Delastelle’s 1901 invention, Polybius square coordinate decomposition, horizontal stream fractionation, Claude Shannon’s concept of diffusion, and runnable Python auto-solvers.</description>
+      <category>Classical Cryptography</category>
+      <author>CipherVerse Cryptography Academy</author>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Bacon&apos;s Cipher &amp; Steganography: The Complete Binary Encoding &amp; Cryptanalysis Guide</title>
+      <link>https://cipherverse.cybrito.tech/blog/bacon-cipher</link>
+      <guid isPermaLink="true">https://cipherverse.cybrito.tech/blog/bacon-cipher</guid>
+      <description>An exhaustive educational breakdown of Sir Francis Bacon&apos;s 1605 bilateral cipher: information theory principles (ceil(log2(26)) = 5), 24-letter vs. 26-letter alphabets, typeface steganography (Font A/B), worked carrier trace matrices, and standalone Python auto-steganography suite.</description>
       <category>Classical Cryptography</category>
       <author>CipherVerse Cryptography Academy</author>
       <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
