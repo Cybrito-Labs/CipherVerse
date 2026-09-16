@@ -13,7 +13,7 @@ pycryptodome==3.20.0
 pillow
 pefile==2023.2.7
 python-jose[cryptography]==3.3.0
-pyjwt==2.8.0
+pyjwt==2.13.0
 python-multipart==0.0.9
 gmssl
 tlsh
